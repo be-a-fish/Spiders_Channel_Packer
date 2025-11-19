@@ -51,20 +51,20 @@ def itemDrop(enemy,level):
     #add DIY materials
     elif drop == "some shit":
         playerStats["diyMaterials"] = playerStats["diyMaterials"] + itemGain
-        diyRandDrop = random.choice(["jacket spikes","fabric scraps", "spools of thread", "human teeth", "crayons"])
+        diyRandDrop = random.choice(["jacket spikes","fabric scraps", "bottle caps", "beer tabs", "spools of thread", "damaged chain links", "human teeth", "crayons"])
 
         print("You put", itemGain, diyRandDrop, "in your pocket")
         print("You now have",playerStats["diyMaterials"], "DIY materials")
     
     #add weapons
     elif drop == "a weapon":
-        weapon = random.choice(["tazer", "spikey bat", "toothbrush shank", "cheap knife", "nerf gun", "spikey glove","sword for some reason"])
+        weapon = random.choice(["tazer","set of knuckle dusters", "broken bottle", "pride flag", "reporposed umbrella", "spikey bat", "toothbrush shank", "cheap knife", "nerf gun", "spikey glove","sword for some reason"])
         playerStats["strength"] = playerStats["strength"] + itemGain
         playerStats["weapon"] = weapon
         print("You find a level", itemGain, weapon)
     #add aromour
     elif drop == "some clothing":
-        clothes = random.choice(["pair of Knockoff Doc Martens", "spikey jacket", "shark tooth necklace", "offensive shirt", "glasses", "skate helmet","fancy suit"])
+        clothes = random.choice(["pair of Knockoff Doc Martens", "pink socks", "spikey jacket", "shark tooth necklace", "offensive shirt", "glasses", "skate helmet","fancy suit"])
         playerStats["defence"] = playerStats["defence"] + itemGain
         playerStats["clothes"] = clothes
         print("You find a level", itemGain, clothes)
@@ -135,7 +135,7 @@ def Encounter(location, level):
     #encounter 3 = friendly
     #encounter 4 = boss
 
-    if encounterNum == 1:#encounter 1 - HOSTILE
+    if encounterNum == 1:    #encounter 1 - HOSTILE
         print("The train stops and some people get on.")
         #hostile foe list
         #  |    |    |
@@ -143,8 +143,10 @@ def Encounter(location, level):
         foeList = ["Spineless liberal", "Poser", "Tory", "Cop", "Crackhead", "Rando", "Pedo looking mf", "Violent ex", "Podcaster", "Fucking tourist", "Skinhead", "Reform candidate"]
         foe = EnemyGenerator(foeList)
         print("A", foe, "gets on the train and looks at you funny")
+
+        #make a choice
         choiceMade = False
-        while choiceMade == False:#loops until a valud input is made
+        while choiceMade == False:#loops until a valid input is made
             print("Your actions are: Attack:1, Argue:2, Ignore:3")
             action = input("what do you do?")
             if action == "1" or "2" or "3":
@@ -162,6 +164,11 @@ def Encounter(location, level):
             #randomAttackList = ["punch", "slap", "poke", "kick", "kiss", "bite","insult", "karate chop","stomp","spit at"]
             #randomWoundList = ["face", "leg", "groin","arm","nose", "eye","tit","feelings","brand new shoes","dick"]
             #print("you", random.choice(randomAttackList), "them in the", random.choice(randomWoundList))
+
+
+
+    elif encounterNum == 2:  #encounter 2 - NEUTRAL
+        pass
 
 #---------------------------------Areas---------------------------------
 Locations = {
