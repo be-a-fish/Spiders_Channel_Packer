@@ -67,8 +67,28 @@ def createMap():
 
 ##----------------------CONTROLLER----------------------------------------------
 
-def moveController():
-    pass
+
+def moveController(wasd):
+    while wasd != ("w") or ("s") or ("a") or ("d"):
+        print ("wasd is set to", wasd)
+        wasd = input("Select movement direction (wasd)")
+        #move north
+        if wasd == ("w"):
+            print ("moving north")
+            break
+        #move south
+        elif wasd == ("s"):
+            print ("moving south")
+            break
+        #move west
+        elif wasd == ("a"):
+            print ("moving west")
+            break
+        #move east
+        elif wasd == ("d"):
+            print ("moving east")
+            break
+
 
 ##--------------------------------------------------------------------
 
@@ -89,10 +109,15 @@ def frameRender():
 ##---------------------------MAIN-GAME-LOOP-----------------------------------------
 
 gameRunning = True
+newArea = True
 
 while gameRunning == True:
+    if newArea == True:
+        createMap()
+        newArea = False
     print("you enter train carage 1")
 
     frameRender()
-    input ("Press enter to continue")
+    moveController(wasd = "x")
+    
 
