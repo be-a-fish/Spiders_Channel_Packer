@@ -2,6 +2,20 @@ print ("Game Start")
 
 import random
 
+print("Welcome to Tube Trouble (working title)")
+print("This game is not suitible for childeren, so it sure as hell ain't suitable for adults")
+print("this game contains or will contain sarcasm, violence, illegal activity, drug references, bullying, sexual harrasment, homophobia, pro-trans messagase which is apparently something I have to warn you about, transphobia, hypocracy, suicide, racism, terrorism, nazi imagry, hell I'll probably add a graphic sex scene at some point.")
+print("this game will tell you to fuck off. If you don't like that fuck off.")
+input("By pressing enter to continue you agree to not be a fucking pussy")
+
+
+
+
+
+
+
+
+
 ##playerName = input("What is the players name? ")
 ##print("The player name is", playerName)
 
@@ -28,6 +42,8 @@ playerStats = {
     "cash": random.randint(1,10)
 }
 print ("My stats are" , playerStats)
+
+input("That's a stupid name")
 
 #how to access value from dictionary:
 print ("my health is",playerStats["health"])
@@ -88,8 +104,8 @@ def Combat(enemy,enemyHP, enemyAttack, level):
         playerDamage = random.randint (1, playerStats["strength"])
         enemyHP = enemyHP - playerDamage
         
-        randomAttackList = ["punch", "slap", "poke", "kick", "kiss", "bite", "insult", "karate chop", "stomp", "spit at", "stab", "throw a rock at", "dropkick"]
-        randomWoundList = ["face", "head", "leg", "groin","arm","nose", "teeth", "spleen", "knee", "stomach", "elbow", "eye","tit","feelings","brand new shoes","dick","pancreas", "browser history"]
+        randomAttackList = ["punch", "slap", "poke", "kick", "kiss", "bite", "insult", "elbow", "karate chop", "stomp", "spit at", "stab", "throw a rock at", "dropkick", "laugh at", "stare at"]
+        randomWoundList = ["face", "head", "leg", "groin", "arm", "nose", "rib", "teeth", "spleen", "knee", "shin", "stomach", "elbow", "eye", "arse", "tit", "feelings", "wallet, where it really hurts", "brand new shoes", "dick", "pancreas", "browser history"]
         print("you", random.choice(randomAttackList), "them in the", random.choice(randomWoundList), "dealing",playerDamage, "HP")
         print("their health is now", enemyHP)
 
@@ -97,7 +113,7 @@ def Combat(enemy,enemyHP, enemyAttack, level):
         
 
         if enemyHP <= 0: #end combat if enemy is dead
-            randomFleeList = ["fees","fucks off","falls in battle","is sent to Jesus","is sent to Vallhalla","suddenly had an important doctors appointment" ,"begs for their life", "fucking dies","doesn't seem to be breathing", "spontaniously combusts","runs for the bathroom","starts moaning and you feel uncomfortable","makes some excuse to leave"]
+            randomFleeList = ["fees","fucks off","falls in battle","is sent to Jesus","is sent to Vallhalla","suddenly had an important doctors appointment" ,"begs for their life", "fucking dies","doesn't seem to be breathing", "spontaniously combusts","runs for the bathroom","uses an escape rope","starts moaning and you feel uncomfortable","makes some excuse to leave","wanted to go out on their own terms so commits seppuku"]
             print("the",enemy,random.choice(randomFleeList))
 
             itemDrop(enemy=enemy, level=level)
@@ -137,10 +153,10 @@ def Encounter(location, level):
 
     if encounterNum == 1:    #encounter 1 - HOSTILE
         print("The train stops and some people get on.")
-        #hostile foe list
+        #hostile foe list - make different to neutral and friendly lists so you can sometims tell and avoid a fight (e.g. a vegan will always be nautral or friendly and a cop will always be hostile)
         #  |    |    |
         #  V    V    V
-        foeList = ["Spineless liberal", "Poser", "Tory", "Cop", "Crackhead", "Rando", "Pedo looking mf", "Violent ex", "Podcaster", "Fucking tourist", "Skinhead", "Reform candidate"]
+        foeList = ["Spineless liberal", "Poser", "Tory", "Cop", "Crackhead", "Rando", "Pedo looking mf", "Violent ex", "Podcaster", "Soyboy", "Capitalist", "White laced punk" "Fucking tourist", "Skinhead", "Reform candidate"]
         foe = EnemyGenerator(foeList)
         print("A", foe, "gets on the train and looks at you funny")
 
