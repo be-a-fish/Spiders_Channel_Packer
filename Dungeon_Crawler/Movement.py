@@ -14,8 +14,8 @@ collision = ("#")
 empty = (" ")
 door = ("=")
 encounter = ("𓁆")
-playerIcon = ("웃")
-#other people to use 𓁌 𓀠 𓁋 𓁆 𓁇 𓀒 𓀗 𓀡 𓁲
+playerIcon = ("Ⓐ")
+#other people to use 𓁌 𓀠 𓁋 𓁆 𓁇 𓀒 𓀗 𓀡 𓁲 웃 ☠ 〠 𐇑
 
 ##------------------------PLAYER-SPAWN-LOCATION---------------------------------
 playerCoords = {
