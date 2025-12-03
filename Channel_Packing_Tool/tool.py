@@ -1,11 +1,17 @@
 print ("tool opened")
-#from PIL import Image
+from PIL import Image
 import PIL
 import numpy as np
 import matplotlib.pyplot as plot
 from tkinter import filedialog
 from tkinter import *
 
+##-----------------------Notes-----------------------
+'''
+imageVarName.Image.thumbnail((256,256)) #resizes an image -> PIL function
+
+
+'''
 ##-----------------------testing zone-----------------------
 
 #RGBA = Image.open("X:\myDocuments\Coding\Git\Python\Channel_Packing_Tool\channels_tester.png")
@@ -63,6 +69,14 @@ def savImg(export):
 
 savImg(RGBA)
 '''
+
+def savImg(export):
+    exportQuality = 90
+    filePath = filedialog.asksaveasfile()
+    export = export.save(fp=str(filePath), format="png")
+    #format    (file path, format=png, parameters)
+
+
 ##-----------------------GUI-----------------------
 
 
@@ -70,20 +84,32 @@ savImg(RGBA)
 ##-----------------------Logic Maths etc-----------------------
 running = True
 while running == True:
+
+    #Import RGBA channels
+
     Rchan = openImg("open Red channel texture, usually Occlusion")
     print ("here are the details for the Red channel:", Rchan)
-    PIL.Image._show(Rchan)
-
+    #PIL.Image._show(Rchan)#for debug opens the image in external
+    '''
     Gchan = openImg("open Green channel texture, usually Roughness")
     print ("here are the details for the Green channel:", Gchan)
-    PIL.Image._show(Gchan)
+    #PIL.Image._show(Gchan)
 
     Bchan = openImg("open Blue channel texture, usually Metalic")
     print ("here are the details for the Blue channel:", Bchan)
-    PIL.Image._show(Bchan)
+    #PIL.Image._show(Bchan)
 
     Achan = openImg("open Alpha channel texture, usually reserved for Mask")
     print ("here are the details for the Alpha channel:", Achan)
-    PIL.Image._show(Achan)
+    #PIL.Image._show(Achan)
+    '''
 
-    input ("press enter to run again")
+    savImg(Rchan)#change to RGBA when files are packed
+
+    #Export packed file
+    #filePath = filedialog.asksaveasfile()
+    #Rchan.save(fp=str(filePath), format="png")
+
+    q = input ("press enter to run again or type quit to end")
+    if q == "quit":
+        running = False
