@@ -69,38 +69,72 @@ def createMap():
 
 
 def moveController(wasd):
-    while wasd != ("w") or ("s") or ("a") or ("d"):
+    while wasd != ("w")  or wasd != ("s") or wasd != ("a") or wasd != ("d"):
+        moveToCoords = playerCoords # a backup if the movement fails
         print ("wasd is set to", wasd)
         wasd = input("Select movement direction (wasd)")
         #move north
         if wasd == ("w"):
             print ("moving north")
-            break
+            if playerCoords ["y"] < 5:#y maximum
+                moveToCoords ["y"] = (playerCoords ["y"] + 1)
+                print ("player y coords is",playerCoords ["y"])
+                
+            else: 
+                print ("can't move further north")
+
         #move south
         elif wasd == ("s"):
             print ("moving south")
-            break
+            if playerCoords ["y"] > 0:#y minimum
+                moveToCoords ["y"] = (playerCoords ["y"] - 1)
+                print ("player y coords is",playerCoords ["y"])
+                
+            else: 
+                print ("can't move further south")
+
         #move west
         elif wasd == ("a"):
             print ("moving west")
-            break
+            if playerCoords ["x"] > 0:#x minimum
+                moveToCoords ["x"] = (playerCoords ["x"] - 1)
+                print ("player x coords is",playerCoords ["x"])
+                
+            else: 
+                print ("can't move further west")
+            
         #move east
         elif wasd == ("d"):
             print ("moving east")
+            if playerCoords ["x"] < 5:#x maximum
+                moveToCoords ["x"] = (playerCoords ["x"] + 1)
+                print ("player x coords is",playerCoords ["x"])
+                
+            else: 
+                print ("can't move further north")
+            
+            
+        
+        #teleport script
+        if wasd == ("w") or wasd == ("s") or wasd == ("a") or wasd == ("d"):
+            print ("player will move when this script is finished")
             break
+        else:
+            print("that's not a valid input moron. press w, s, a or d then enter you fucking lemon")
+            
 
 
 ##--------------------------------------------------------------------
 
 ##----------------------RENDER-ENGINE----------------------------------------------
 
-def frameRender():
+def frameRender():# * prints list as string
     print ()
-    print (layer1)
-    print (layer2)
-    print (layer3)
-    print (layer4)
-    print (layer5)
+    print (*layer1)
+    print (*layer2)
+    print (*layer3)
+    print (*layer4)
+    print (*layer5)
     print ()
     print ("carage 1, Northern Line")
 
@@ -115,7 +149,7 @@ while gameRunning == True:
     if newArea == True:
         createMap()
         newArea = False
-    print("you enter train carage 1")
+        print("you enter train carage 1")
 
     frameRender()
     moveController(wasd = "x")
