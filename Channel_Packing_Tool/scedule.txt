@@ -1,0 +1,9 @@
+Scedule 3/12/25:
+    Open images .5 days
+    extract channels and reconstruct .5 days
+    export images .5 days
+    debugging .5 day
+    GUI 2 days
+    more debugging 1 day
+
+
