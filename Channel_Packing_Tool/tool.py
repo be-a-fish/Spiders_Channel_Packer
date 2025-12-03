@@ -72,11 +72,18 @@ running = True
 while running == True:
     Rchan = openImg("open Red channel texture, usually Occlusion")
     print ("here are the details for the Red channel:", Rchan)
+    PIL.Image._show(Rchan)
+
     Gchan = openImg("open Green channel texture, usually Roughness")
     print ("here are the details for the Green channel:", Gchan)
+    PIL.Image._show(Gchan)
+
     Bchan = openImg("open Blue channel texture, usually Metalic")
     print ("here are the details for the Blue channel:", Bchan)
+    PIL.Image._show(Bchan)
+
     Achan = openImg("open Alpha channel texture, usually reserved for Mask")
     print ("here are the details for the Alpha channel:", Achan)
+    PIL.Image._show(Achan)
 
     input ("press enter to run again")
