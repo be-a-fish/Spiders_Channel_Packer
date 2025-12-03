@@ -72,9 +72,12 @@ savImg(RGBA)
 
 def savImg(export):
     exportQuality = 90
-    filePath = filedialog.asksaveasfile()
-    export = export.save(fp=str(filePath), format="png")
-    #format    (file path, format=png, parameters)
+    #filePath = filedialog.asksaveasfile()
+    filePath = filedialog.asksaveasfilename(defaultextension=".png")
+    print ("file path for save is",filePath)
+    export = export.save(fp=str(filePath))
+    print ("attempted to save as: "+ str(filePath))
+    #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
 
 
 ##-----------------------GUI-----------------------
@@ -88,7 +91,7 @@ while running == True:
     #Import RGBA channels
 
     Rchan = openImg("open Red channel texture, usually Occlusion")
-    print ("here are the details for the Red channel:", Rchan)
+    #print ("here are the details for the Red channel:", Rchan)
     #PIL.Image._show(Rchan)#for debug opens the image in external
     '''
     Gchan = openImg("open Green channel texture, usually Roughness")
