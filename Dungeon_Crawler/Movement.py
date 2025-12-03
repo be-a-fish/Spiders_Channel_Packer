@@ -22,6 +22,7 @@ playerCoords = {
     "x":2,
     "y":3
 }
+moveToCoords = playerCoords
 
 def playerSpawn():
     layer3[2] = playerIcon
@@ -67,11 +68,40 @@ def createMap():
 
 ##----------------------CONTROLLER----------------------------------------------
 
+#notes:
+#
+# layer = playerCoords y
+# layer1 = y1
+# layer5 = y5
+#
+# playerCoords x is the value in the list
+
+'''
+def checkLocation(y, x): #y=layer x=list value
+    print ("checking location")
+
+    if y[x] == (collision):
+        print ("thats a fucking wall you fuckwit")
+        return (False)
+    
+    if y[x] == (empty):
+        playerCoords = moveToCoords
+        if y == layer1:
+            layer1 [x] = (playerIcon)
+        elif y ==
+        return (True) #return true if movement possible
+
+    elif y[x] == (door):
+        return (True)
+'''
 
 def moveController(wasd):
     while wasd != ("w")  or wasd != ("s") or wasd != ("a") or wasd != ("d"):
-        moveToCoords = playerCoords # a backup if the movement fails
+        
+        moveToCoords = playerCoords # so we have 2 positions to check if movement is possible
+        y = ("layer"+str(moveToCoords ["y"]))
         print ("wasd is set to", wasd)
+        print ("y move to =", y)
         wasd = input("Select movement direction (wasd)")
         #move north
         if wasd == ("w"):
@@ -86,7 +116,7 @@ def moveController(wasd):
         #move south
         elif wasd == ("s"):
             print ("moving south")
-            if playerCoords ["y"] > 0:#y minimum
+            if playerCoords ["y"] > 1:#y minimum
                 moveToCoords ["y"] = (playerCoords ["y"] - 1)
                 print ("player y coords is",playerCoords ["y"])
                 
@@ -106,7 +136,7 @@ def moveController(wasd):
         #move east
         elif wasd == ("d"):
             print ("moving east")
-            if playerCoords ["x"] < 5:#x maximum
+            if playerCoords ["x"] < 17:#x maximum
                 moveToCoords ["x"] = (playerCoords ["x"] + 1)
                 print ("player x coords is",playerCoords ["x"])
                 
@@ -118,7 +148,64 @@ def moveController(wasd):
         #teleport script
         if wasd == ("w") or wasd == ("s") or wasd == ("a") or wasd == ("d"):
             print ("player will move when this script is finished")
+            checkSpot = ("#")
+
+            if y == ("layer1"):
+                if layer1[moveToCoords] == (collision):
+                    print ("thats a fucking wall you fuckwit")
+                else:
+                    layer2 = [x.replace(playerIcon, " ") for x in layer2]
+                    layer1[moveToCoords] = (playerIcon)
+            
+            if y == ("layer2"):
+                if layer2[moveToCoords] == (collision):
+                    print ("thats a fucking wall you fuckwit")
+                else:
+                    layer3 = [x.replace(playerIcon, " ") for x in layer3]
+                    layer1 = [x.replace(playerIcon, " ") for x in layer1]
+                    layer2[moveToCoords] = (playerIcon)
+            if y == ("layer3"):
+                if layer3[moveToCoords] == (collision):
+                    print ("thats a fucking wall you fuckwit")
+                else:
+                    layer4 = [x.replace(playerIcon, " ") for x in layer4]
+                    layer2 = [x.replace(playerIcon, " ") for x in layer2]
+                    layer3[moveToCoords] = (playerIcon)
+            if y == ("layer4"):
+                if layer4[moveToCoords] == (collision):
+                    print ("thats a fucking wall you fuckwit")
+                else:
+                    layer5 = [x.replace(playerIcon, " ") for x in layer5]
+                    layer3 = [x.replace(playerIcon, " ") for x in layer3]
+                    layer4[moveToCoords] = (playerIcon)
+            if y == ("layer5"):
+                if layer5[moveToCoords] == (collision):
+                    print ("thats a fucking wall you fuckwit")
+                else:
+                    layer4 = [x.replace(playerIcon, " ") for x in layer4]
+                    layer5[moveToCoords] = (playerIcon)
+                    
+
+            print ("checking location")
             break
+
+            '''
+            if y[x] == (collision):
+                print ("thats a fucking wall you fuckwit")
+                return (False)
+            
+            if y[x] == (empty):
+                playerCoords = moveToCoords
+                if y == layer1:
+                    layer1 [x] = (playerIcon)
+                elif y == 
+                return (True) #return true if movement possible
+
+            elif y[x] == (door):
+                return (True)
+            '''
+
+            
         else:
             print("that's not a valid input moron. press w, s, a or d then enter you fucking lemon")
             
