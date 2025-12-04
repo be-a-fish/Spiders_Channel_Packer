@@ -25,13 +25,15 @@ imageVarName.Image.thumbnail((256,256)) #resizes an image -> PIL function
 ##-----------------------Open Images-----------------------
 
 
-def openImg(text,title):
+def openImg(text,fileName):
     print(text)
     extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-    filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=title)#opens a window to grab a file
+    filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName)#opens a window to grab a file
     print ("so you have chosen:" ,filePath)
     file = PIL.Image.open(filePath)#opens the file from the path
     return file
+
+    #(backup path("../default_assets/backup.png"))
 
 #RGBA = openImg(text="test")
 #PIL.Image.show(RGBA)
@@ -71,10 +73,14 @@ def savImg(export):
 savImg(RGBA)
 '''
 
-def savImg(export,text):
+def savImg(export,text,defaultName):
     exportQuality = 90
     #filePath = filedialog.asksaveasfile()
-    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile="Occlusion_Roughness_Metalic")
+    try:
+        filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile="Occlusion_Roughness_Metalic")
+    except:
+        filePath = str("./Channel_Packing_Tool/default_output/",defaultName)
+        print("didn't manage to get that dictionary. defaulting to ",filePath)
     print ("file path for save is",filePath)
     export = export.save(fp=str(filePath))
     print ("attempted to save as: "+ str(filePath))
@@ -91,29 +97,30 @@ while running == True:
 
     #Import RGBA channels
 
-    Rchan = openImg(text="open Red channel texture, usually Ambient Occlusion",title="Occlusion")
+    Rchan = openImg(text="open Red channel texture, usually Ambient Occlusion",fileName="Occlusion")
     #print ("here are the details for the Red channel:", Rchan)
     #PIL.Image._show(Rchan)#for debug opens the image in external
-    '''
-    Gchan = openImg(text="open Green channel texture, usually Roughness","title="Roughness")
+    
+    Gchan = openImg(text="open Green channel texture, usually Roughness",fileName="Roughness")
     print ("here are the details for the Green channel:", Gchan)
     #PIL.Image._show(Gchan)
 
-    Bchan = openImg(text="open Blue channel texture, usually Metalic",title="Metalic")
+    Bchan = openImg(text="open Blue channel texture, usually Metalic",fileName="Metalic")
     print ("here are the details for the Blue channel:", Bchan)
     #PIL.Image._show(Bchan)
 
-    Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",title="Alpha_Mask")
+    Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",fileName="Alpha_Mask")
     print ("here are the details for the Alpha channel:", Achan)
     #PIL.Image._show(Achan)
-    '''
+    
 
-    savImg(export=Rchan,text="save output file as")#change to RGBA when files are packed
+    savImg(export=Rchan,text="save output file as",defaultName="ORMA")#change Rchan to RGBA when files are packed
 
     #Export packed file
     #filePath = filedialog.asksaveasfile()
     #Rchan.save(fp=str(filePath), format="png")
 
     q = input ("press enter to run again or type quit to end")
-    if q == "quit":
+    if q == ("quit"):
         running = False
+    
