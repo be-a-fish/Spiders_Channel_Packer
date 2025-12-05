@@ -1,11 +1,14 @@
 print ("tool opened")
-#from PIL import Image
+
+from PIL import Image
 import PIL
 import numpy as np
 import matplotlib.pyplot as plt
 from tkinter import filedialog
-from tkinter import *
+#from tkinter import *
+#import tkinter as tk
 
+print("librarys loaded")
 
 ##-----------------------Notes-----------------------
 '''
@@ -35,6 +38,8 @@ def DBGprint(text):
     if DEBUG:
         print(text)
 
+
+
 #import os 
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -47,6 +52,7 @@ def DBGprint(text):
 #Image._show(RGBA)
 
 #plt.gray()#grayscale
+#Image.convert('RGBA')
 
 ##-----------------------Open Images-----------------------
 
@@ -84,24 +90,24 @@ PIL.Image._show(RGBA)
 #print ("hopefully that printed RGBA")
 
 ##-----------------------Seperate Channels-----------------------
-
+'''
 def RGBAtoSingleChannel(RGBA):
     ImgArray = np.asarray(RGBA)#converts immage to array format: ImgArray[red,green,blue,alpha]
     DBGprint(text=ImgArray)
     pass
+'''
 
-
-
+'''
 def PackToRGBA(red,green,blue,alpha,resolution):# return RGBA
     #setup resolution as resolution = [1024,1024]
     #                                   ^     ^
     #                                   |     |
     #                                 Width,height
     
-    '''RArray = np.asarray(red)
-    GArray = np.asarray(green)
-    BArray = np.asarray(blue)
-    AArray = np.asarray(alpha)'''
+    #RArray = np.asarray(red)
+    #GArray = np.asarray(green)
+    #BArray = np.asarray(blue)
+    #AArray = np.asarray(alpha)
 
     RArray = np.asarray(red)
     GArray = np.asarray(green)
@@ -126,6 +132,45 @@ def PackToRGBA(red,green,blue,alpha,resolution):# return RGBA
 
     #RGBA = Image.fromarray(data, 'RGB')
     return RGBA
+'''
+
+def packRGBA(red,green,blue,alpha,resolution):
+
+    #---Make linear/grayscale images
+    '''
+    redLin = Image.Image.getchannel(channel=0,self=red)
+    DBGprint(red)
+    greenLin = Image.Image.getchannel(channel=0,self=green)
+    DBGprint(green)
+    blueLin = Image.Image.getchannel(channel=0,self=blue)
+    DBGprint(blue)
+    alphaLin = Image.Image.getchannel(channel=0,self=alpha)
+    DBGprint(alpha)
+    '''
+    redLin = Image.Image.convert(self=red, mode='L')
+    DBGprint(red)
+    greenLin = Image.Image.convert(self=green, mode='L')
+    DBGprint(green)
+    blueLin = Image.Image.convert(self=blue, mode='L')
+    DBGprint(blue)
+    alphaLin = Image.Image.convert(self=alpha, mode='L')
+    DBGprint(alpha)
+
+    Image.Image.show(redLin)
+    #Image.Image.show(alpha)
+    input("press enter to continue")
+    #---Combine into single image
+
+    RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
+    PIL.Image.Image.show(RGBA)
+    DBGprint(RGBA)
+    DBGprint(resolution)
+    return RGBA
+
+def unpackRGBA(RGBA):
+
+    red,green,blue,alpha = Image.Image.split(RGBA)
+
 
 
 
@@ -207,7 +252,7 @@ while running:
     print ("here are the details for the Alpha channel:", Achan)
     #PIL.Image._show(Achan)
 
-    RGBA = PackToRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
+    RGBA = packRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
     input("press enter to continue")
     
 
