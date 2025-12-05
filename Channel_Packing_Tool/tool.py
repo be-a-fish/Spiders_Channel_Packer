@@ -1,5 +1,5 @@
 print ("tool opened")
-from PIL import Image
+#from PIL import Image
 import PIL
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,8 +13,16 @@ imageVarName.Image.thumbnail((256,256)) #resizes an image -> PIL function
 
 
 #default paths: 
-#Output Path ./Channel_Packing_Tool/default_output/FILENAME.png
-#Input Path
+    #Output Path ./Channel_Packing_Tool/default_output/FILENAME.png
+    #Input Path ./Channel_Packing_Tool/default_assets/FILENAME.png
+
+#default asset names:
+    Red=Occlusion.png
+    Green=Roughness.png
+    Blue=Metalic.png
+    Alpha=Alpha_Mask.png
+
+    Packed=ORMA
 
 '''
 ##-----------------------testing zone-----------------------
@@ -26,6 +34,7 @@ if DEBUG:
 def DBGprint(text):
     if DEBUG:
         print(text)
+
 #import os 
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,14 +46,17 @@ def DBGprint(text):
 
 #Image._show(RGBA)
 
+#plt.gray()#grayscale
+
 ##-----------------------Open Images-----------------------
 
 
 def openImg(text,fileName):
-    print(text)
+    DBGprint(text=text)
     extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-    defaultPath = str("./Channel_Packing_Tool/default_output/"+fileName)
-    filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName)#opens a window to grab a file
+    defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+    filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
+
     print ("so you have chosen:" ,filePath)
     file = PIL.Image.open(filePath)#opens the file from the path
     return file
@@ -72,6 +84,50 @@ PIL.Image._show(RGBA)
 #print ("hopefully that printed RGBA")
 
 ##-----------------------Seperate Channels-----------------------
+
+def RGBAtoSingleChannel(RGBA):
+    ImgArray = np.asarray(RGBA)#converts immage to array format: ImgArray[red,green,blue,alpha]
+    DBGprint(text=ImgArray)
+    pass
+
+
+
+def PackToRGBA(red,green,blue,alpha,resolution):# return RGBA
+    #setup resolution as resolution = [1024,1024]
+    #                                   ^     ^
+    #                                   |     |
+    #                                 Width,height
+    
+    '''RArray = np.asarray(red)
+    GArray = np.asarray(green)
+    BArray = np.asarray(blue)
+    AArray = np.asarray(alpha)'''
+
+    RArray = np.asarray(red)
+    GArray = np.asarray(green)
+    BArray = np.asarray(blue)
+    AArray = np.asarray(alpha)
+
+    PackedArray = np.array([RArray[0],GArray[0],BArray[0],AArray[0]])
+
+    DBGprint(PackedArray)
+
+    #       Height and width are switched in numpy for some reason
+    #                     Height       Width
+    #                       V            V
+    data = np.zeros((resolution[1], resolution[0], 3), dtype=np.uint8)
+
+    #PackedArray = np.zeros((5,5))
+    DBGprint(PackedArray)
+
+    RGBA = PIL.Image.fromarray(PackedArray)
+    DBGprint(RGBA)
+    PIL.Image._show(RGBA)#for debug opens the image in external
+
+    #RGBA = Image.fromarray(data, 'RGB')
+    return RGBA
+
+
 
 
 
@@ -112,6 +168,21 @@ def savImg(export,text,defaultName):
 
 ##-----------------------GUI-----------------------
 
+#---->button class:
+#location
+#funcion
+#colour/texture
+#animation
+    #---->slider subclass
+    #size
+    #values
+    #textures
+
+#---->window class:
+#size
+#buttons (childeren)
+#colour/texture
+
 
 
 ##-----------------------Logic Maths etc-----------------------
@@ -124,26 +195,29 @@ while running:
     print ("here are the details for the Red channel:", Rchan)
     #PIL.Image._show(Rchan)#for debug opens the image in external
     
-    #Gchan = openImg(text="open Green channel texture, usually Roughness",fileName="Roughness.png")
-    #print ("here are the details for the Green channel:", Gchan)
+    Gchan = openImg(text="open Green channel texture, usually Roughness",fileName="Roughness.png")
+    print ("here are the details for the Green channel:", Gchan)
     #PIL.Image._show(Gchan)
 
-    #Bchan = openImg(text="open Blue channel texture, usually Metalic",fileName="Metalic.png")
-    #print ("here are the details for the Blue channel:", Bchan)
+    Bchan = openImg(text="open Blue channel texture, usually Metalic",fileName="Metalic.png")
+    print ("here are the details for the Blue channel:", Bchan)
     #PIL.Image._show(Bchan)
 
-    #Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",fileName="Alpha_Mask.png")
-    #print ("here are the details for the Alpha channel:", Achan)
+    Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",fileName="Alpha_Mask.png")
+    print ("here are the details for the Alpha channel:", Achan)
     #PIL.Image._show(Achan)
+
+    RGBA = PackToRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
+    input("press enter to continue")
     
 
-    savImg(export=Rchan,text="save output file as",defaultName="ORMA.png")#change Rchan to RGBA when files are packed
+    savImg(export=RGBA,text="save output file as",defaultName="ORMA.png")#change Rchan to RGBA when files are packed
 
     #Export packed file
     #filePath = filedialog.asksaveasfile()
     #Rchan.save(fp=str(filePath), format="png")
 
     q = input ("press enter to run again or type quit to end")
-    if q == ("quit"):
+    if q == ("quit") or q == ("q"):
         running = False
     
