@@ -54,8 +54,10 @@ def DBGprint(text):
 #plt.gray()#grayscale
 #Image.convert('RGBA')
 
-##-----------------------Open Images-----------------------
-
+##-----------------------Open and Export Images-----------------------
+#to do: 
+# batch import
+# batch export
 
 def openImg(text,fileName):
     DBGprint(text=text)
@@ -69,27 +71,37 @@ def openImg(text,fileName):
 
     #(backup path("../default_assets/backup.png"))
 
+def savImg(export,text,defaultName):
+    #exportQuality = 90
+    #filePath = filedialog.asksaveasfile()
+    defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
+    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
+    
+    #filePath = str("./default_output/",defaultName)
+    #print("didn't manage to get that dictionary. defaulting to ",filePath)
+    print ("file path for save is",filePath)
+    try:
+        export = export.save(fp=str(filePath))
+    except ValueError as E:
+        print("there was an error while attempting to export")
+        print("the file path is ",filePath)
+        print("the export details are ",export)
+        DBGprint(text=str("EXPORT ERROR"+filePath+export))
+        
+    print ("attempted to save as: "+ str(filePath))
+    #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
+
+
 #RGBA = openImg(text="test")
-#PIL.Image.show(RGBA)
+#PIL.Image.Image.show(RGBA)
 
 '''
-def grabPath():
-    filePath = filedialog.askopenfilename()
-    print ("so you have chosen:" ,filePath)
-    return filePath
-
 RGBA = PIL.Image.open(grabPath())
 PIL.Image._show(RGBA)
 '''
-#Rchan = openImg()
-#Gchan = openImg()
-#Bchan = openImg()
-#Achan = openImg()
 
-#print (RGBA)
-#print ("hopefully that printed RGBA")
 
-##-----------------------Seperate Channels-----------------------
+##-----------------------Pack and Unpack Channels-----------------------
 '''
 def RGBAtoSingleChannel(RGBA):
     ImgArray = np.asarray(RGBA)#converts immage to array format: ImgArray[red,green,blue,alpha]
@@ -158,7 +170,6 @@ def packRGBA(red,green,blue,alpha,resolution):
 
     #Image.Image.show(redLin)
     #Image.Image.show(alpha)
-    input("press enter to continue")
     #---Combine into single image
 
     RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
@@ -173,45 +184,6 @@ def unpackRGBA(RGBA):
 
     RGBAList = [red,green,blue,alpha]
     return RGBAList
-
-
-
-
-
-
-##-----------------------Combine Channels-----------------------
-
-
-
-##-----------------------Export Images-----------------------
-'''
-def savImg(export):
-    filePath = filedialog.asksaveasfile()
-    #filePath.write (export)
-    PIL.Image.write(export)
-
-savImg(RGBA)
-'''
-
-def savImg(export,text,defaultName):
-    #exportQuality = 90
-    #filePath = filedialog.asksaveasfile()
-    defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
-    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
-    
-    #filePath = str("./default_output/",defaultName)
-    #print("didn't manage to get that dictionary. defaulting to ",filePath)
-    print ("file path for save is",filePath)
-    try:
-        export = export.save(fp=str(filePath))
-    except ValueError as E:
-        print("there was an error while attempting to export")
-        print("the file path is ",filePath)
-        print("the export details are ",export)
-        DBGprint(text=str("EXPORT ERROR"+filePath+export))
-        
-    print ("attempted to save as: "+ str(filePath))
-    #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
 
 
 ##-----------------------GUI-----------------------
@@ -236,12 +208,10 @@ def savImg(export,text,defaultName):
 ##-----------------------Logic Maths etc-----------------------
 
 
-
-
 running = True
 while running:
 
-    unpack = True
+    unpack = False
     
     if unpack:#if unpack mode is true
         #import packed
@@ -279,8 +249,6 @@ while running:
         #PIL.Image._show(Achan)
 
         RGBA = packRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
-        input("press enter to continue")
-        
 
         savImg(export=RGBA,text="save output file as",defaultName="ORMA.png")#change Rchan to RGBA when files are packed
 
