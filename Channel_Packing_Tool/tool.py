@@ -197,7 +197,7 @@ def savImg(export,text,defaultName):
     #exportQuality = 90
     #filePath = filedialog.asksaveasfile()
     defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
-    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile="Occlusion_Roughness_Metalic") or defaultPath
+    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
     
     #filePath = str("./default_output/",defaultName)
     #print("didn't manage to get that dictionary. defaulting to ",filePath)
@@ -241,7 +241,7 @@ def savImg(export,text,defaultName):
 running = True
 while running:
 
-    unpack = False
+    unpack = True
     
     if unpack:#if unpack mode is true
         #import packed
