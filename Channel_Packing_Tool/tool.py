@@ -156,13 +156,13 @@ def packRGBA(red,green,blue,alpha,resolution):
     alphaLin = Image.Image.convert(self=alpha, mode='L')
     DBGprint(alpha)
 
-    Image.Image.show(redLin)
+    #Image.Image.show(redLin)
     #Image.Image.show(alpha)
     input("press enter to continue")
     #---Combine into single image
 
     RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
-    PIL.Image.Image.show(RGBA)
+    #PIL.Image.Image.show(RGBA)
     DBGprint(RGBA)
     DBGprint(resolution)
     return RGBA
@@ -170,6 +170,9 @@ def packRGBA(red,green,blue,alpha,resolution):
 def unpackRGBA(RGBA):
 
     red,green,blue,alpha = Image.Image.split(RGBA)
+
+    RGBAList = [red,green,blue,alpha]
+    return RGBAList
 
 
 
@@ -231,36 +234,60 @@ def savImg(export,text,defaultName):
 
 
 ##-----------------------Logic Maths etc-----------------------
+
+
+
+
 running = True
 while running:
 
-    #Import RGBA channels
-
-    Rchan = openImg(text="open Red channel texture, usually Ambient Occlusion",fileName="Occlusion.png")
-    print ("here are the details for the Red channel:", Rchan)
-    #PIL.Image._show(Rchan)#for debug opens the image in external
+    unpack = False
     
-    Gchan = openImg(text="open Green channel texture, usually Roughness",fileName="Roughness.png")
-    print ("here are the details for the Green channel:", Gchan)
-    #PIL.Image._show(Gchan)
+    if unpack:#if unpack mode is true
+        #import packed
+        RGBA = openImg(text="Open channel packed image",fileName="ORMA.png")
 
-    Bchan = openImg(text="open Blue channel texture, usually Metalic",fileName="Metalic.png")
-    print ("here are the details for the Blue channel:", Bchan)
-    #PIL.Image._show(Bchan)
+        #unpacks imported image
+        Rchan,Gchan,Bchan,Achan = unpackRGBA(RGBA)
 
-    Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",fileName="Alpha_Mask.png")
-    print ("here are the details for the Alpha channel:", Achan)
-    #PIL.Image._show(Achan)
+        #exports images
+        savImg(export=Rchan,text="save Red channel texture, usually Ambient Occlusion",defaultName="Occlusion.png")
 
-    RGBA = packRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
-    input("press enter to continue")
+        savImg(export=Gchan,text="save Green channel texture, usually Roughness",defaultName="Roughness.png")
+
+        savImg(export=Bchan,text="save Blue channel texture, usually Metalic",defaultName="Metalic.png")
+
+        savImg(export=Achan,text="save Alpha channel texture, usually reserved for Mask",defaultName="Alpha_Mask.png")
+
+    else:#if unpack mode is false
+        #Import RGBA channels
+
+        Rchan = openImg(text="open Red channel texture, usually Ambient Occlusion",fileName="Occlusion.png")
+        print ("here are the details for the Red channel:", Rchan)
+        #PIL.Image._show(Rchan)#for debug opens the image in external
+        
+        Gchan = openImg(text="open Green channel texture, usually Roughness",fileName="Roughness.png")
+        print ("here are the details for the Green channel:", Gchan)
+        #PIL.Image._show(Gchan)
+
+        Bchan = openImg(text="open Blue channel texture, usually Metalic",fileName="Metalic.png")
+        print ("here are the details for the Blue channel:", Bchan)
+        #PIL.Image._show(Bchan)
+
+        Achan = openImg(text="open Alpha channel texture, usually reserved for Mask",fileName="Alpha_Mask.png")
+        print ("here are the details for the Alpha channel:", Achan)
+        #PIL.Image._show(Achan)
+
+        RGBA = packRGBA(red=Rchan,green=Gchan,blue=Bchan,alpha=Achan,resolution=[1024,1024])
+        input("press enter to continue")
+        
+
+        savImg(export=RGBA,text="save output file as",defaultName="ORMA.png")#change Rchan to RGBA when files are packed
+
+        #Export packed file
+        #filePath = filedialog.asksaveasfile()
+        #Rchan.save(fp=str(filePath), format="png")
     
-
-    savImg(export=RGBA,text="save output file as",defaultName="ORMA.png")#change Rchan to RGBA when files are packed
-
-    #Export packed file
-    #filePath = filedialog.asksaveasfile()
-    #Rchan.save(fp=str(filePath), format="png")
 
     q = input ("press enter to run again or type quit to end")
     if q == ("quit") or q == ("q"):
