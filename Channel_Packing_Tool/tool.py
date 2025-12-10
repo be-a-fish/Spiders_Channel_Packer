@@ -5,7 +5,7 @@ import PIL
 import numpy as np
 import matplotlib.pyplot as plt
 from tkinter import filedialog
-#from tkinter import *
+#from tkinter import * #breaks image from PIL, don't use unless essential
 #import tkinter as tk
 
 print("librarys loaded")
@@ -159,7 +159,7 @@ def packRGBA(red,green,blue,alpha,resolution):
     alphaLin = Image.Image.getchannel(channel=0,self=alpha)
     DBGprint(alpha)
     '''
-    redLin = Image.Image.convert(self=red, mode='L')
+    redLin = Image.Image.convert(self=red, mode='L') #makes image format liniar
     DBGprint(red)
     greenLin = Image.Image.convert(self=green, mode='L')
     DBGprint(green)
@@ -211,7 +211,7 @@ def unpackRGBA(RGBA):
 running = True
 while running:
 
-    unpack = False
+    unpack = True
     
     if unpack:#if unpack mode is true
         #import packed
