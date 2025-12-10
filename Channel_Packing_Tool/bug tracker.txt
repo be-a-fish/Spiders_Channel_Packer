@@ -1,0 +1,11 @@
+
+Known issues:
+
+doesn't work with 3 channel image files.
+potential solutions:
+any opened files need to be converted to 3 channel images.
+also worth looking into a tickbox for "use alpha"
+
+
+Fixed issues:
+
