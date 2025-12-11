@@ -117,13 +117,21 @@ if __name__ == '__main__':
 
 #box layout test
 
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QWidget, QCheckBox)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QGridLayout, QPushButton, QWidget, QCheckBox)
+from PySide6 import QtGui
 
 
 class Window(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Spider's Channel Packing Tool")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./Channel_Packing_Tool/GUI/icon.png"))
+        self.setWindowIcon(icon)
+
+        #dark mode stuff:
+        self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: none} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
+        #self.setStyleSheet("QPushButton {background-color: #373165; color yellow; border: 3px solid #373165}")
 
         '''#---testing layout
 
@@ -164,11 +172,12 @@ class Window(QWidget):
         #makes the RGBA channels as boxes
         def MakeChannel(name):
             channel = QVBoxLayout()
-            channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE"))#need to figure out adding images above these
-            channel.addWidget(QPushButton("import "+name+" texture"))
-            channel.addWidget(QPushButton("export "+name+" texture"))
+            channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1)#need to figure out adding images above these
+            channel.addWidget(QPushButton("import "+name+" texture"),0)
+            channel.addWidget(QPushButton("export "+name+" texture"),0)
 
             container = QWidget()
+
             container.setLayout(channel)
 
             return container#returns the created layout as a container
