@@ -38,9 +38,9 @@ if __name__ == "__main__":
 
 '''
 
-#button layout
+#button layout test
 
-
+'''
 from PySide6.QtCore import QSizeF, Qt
 from PySide6.QtWidgets import (QApplication, QGraphicsAnchorLayout, QGraphicsProxyWidget,
                                QGraphicsScene, QGraphicsView, QGraphicsWidget,
@@ -113,4 +113,127 @@ if __name__ == '__main__':
 
     sys.exit(app.exec())
 
+'''
 
+#box layout test
+
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QWidget, QCheckBox)
+
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Spider's Channel Packing Tool")
+
+        '''#---testing layout
+
+        #hbox layout
+        layout = QHBoxLayout()
+        imps = QVBoxLayout()
+        exps = QVBoxLayout()
+
+        #adds widgets
+        imps.addWidget(QPushButton("import Red Channel"))
+        imps.addWidget(QPushButton("import green Channel"))
+        imps.addWidget(QPushButton("import blue Channel"))
+        imps.addWidget(QPushButton("import alpha Channel"))
+
+        exps.addWidget(QPushButton("export Red Channel"))
+        exps.addWidget(QPushButton("export green Channel"))
+        exps.addWidget(QPushButton("export blue Channel"))
+        exps.addWidget(QPushButton("export alpha Channel"))
+
+        #containers
+        container1 = QWidget()
+        container1.setLayout(imps)
+        container2 = QWidget()
+        container2.setLayout(exps)
+
+        layout.addWidget(container1)
+        layout.addWidget(container2)
+
+        #sets layout on the application
+        #self.setLayout(layout)
+        '''
+
+        #-----------------Final Layout-----------------
+
+        seperateChans = QVBoxLayout()
+        packedChans = QVBoxLayout()
+
+        #makes the RGBA channels as boxes
+        def MakeChannel(name):
+            channel = QVBoxLayout()
+            channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE"))#need to figure out adding images above these
+            channel.addWidget(QPushButton("import "+name+" texture"))
+            channel.addWidget(QPushButton("export "+name+" texture"))
+
+            container = QWidget()
+            container.setLayout(channel)
+
+            return container#returns the created layout as a container
+        
+        #---------------------v-Seperate Channels-v------------------------
+
+        #RGBA as containers
+        red = MakeChannel(name="red")
+        green = MakeChannel(name="green")
+        blue = MakeChannel(name="blue")
+        alpha = MakeChannel(name="alpha")
+
+        #Add containers to Vertical layout
+        seperateChans.addWidget(red)
+        seperateChans.addWidget(green)
+        seperateChans.addWidget(blue)
+        seperateChans.addWidget(alpha)
+
+        #---------------------^-Seperate Channels-^------------------------
+
+        #----------------------v-PACKED Channels-v-------------------------
+
+        #RGBA as containers
+        RGBA = MakeChannel(name="packed")
+
+        #Add containers to Vertical layout
+        packedChans.addWidget(RGBA)
+
+        #----------------------^-PACKED Channels-^-------------------------
+
+        #-------------------------v-Settings-v----------------------------
+
+        settings = QVBoxLayout()
+        settings.addWidget(QPushButton("Pack Textures\n --> "))
+        settings.addWidget(QPushButton("Unpack Textures\n <-- "))
+        settings.addWidget(QCheckBox("Use Alpha"))
+
+
+        #-------------------------^-Settings-^----------------------------
+
+        #collums
+        col1 = QWidget()
+        col1.setLayout(seperateChans)#seperate channels
+
+        col2 = QWidget()
+        col2.setLayout(settings)#settings collum
+
+        col3 = QWidget()
+        col3.setLayout(packedChans)#packed texture
+
+        #master layout
+        Mlayout = QHBoxLayout()
+        Mlayout.addWidget(col1,1)#numbers represent importance for scaling
+        Mlayout.addWidget(col2,0)
+        Mlayout.addWidget(col3,2)
+
+        self.setLayout(Mlayout)
+        
+
+
+
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
