@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
 #box layout test
 
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QGridLayout, QPushButton, QWidget, QCheckBox)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QWidget, QCheckBox, QLabel)
 from PySide6 import QtGui
 
 
@@ -170,9 +170,16 @@ class Window(QWidget):
         packedChans = QVBoxLayout()
 
         #makes the RGBA channels as boxes
-        def MakeChannel(name):
+        def MakeChannel(name,imgPath):
             channel = QVBoxLayout()
-            channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1)#need to figure out adding images above these
+
+            label = QLabel()
+            imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
+            label.setGeometry(100, 100, 200, 200)
+            label.setPixmap(imgGUI)
+            channel.addWidget(label)
+            #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1)#need to figure out adding images above these
+
             channel.addWidget(QPushButton("import "+name+" texture"),0)
             channel.addWidget(QPushButton("export "+name+" texture"),0)
 
@@ -185,10 +192,10 @@ class Window(QWidget):
         #---------------------v-Seperate Channels-v------------------------
 
         #RGBA as containers
-        red = MakeChannel(name="red")
-        green = MakeChannel(name="green")
-        blue = MakeChannel(name="blue")
-        alpha = MakeChannel(name="alpha")
+        red = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
+        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
+        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
+        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
 
         #Add containers to Vertical layout
         seperateChans.addWidget(red)
@@ -201,7 +208,7 @@ class Window(QWidget):
         #----------------------v-PACKED Channels-v-------------------------
 
         #RGBA as containers
-        RGBA = MakeChannel(name="packed")
+        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBA)
