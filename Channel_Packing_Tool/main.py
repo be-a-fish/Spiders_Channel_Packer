@@ -66,6 +66,12 @@ class Buttons():
 class Packer():
     
     useAlpha = False
+    def alphaToggle():#might be more eligant way of doing this. worth asking if I have time
+        if Packer.useAlpha:
+            Packer.useAlpha = False
+        else:
+            Packer.useAlpha = True
+        print("use Alpha set to",Packer.useAlpha)
 
     class ImRW():
         #oppening and closing images
@@ -289,7 +295,11 @@ class Window(QWidget):
         unpack = QPushButton("Unpack Textures\n <-- ")
         unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-        settings.addWidget(QCheckBox("Use Alpha"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        useAlphaCB = QCheckBox("Use Alpha")
+        useAlphaCB.setChecked(Packer.useAlpha)
+        useAlphaCB.clicked.connect(Packer.alphaToggle)
+        #useAlphaCB.clicked.connect(partial(print,"testing"))
+        settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
         #-------------------------^-Settings-^----------------------------

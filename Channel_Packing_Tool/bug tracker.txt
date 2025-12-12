@@ -22,4 +22,6 @@ GUI: images not scaling
 
 Resolution scaling
 
+===Implimented Features
+
 alpha toggle
