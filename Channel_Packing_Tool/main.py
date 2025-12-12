@@ -61,7 +61,7 @@ class Buttons():
 #to do: 
 # batch import
 # batch export
-# make this all a class
+
 
 class Packer():
     
@@ -121,6 +121,13 @@ class Packer():
             file = PIL.Image.open(defaultPath)#opens the file from the path
             return file
         
+    ##-----------------------Load Defaults-----------------------
+
+    RGBA = ImRW.DefLoad(fileName="ORMA.png")
+
+    RChan, GChan, BChan, AChan = Image.Image.split(RGBA)#need to define before function so can't use unpacker
+
+    #all functional for now :)
 
 
     ##-----------------------Pack and Unpack Channels-----------------------
@@ -157,14 +164,21 @@ class Packer():
             
             DBGprint(RGBA)
             DBGprint(resolution)
-            return RGBA
+            Packer.RGBA = RGBA
+            #return RGBA
 
         def UnpackRGBA(RGBA):
             DBGprint("attempting to unpack RGBA")
+            
+            Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Image.Image.split(RGBA)
+            #need to use Packer Variables rather than return value because button inputs dont support return values
+            '''
             red,green,blue,alpha = Image.Image.split(RGBA)
-
+            
             RGBAList = [red,green,blue,alpha]
             return RGBAList
+            '''
+    
 
 
 #format examples:
@@ -175,13 +189,7 @@ class Packer():
 #Button_Name.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
 
 
-##-----------------------Load Defaults-----------------------
 
-RGBA = Packer.ImRW.DefLoad(fileName="ORMA.png")
-
-RChan, GChan, BChan, AChan = Packer.ImPack.UnpackRGBA(RGBA)
-
-#all functional for now :)
 
 
 
@@ -253,10 +261,10 @@ class Window(QWidget):
         #---------------------v-Seperate Channels-v------------------------
 
         #RGBA as containers
-        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion",Img=RChan)
-        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness",Img=GChan)
-        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic",Img=BChan)
-        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask",Img=AChan)
+        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion",Img=Packer.RChan)
+        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness",Img=Packer.GChan)
+        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic",Img=Packer.BChan)
+        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask",Img=Packer.AChan)
 
         #Add containers to Vertical layout
         seperateChans1.addWidget(redCont)
@@ -278,7 +286,7 @@ class Window(QWidget):
         #----------------------v-PACKED Channels-v-------------------------
 
         #RGBA as containers
-        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA",Img=RGBA)
+        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA",Img=Packer.RGBA)
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBACont)
@@ -290,10 +298,10 @@ class Window(QWidget):
         settings = QVBoxLayout()
         settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
         pack = QPushButton("Pack Textures\n --> ")
-        pack.clicked.connect(partial(Packer.ImPack.PackRGBA,RChan,GChan,BChan,AChan,"replace with resolution when implimented"))#change to pack
+        pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
-        unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
+        unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         useAlphaCB = QCheckBox("Use Alpha")
         useAlphaCB.setChecked(Packer.useAlpha)

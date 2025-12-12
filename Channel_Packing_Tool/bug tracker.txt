@@ -10,6 +10,9 @@ GUI: Images scaling breacks aspect ratio
 
 GUI: push buttons activating at launch instead of on press
 
+Tool: Images are remaining default
+need to sets Packer Var rather than return it
+
 ===Fixed issues:
 
 GUI: images not scaling
