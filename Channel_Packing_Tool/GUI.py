@@ -123,6 +123,8 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QLineEdit)
 from PySide6 import QtGui, QtCore
 
+def button_click_test():
+    print("stop clicking me >:(")
 
 class Window(QWidget):
     def __init__(self):
@@ -180,6 +182,7 @@ class Window(QWidget):
         def MakeChannel(name,imgPath,filename):
             channel = QVBoxLayout()
 
+            #---------Image Label-----------
             label = QLabel()
             imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
             #imgGUI.scaledToHeight(100)
@@ -194,7 +197,7 @@ class Window(QWidget):
             label.setMinimumSize(100,100)
             label.setBaseSize(200,200)
             #label.resize(10, 10)
-            channel.addWidget(label)
+            channel.addWidget(label,0)
             #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
 
             channel.addWidget(QPushButton("import "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -225,7 +228,14 @@ class Window(QWidget):
         seperateChans2.addWidget(blue)
         seperateChans2.addWidget(alpha)
 
-        seperateChans1.addWidget(QPushButton("batch import channels"))
+        #batchImport = QPushButton("batch import channels").hitButton(print("batch import"))
+        
+        batchImport = (QPushButton("batch import channels"))
+        batchImport.clicked.connect(button_click_test())
+        
+
+        seperateChans1.addWidget(batchImport)
+        #seperateChans1.addWidget(QPushButton("batch import channels"))#.clicked.connect(button_click()))
         seperateChans2.addWidget(QPushButton("batch export channels"))
 
         #---------------------^-Seperate Channels-^------------------------
@@ -284,4 +294,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Window()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

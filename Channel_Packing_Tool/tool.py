@@ -31,8 +31,6 @@ imageVarName.Image.thumbnail((256,256)) #resizes an image -> PIL function
 ##-----------------------testing zone-----------------------
 
 DEBUG = True
-if DEBUG:
-    pass
 
 def DBGprint(text):
     if DEBUG:
