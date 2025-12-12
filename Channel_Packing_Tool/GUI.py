@@ -117,8 +117,11 @@ if __name__ == '__main__':
 
 #box layout test
 
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QWidget, QCheckBox, QLabel)
-from PySide6 import QtGui
+from PySide6.QtWidgets import (QApplication, QHBoxLayout,
+                               QVBoxLayout, QPushButton,
+                               QWidget, QCheckBox, QLabel,
+                               QLineEdit)
+from PySide6 import QtGui, QtCore
 
 
 class Window(QWidget):
@@ -130,8 +133,10 @@ class Window(QWidget):
         self.setWindowIcon(icon)
 
         #dark mode stuff:
-        self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: none} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
-        #self.setStyleSheet("QPushButton {background-color: #373165; color yellow; border: 3px solid #373165}")
+        self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:darkgray; border: none} QLineEdit {background-color: #373165; color yellow; border: 3px solid #373165} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
+        #self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: 3px solid yellow} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
+        #Debug disable later ^
+        
 
         '''#---testing layout
 
@@ -168,47 +173,58 @@ class Window(QWidget):
 
         seperateChans = QVBoxLayout()
         packedChans = QVBoxLayout()
+        seperateChans1 = QVBoxLayout()
+        seperateChans2 = QVBoxLayout()
 
         #makes the RGBA channels as boxes
-        def MakeChannel(name,imgPath):
+        def MakeChannel(name,imgPath,filename):
             channel = QVBoxLayout()
 
             label = QLabel()
             imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
-            label.setGeometry(100, 100, 200, 200)
+            imgGUI.scaled(10,10)
+            #label.setGeometry(1, 1, 2, 2)
             label.setPixmap(imgGUI)
             channel.addWidget(label)
-            #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1)#need to figure out adding images above these
+            #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
 
-            channel.addWidget(QPushButton("import "+name+" texture"),0)
-            channel.addWidget(QPushButton("export "+name+" texture"),0)
+            channel.addWidget(QPushButton("import "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QPushButton("export "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+            channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QLineEdit(filename+".png"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            #channel.setAlignment(alignment= "")
 
             container = QWidget()
 
             container.setLayout(channel)
+            
 
             return container#returns the created layout as a container
         
         #---------------------v-Seperate Channels-v------------------------
 
         #RGBA as containers
-        red = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
-        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
-        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
-        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
+        red = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion")
+        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Roughness")
+        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Metalic")
+        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Alpha_Mask")
 
         #Add containers to Vertical layout
-        seperateChans.addWidget(red)
-        seperateChans.addWidget(green)
-        seperateChans.addWidget(blue)
-        seperateChans.addWidget(alpha)
+        seperateChans1.addWidget(red)
+        seperateChans1.addWidget(green)
+        seperateChans2.addWidget(blue)
+        seperateChans2.addWidget(alpha)
+
+        seperateChans1.addWidget(QPushButton("batch import channels"))
+        seperateChans2.addWidget(QPushButton("batch export channels"))
 
         #---------------------^-Seperate Channels-^------------------------
 
         #----------------------v-PACKED Channels-v-------------------------
 
         #RGBA as containers
-        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png")
+        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="ORMA")
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBA)
@@ -218,16 +234,20 @@ class Window(QWidget):
         #-------------------------v-Settings-v----------------------------
 
         settings = QVBoxLayout()
-        settings.addWidget(QPushButton("Pack Textures\n --> "))
-        settings.addWidget(QPushButton("Unpack Textures\n <-- "))
-        settings.addWidget(QCheckBox("Use Alpha"))
+        settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+        settings.addWidget(QPushButton("Pack Textures\n --> "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        settings.addWidget(QPushButton("Unpack Textures\n <-- "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        settings.addWidget(QCheckBox("Use Alpha"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
         #-------------------------^-Settings-^----------------------------
 
         #collums
+        col0 =QWidget()
+        col0.setLayout(seperateChans1)
+
         col1 = QWidget()
-        col1.setLayout(seperateChans)#seperate channels
+        col1.setLayout(seperateChans2)#seperate channels
 
         col2 = QWidget()
         col2.setLayout(settings)#settings collum
@@ -237,6 +257,7 @@ class Window(QWidget):
 
         #master layout
         Mlayout = QHBoxLayout()
+        Mlayout.addWidget(col0,1)
         Mlayout.addWidget(col1,1)#numbers represent importance for scaling
         Mlayout.addWidget(col2,0)
         Mlayout.addWidget(col3,2)
