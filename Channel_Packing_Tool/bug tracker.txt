@@ -1,14 +1,16 @@
 
-Known issues:
+====Known issues:
 
 doesn't work with 3 channel image files.
 potential solutions:
 any opened files need to be converted to 3 channel images.
 also worth looking into a tickbox for "use alpha"
 
-Images scaling breacks aspect ratio
+GUI: Images scaling breacks aspect ratio
 
-Fixed issues:
+GUI: push buttons activating at launch instead of on press
 
-images not scaling
+===Fixed issues:
+
+GUI: images not scaling
 
