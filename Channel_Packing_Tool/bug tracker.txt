@@ -14,3 +14,12 @@ GUI: push buttons activating at launch instead of on press
 
 GUI: images not scaling
 
+
+
+
+
+===Planned Features:
+
+Resolution scaling
+
+alpha toggle

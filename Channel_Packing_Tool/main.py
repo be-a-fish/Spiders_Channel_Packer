@@ -63,108 +63,119 @@ class Buttons():
 # batch export
 # make this all a class
 
-class ImageOpening():
-    #oppening and closing images
+class Packer():
+    
+    useAlpha = False
 
-    def openImg(text,fileName):
-        DBGprint(text=text)
-        extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-        defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
-        filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
+    class ImRW():
+        #oppening and closing images
 
-        print ("so you have chosen:" ,filePath)
-        file = PIL.Image.open(filePath)#opens the file from the path
-        return file
+        def OpenImg(text,fileName):
+            DBGprint(text=text)
+            extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
+            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+            filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
 
-        #(backup path("../default_assets/backup.png"))
+            print ("so you have chosen:" ,filePath)
+            file = PIL.Image.open(filePath)#opens the file from the path
+            fileConv = Image.Image.convert(self=file, mode='RGBA')#converts to RGBA
+            DBGprint(fileConv)
+            return fileConv
 
-    def savImg(export,text,defaultName):
-        #exportQuality = 90
-        #filePath = filedialog.asksaveasfile()
-        defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
-        filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
-        
-        #filePath = str("./default_output/",defaultName)
-        #print("didn't manage to get that dictionary. defaulting to ",filePath)
-        print ("file path for save is",filePath)
-        try:
-            export = export.save(fp=str(filePath))
-        except ValueError as E:
-            print("there was an error while attempting to export")
-            print("the file path is ",filePath)
-            print("the export details are ",export)
-            DBGprint(text=str("EXPORT ERROR"+filePath+export))
+            #(backup path("../default_assets/backup.png"))
+
+        def SavImg(export,text,defaultName):
+            #exportQuality = 90
+            #filePath = filedialog.asksaveasfile()
+            defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
+            filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
             
-        print ("attempted to save as: "+ str(filePath))
-        #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##-----------------------Pack and Unpack Channels-----------------------
-
-class ImagePacking():
-    #image packing class
-
+            #filePath = str("./default_output/",defaultName)
+            #print("didn't manage to get that dictionary. defaulting to ",filePath)
+            print ("file path for save is",filePath)
+            try:
+                export = export.save(fp=str(filePath))
+            except ValueError as E:
+                print("there was an error while attempting to export")
+                print("the file path is ",filePath)
+                print("the export details are ",export)
+                DBGprint(text=str("EXPORT ERROR"+filePath+export))
+                
+            print ("attempted to save as: "+ str(filePath))
+            #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
         
-    def packRGBA(red,green,blue,alpha,resolution):
+        def OpenImgBatch():
+            print("This functionality hasn't been made yet")
 
-        #---Make linear/grayscale images
-        redLin = Image.Image.convert(self=red, mode='L') #makes image format liniar
-        DBGprint(red)
-        greenLin = Image.Image.convert(self=green, mode='L')
-        DBGprint(green)
-        blueLin = Image.Image.convert(self=blue, mode='L')
-        DBGprint(blue)
-        alphaLin = Image.Image.convert(self=alpha, mode='L')
-        DBGprint(alpha)
-
-        #Image.Image.show(redLin)
-        #Image.Image.show(alpha)
-        #---Combine into single image
-
-        RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
-        #PIL.Image.Image.show(RGBA)
-        DBGprint(RGBA)
-        DBGprint(resolution)
-        return RGBA
-
-    def unpackRGBA(RGBA):
-
-        red,green,blue,alpha = Image.Image.split(RGBA)
-
-        RGBAList = [red,green,blue,alpha]
-        return RGBAList
+        def SavImgBatch():
+            print("This functionality hasn't been made yet")
+        
+        def DefLoad(fileName):#opens file without a file dialogue
+            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+            file = PIL.Image.open(defaultPath)#opens the file from the path
+            return file
+        
 
 
+    ##-----------------------Pack and Unpack Channels-----------------------
+
+    class ImPack():
+        #image packing class
+
+            
+        def PackRGBA(red,green,blue,alpha,resolution):
+
+            #---Make linear/grayscale images
+            redLin = Image.Image.convert(self=red, mode='L') #makes image format liniar
+            DBGprint(red)
+            greenLin = Image.Image.convert(self=green, mode='L')
+            DBGprint(green)
+            blueLin = Image.Image.convert(self=blue, mode='L')
+            DBGprint(blue)
+            alphaLin = Image.Image.convert(self=alpha, mode='L')
+            DBGprint(alpha)
+
+            #Image.Image.show(redLin)
+            #Image.Image.show(alpha)
+            #---Combine into single image
+
+            
+            #PIL.Image.Image.show(RGBA)
+            if Packer.useAlpha:
+                RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
+                DBGprint("using alpha channel")
+            else:
+                RGBA = Image.merge('RGB', (redLin,greenLin,blueLin))
+                RGBA = Image.Image.convert(self=RGBA, mode='RGBA')#converts to RGBA with blank alpha channel to avoid issues
+                DBGprint("not using alpha but in RGBA mode to avoid errors")
+            
+            DBGprint(RGBA)
+            DBGprint(resolution)
+            return RGBA
+
+        def UnpackRGBA(RGBA):
+            DBGprint("attempting to unpack RGBA")
+            red,green,blue,alpha = Image.Image.split(RGBA)
+
+            RGBAList = [red,green,blue,alpha]
+            return RGBAList
 
 
+#format examples:
+#Packer.ImPack.PackRGBA(red,green,blue,alpha,resolution)
+#Packer.ImRW.OpenImg(text,fileName)
+
+#for buttons:
+#Button_Name.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
 
 
+##-----------------------Load Defaults-----------------------
 
+RGBA = Packer.ImRW.DefLoad(fileName="ORMA.png")
 
+RChan, GChan, BChan, AChan = Packer.ImPack.UnpackRGBA(RGBA)
 
-
+#all functional for now :)
 
 
 
@@ -197,30 +208,28 @@ class Window(QWidget):
         seperateChans2 = QVBoxLayout()
 
         #makes the RGBA channels as boxes
-        def MakeChannel(name,imgPath,filename):
+        def MakeChannel(name,imgPath,filename,Img):
             channel = QVBoxLayout()
 
             #---------Image Label-----------
             label = QLabel()
             imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
-            #imgGUI.scaledToHeight(100)
             imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-            #imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
             
             
-            #label.setGeometry(1, 1, 2, 2)
             label.setPixmap(imgGUI)
             label.setScaledContents(200)
             #label.setMaximumSize(500,500)
             label.setMinimumSize(100,100)
             label.setBaseSize(200,200)
-            #label.resize(10, 10)
             channel.addWidget(label,0)
-            #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
+            
 
             imp = QPushButton("📁 import "+name+" texture")
-            imp.clicked.connect(partial(Buttons.PressImport,"arg"))
+            imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 export "+name+" texture")
+            exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
+
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
@@ -238,32 +247,35 @@ class Window(QWidget):
         #---------------------v-Seperate Channels-v------------------------
 
         #RGBA as containers
-        red = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion")
-        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness")
-        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic")
-        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask")
+        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion",Img=RChan)
+        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness",Img=GChan)
+        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic",Img=BChan)
+        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask",Img=AChan)
 
         #Add containers to Vertical layout
-        seperateChans1.addWidget(red)
-        seperateChans1.addWidget(green)
-        seperateChans2.addWidget(blue)
-        seperateChans2.addWidget(alpha)
+        seperateChans1.addWidget(redCont)
+        seperateChans1.addWidget(greenCont)
+        seperateChans2.addWidget(blueCont)
+        seperateChans2.addWidget(alphaCont)
 
         
+        batchImp = QPushButton("📁 batch import channels")
+        batchImp.clicked.connect(partial(Packer.ImRW.OpenImgBatch))
+        seperateChans1.addWidget(batchImp)#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
 
-        seperateChans1.addWidget(QPushButton("📁 batch import channels"))#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
-        #seperateChans1.addWidget(QPushButton("batch import channels"))#.clicked.connect(button_click()))
-        seperateChans2.addWidget(QPushButton("💾 batch export channels"))
+        batchExp = QPushButton("💾 batch export channels")
+        batchExp.clicked.connect(partial(Packer.ImRW.SavImgBatch))
+        seperateChans2.addWidget(batchExp)
 
         #---------------------^-Seperate Channels-^------------------------
 
         #----------------------v-PACKED Channels-v-------------------------
 
         #RGBA as containers
-        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA")
+        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA",Img=RGBA)
 
         #Add containers to Vertical layout
-        packedChans.addWidget(RGBA)
+        packedChans.addWidget(RGBACont)
 
         #----------------------^-PACKED Channels-^-------------------------
 
@@ -271,8 +283,12 @@ class Window(QWidget):
 
         settings = QVBoxLayout()
         settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
-        settings.addWidget(QPushButton("Pack Textures\n --> "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-        settings.addWidget(QPushButton("Unpack Textures\n <-- "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        pack = QPushButton("Pack Textures\n --> ")
+        pack.clicked.connect(partial(Packer.ImPack.PackRGBA,RChan,GChan,BChan,AChan,"replace with resolution when implimented"))#change to pack
+        settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        unpack = QPushButton("Unpack Textures\n <-- ")
+        unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
+        settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         settings.addWidget(QCheckBox("Use Alpha"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
