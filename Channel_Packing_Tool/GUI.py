@@ -123,8 +123,25 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QLineEdit)
 from PySide6 import QtGui, QtCore
 
+from functools import partial
+
 def button_click_test():
     print("stop clicking me >:(")
+
+class Buttons():
+    def PressImport(text):
+        print("importing")
+        print("your passed variable is",text)
+
+    def PressExport(text):
+        print("exporting")
+        print("your passed variable is",text)
+    
+    def PressUnused(text):
+        print("this feature isn't implimented yet\nsorry")
+        print("your passed variable is",text)
+
+
 
 class Window(QWidget):
     def __init__(self):
@@ -200,8 +217,11 @@ class Window(QWidget):
             channel.addWidget(label,0)
             #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
 
-            channel.addWidget(QPushButton("📁 import "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-            channel.addWidget(QPushButton("💾 export "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            imp = QPushButton("📁 import "+name+" texture")
+            imp.clicked.connect(partial(Buttons.PressImport,"arg"))
+            exp = QPushButton("💾 export "+name+" texture")
+            channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
             channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(QLineEdit(filename+".png"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -228,13 +248,9 @@ class Window(QWidget):
         seperateChans2.addWidget(blue)
         seperateChans2.addWidget(alpha)
 
-        #batchImport = QPushButton("batch import channels").hitButton(print("batch import"))
-        
-        batchImport = (QPushButton("📁 batch import channels"))
-        batchImport.clicked.connect(button_click_test())
         
 
-        seperateChans1.addWidget(batchImport)
+        seperateChans1.addWidget(QPushButton("📁 batch import channels"))#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
         #seperateChans1.addWidget(QPushButton("batch import channels"))#.clicked.connect(button_click()))
         seperateChans2.addWidget(QPushButton("💾 batch export channels"))
 
