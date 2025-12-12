@@ -65,7 +65,7 @@ class Buttons():
 
 class Packer():
     
-    useAlpha = False
+    useAlpha = True
     def alphaToggle():#might be more eligant way of doing this. worth asking if I have time
         if Packer.useAlpha:
             Packer.useAlpha = False
