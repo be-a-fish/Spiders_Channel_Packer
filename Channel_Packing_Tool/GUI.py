@@ -182,9 +182,18 @@ class Window(QWidget):
 
             label = QLabel()
             imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
-            imgGUI.scaled(10,10)
+            #imgGUI.scaledToHeight(100)
+            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            #imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            
+            
             #label.setGeometry(1, 1, 2, 2)
             label.setPixmap(imgGUI)
+            label.setScaledContents(200)
+            #label.setMaximumSize(500,500)
+            label.setMinimumSize(100,100)
+            label.setBaseSize(200,200)
+            #label.resize(10, 10)
             channel.addWidget(label)
             #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
 
@@ -206,9 +215,9 @@ class Window(QWidget):
 
         #RGBA as containers
         red = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion")
-        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Roughness")
-        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Metalic")
-        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Alpha_Mask")
+        green = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness")
+        blue = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic")
+        alpha = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask")
 
         #Add containers to Vertical layout
         seperateChans1.addWidget(red)
@@ -224,7 +233,7 @@ class Window(QWidget):
         #----------------------v-PACKED Channels-v-------------------------
 
         #RGBA as containers
-        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="ORMA")
+        RGBA = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA")
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBA)
@@ -261,6 +270,8 @@ class Window(QWidget):
         Mlayout.addWidget(col1,1)#numbers represent importance for scaling
         Mlayout.addWidget(col2,0)
         Mlayout.addWidget(col3,2)
+        #Mlayout.maximumSize()
+        
 
         self.setLayout(Mlayout)
         

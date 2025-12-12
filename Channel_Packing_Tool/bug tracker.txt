@@ -6,6 +6,9 @@ potential solutions:
 any opened files need to be converted to 3 channel images.
 also worth looking into a tickbox for "use alpha"
 
+Images scaling breacks aspect ratio
 
 Fixed issues:
+
+images not scaling
 
