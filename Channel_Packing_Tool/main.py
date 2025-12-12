@@ -63,37 +63,40 @@ class Buttons():
 # batch export
 # make this all a class
 
-def openImg(text,fileName):
-    DBGprint(text=text)
-    extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-    defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
-    filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
+class ImageOpening():
+    #oppening and closing images
 
-    print ("so you have chosen:" ,filePath)
-    file = PIL.Image.open(filePath)#opens the file from the path
-    return file
+    def openImg(text,fileName):
+        DBGprint(text=text)
+        extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
+        defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+        filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
 
-    #(backup path("../default_assets/backup.png"))
+        print ("so you have chosen:" ,filePath)
+        file = PIL.Image.open(filePath)#opens the file from the path
+        return file
 
-def savImg(export,text,defaultName):
-    #exportQuality = 90
-    #filePath = filedialog.asksaveasfile()
-    defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
-    filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
-    
-    #filePath = str("./default_output/",defaultName)
-    #print("didn't manage to get that dictionary. defaulting to ",filePath)
-    print ("file path for save is",filePath)
-    try:
-        export = export.save(fp=str(filePath))
-    except ValueError as E:
-        print("there was an error while attempting to export")
-        print("the file path is ",filePath)
-        print("the export details are ",export)
-        DBGprint(text=str("EXPORT ERROR"+filePath+export))
+        #(backup path("../default_assets/backup.png"))
+
+    def savImg(export,text,defaultName):
+        #exportQuality = 90
+        #filePath = filedialog.asksaveasfile()
+        defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
+        filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
         
-    print ("attempted to save as: "+ str(filePath))
-    #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
+        #filePath = str("./default_output/",defaultName)
+        #print("didn't manage to get that dictionary. defaulting to ",filePath)
+        print ("file path for save is",filePath)
+        try:
+            export = export.save(fp=str(filePath))
+        except ValueError as E:
+            print("there was an error while attempting to export")
+            print("the file path is ",filePath)
+            print("the export details are ",export)
+            DBGprint(text=str("EXPORT ERROR"+filePath+export))
+            
+        print ("attempted to save as: "+ str(filePath))
+        #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
 
 
 
@@ -120,35 +123,38 @@ def savImg(export,text,defaultName):
 
 ##-----------------------Pack and Unpack Channels-----------------------
 
+class ImagePacking():
+    #image packing class
 
-def packRGBA(red,green,blue,alpha,resolution):
+        
+    def packRGBA(red,green,blue,alpha,resolution):
 
-    #---Make linear/grayscale images
-    redLin = Image.Image.convert(self=red, mode='L') #makes image format liniar
-    DBGprint(red)
-    greenLin = Image.Image.convert(self=green, mode='L')
-    DBGprint(green)
-    blueLin = Image.Image.convert(self=blue, mode='L')
-    DBGprint(blue)
-    alphaLin = Image.Image.convert(self=alpha, mode='L')
-    DBGprint(alpha)
+        #---Make linear/grayscale images
+        redLin = Image.Image.convert(self=red, mode='L') #makes image format liniar
+        DBGprint(red)
+        greenLin = Image.Image.convert(self=green, mode='L')
+        DBGprint(green)
+        blueLin = Image.Image.convert(self=blue, mode='L')
+        DBGprint(blue)
+        alphaLin = Image.Image.convert(self=alpha, mode='L')
+        DBGprint(alpha)
 
-    #Image.Image.show(redLin)
-    #Image.Image.show(alpha)
-    #---Combine into single image
+        #Image.Image.show(redLin)
+        #Image.Image.show(alpha)
+        #---Combine into single image
 
-    RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
-    #PIL.Image.Image.show(RGBA)
-    DBGprint(RGBA)
-    DBGprint(resolution)
-    return RGBA
+        RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
+        #PIL.Image.Image.show(RGBA)
+        DBGprint(RGBA)
+        DBGprint(resolution)
+        return RGBA
 
-def unpackRGBA(RGBA):
+    def unpackRGBA(RGBA):
 
-    red,green,blue,alpha = Image.Image.split(RGBA)
+        red,green,blue,alpha = Image.Image.split(RGBA)
 
-    RGBAList = [red,green,blue,alpha]
-    return RGBAList
+        RGBAList = [red,green,blue,alpha]
+        return RGBAList
 
 
 
