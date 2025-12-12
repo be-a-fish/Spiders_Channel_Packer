@@ -200,8 +200,8 @@ class Window(QWidget):
             channel.addWidget(label,0)
             #channel.addWidget(QPushButton("REPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE\nREPLACE ME WITH THE IMAGE"),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)#need to figure out adding images above these
 
-            channel.addWidget(QPushButton("import "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-            channel.addWidget(QPushButton("export "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QPushButton("📁 import "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QPushButton("💾 export "+name+" texture"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
             channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(QLineEdit(filename+".png"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -230,13 +230,13 @@ class Window(QWidget):
 
         #batchImport = QPushButton("batch import channels").hitButton(print("batch import"))
         
-        batchImport = (QPushButton("batch import channels"))
+        batchImport = (QPushButton("📁 batch import channels"))
         batchImport.clicked.connect(button_click_test())
         
 
         seperateChans1.addWidget(batchImport)
         #seperateChans1.addWidget(QPushButton("batch import channels"))#.clicked.connect(button_click()))
-        seperateChans2.addWidget(QPushButton("batch export channels"))
+        seperateChans2.addWidget(QPushButton("💾 batch export channels"))
 
         #---------------------^-Seperate Channels-^------------------------
 
