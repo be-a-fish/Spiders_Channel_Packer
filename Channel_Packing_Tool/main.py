@@ -167,20 +167,22 @@ class Packer():
 
 #for buttons:
 #Button_Name.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
+#but dont do this now cos I've added a controller class to clean things up
 
 #-----------------Controller-----------------
 #nessiccary to return values from functions. Also makes things more organised and readable
 #also allows multiple functions to activate when button pressed
+#just generally better than you in every consivable way
 
-#This might look stupid but it helps me find the controller section faster
-#
-#     _---___________---_
-#    / /  \  _  _     Y  \
-#   /  \__/         X   B \
-#  /       +    (_)   A    \
-# /    _________________    \
-#/    /                 \    \
-#\___/                   \___/
+#   This might look stupid and unproffesional but it helps me find the controller section faster
+#   
+#         _---___________---_
+#        / /  \  _  _     Y  \
+#      /   \__/         X   B  \
+#     /        +    (_)   A     \
+#    /      _______________      \
+#   /      /               \      \
+#   \____/                   \____/
 
 
 class Controller():
@@ -359,7 +361,15 @@ class Window(QWidget):
             return container#returns the created layout as a container
         
         #---------------------v-Seperate Channels-v------------------------
-
+        #    _______
+        #   |       |
+        #   |       |___
+        #   |_______|   |
+        #       |       |___
+        #       |_______|   |
+        #           |       |
+        #           |_______|
+        #
         #RGBA as containers
         redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion",Img=Packer.RChan)
         greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness",Img=Packer.GChan)
