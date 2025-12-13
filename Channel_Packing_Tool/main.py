@@ -236,6 +236,7 @@ class Window(QWidget):
 
         #-----------------Theme and Titlebar-----------------
 
+        #randomly picks a title for the window from the list
         titleList = ["Spider's Channel Packing Tool",
                      "Some sketchy software I found online",
                      "Totally not a virus.exe",
@@ -253,6 +254,8 @@ class Window(QWidget):
         title = random.choice(titleList)
 
         self.setWindowTitle(title)
+
+        #sets the icon to premade icon file
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("./Channel_Packing_Tool/GUI/icon.png"))
         self.setWindowIcon(icon)
@@ -266,17 +269,18 @@ class Window(QWidget):
         #-----------------Layout-----------------
 
         seperateChans = QVBoxLayout()
-        packedChans = QVBoxLayout()
-        seperateChans1 = QVBoxLayout()
-        seperateChans2 = QVBoxLayout()
+        packedChans = QVBoxLayout()#contains Packed RGBA
+        seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
+        seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
         #makes the RGBA channels as boxes
         def MakeChannel(name,imgPath,filename,Img):
             channel = QVBoxLayout()
 
             #---------Image Label-----------
+            #to do: maintain aspect ratio
             label = QLabel()
-            imgGUI = QtGui.QPixmap(imgPath)#------------NEEDS FIGURING OUT!!!!
+            imgGUI = QtGui.QPixmap(imgPath)
             imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
             
             
@@ -352,14 +356,20 @@ class Window(QWidget):
 
         settings = QVBoxLayout()
         settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+        
+        #---Pack Button
         pack = QPushButton("Pack Textures\n --> ")
         #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
+        
+        #---Unpack Button
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
         #-------🎮 NEEDS ADDING TO CONROLLER
         unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+        #---Alpha Checkbox
         useAlphaCB = QCheckBox("Use Alpha")
         useAlphaCB.setChecked(Packer.useAlpha)
         #-------🎮 NEEDS ADDING TO CONROLLER
@@ -369,9 +379,9 @@ class Window(QWidget):
 
         #-------------------------^-Settings-^----------------------------
 
-        #collums
+        #---collums
         col0 =QWidget()
-        col0.setLayout(seperateChans1)
+        col0.setLayout(seperateChans1)#seperate channels
 
         col1 = QWidget()
         col1.setLayout(seperateChans2)#seperate channels
@@ -382,12 +392,12 @@ class Window(QWidget):
         col3 = QWidget()
         col3.setLayout(packedChans)#packed texture
 
-        #master layout
+        #---master layout
         Mlayout = QHBoxLayout()
         Mlayout.addWidget(col0,1)
         Mlayout.addWidget(col1,1)#numbers represent importance for scaling
         Mlayout.addWidget(col2,0)
-        Mlayout.addWidget(col3,2)
+        Mlayout.addWidget(col3,2)#scale this guy most important
         #Mlayout.maximumSize()
         
 
