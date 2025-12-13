@@ -23,33 +23,6 @@ def DBGprint(text):
     if DEBUG:
         print(text)
 
-def button_click_test():
-    print("stop clicking me >:(")
-
-class Buttons():
-    def PressImport(text):
-        print("importing")
-        print("your passed variable is",text)
-
-    def PressExport(text):
-        print("exporting")
-        print("your passed variable is",text)
-    
-    def PressUnused(text):
-        print("this feature isn't implimented yet\nsorry")
-        print("your passed variable is",text)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,14 +143,15 @@ class Packer():
         def UnpackRGBA(RGBA):
             DBGprint("attempting to unpack RGBA")
             
-            Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Image.Image.split(RGBA)
-            #need to use Packer Variables rather than return value because button inputs dont support return values
-            '''
+            #Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Image.Image.split(RGBA)
+            #wanted to use Packer Variables rather than return value because button inputs dont support return values
+            #unnessisary due to controller class
+            
             red,green,blue,alpha = Image.Image.split(RGBA)
             
             RGBAList = [red,green,blue,alpha]
             return RGBAList
-            '''
+            
     
 
 
@@ -188,9 +162,33 @@ class Packer():
 #for buttons:
 #Button_Name.clicked.connect(partial(Packer.ImPack.UnpackRGBA,RGBA))
 
+#-----------------Controller-----------------
+#nessiccary to return values from functions. Also makes things more organised and readable
+#also allows multiple functions to activate when button pressed
 
+class Controller():
 
+    class Btn():
 
+        def BtExport():
+            DBGprint("button export pressed")
+
+        def BtImport():
+            DBGprint("button import pressed")
+
+        def BtBatchExp():
+            DBGprint("button batch export pressed")
+
+        def BtBatchImp():
+            DBGprint("button batch import pressed")
+
+        def Btpacking():
+            DBGprint("button pack pressed")
+
+        def Btunpacking():
+            DBGprint("button unpack pressed")
+
+        
 
 
 
