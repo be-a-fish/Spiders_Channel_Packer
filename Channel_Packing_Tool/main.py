@@ -185,14 +185,14 @@ class Controller():
         elif name == "red":
             Img = Packer.RChan
         elif name == "green":
-            Img = Packer.RChan
+            Img = Packer.GChan
         elif name == "blue":
-            Img = Packer.RChan
+            Img = Packer.BChan
         elif name == "alpha":
-            Img = Packer.RChan
+            Img = Packer.AChan
         else:
             print(name," isn't a valid name")
-            
+
         Packer.ImRW.SavImg(export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png")
 
     def BtnImport(name, filename):
