@@ -12,7 +12,6 @@ from functools import partial
 from PIL import Image
 import PIL
 
-import matplotlib.pyplot as plt
 from tkinter import filedialog
 
 ##-----------------------testing zone-----------------------
