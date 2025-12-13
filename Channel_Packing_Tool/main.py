@@ -176,24 +176,24 @@ class Controller():
 
     #----Buttons:
 
-    def BtnExport(Img,name,filename):
+    def BtnExport(name,filename):
         DBGprint("button export pressed")
         
         #identify channel by name
         if name == "packed":
-            Img = Packer.RGBA
+            exp = Packer.RGBA
         elif name == "red":
-            Img = Packer.RChan
+            exp = Packer.RChan
         elif name == "green":
-            Img = Packer.GChan
+            exp = Packer.GChan
         elif name == "blue":
-            Img = Packer.BChan
+            exp = Packer.BChan
         elif name == "alpha":
-            Img = Packer.AChan
+            exp = Packer.AChan
         else:
             print(name," isn't a valid name")
 
-        Packer.ImRW.SavImg(export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png")
+        Packer.ImRW.SavImg(export=exp,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png")
 
     def BtnImport(name, filename):
         DBGprint("button import pressed")
@@ -330,7 +330,7 @@ class Window(QWidget):
             exp = QPushButton("💾 export "+name+" texture")
             #-------🎮
             #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
-            exp.clicked.connect(partial(Controller.BtnExport,Img=Img,name=name,filename=filename))
+            exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
 
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
