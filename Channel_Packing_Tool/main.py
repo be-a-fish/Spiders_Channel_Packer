@@ -172,6 +172,17 @@ class Packer():
 #nessiccary to return values from functions. Also makes things more organised and readable
 #also allows multiple functions to activate when button pressed
 
+#This might look stupid but it helps me find the controller section faster
+#
+#     _---___________---_
+#    / /  \  _  _     Y  \
+#   /  \__/         X   B \
+#  /       +    (_)   A    \
+# /    _________________    \
+#/    /                 \    \
+#\___/                   \___/
+
+
 class Controller():
 
     #----Buttons:
@@ -224,6 +235,7 @@ class Controller():
 
     def BtnPacking():
         DBGprint("button pack pressed")
+        Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented")
 
     def BtnUnpacking():
         DBGprint("button unpack pressed")
@@ -397,6 +409,7 @@ class Window(QWidget):
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
         #unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
+        #-------🎮
         unpack.clicked.connect(Controller.BtnUnpacking)
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
@@ -416,7 +429,7 @@ class Window(QWidget):
         #-------------------------^-Settings-^----------------------------
 
         #---collums
-        col0 =QWidget()
+        col0 = QWidget()
         col0.setLayout(seperateChans1)#seperate channels
 
         col1 = QWidget()

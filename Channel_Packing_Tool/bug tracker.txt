@@ -10,6 +10,7 @@ GUI: Images scaling breacks aspect ratio
 
 GUI: push buttons activating at launch instead of on press
 
+Tool: Channels not packing into RGBA
 
 ===Fixed issues:
 
