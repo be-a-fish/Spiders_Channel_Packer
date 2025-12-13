@@ -176,12 +176,30 @@ class Controller():
 
     #----Buttons:
 
-    def BtnExport():
+    def BtnExport(Img,name,filename):
         DBGprint("button export pressed")
+        
+        #identify channel by name
+        if name == "packed":
+            Img = Packer.RGBA
+        elif name == "red":
+            Img = Packer.RChan
+        elif name == "green":
+            Img = Packer.RChan
+        elif name == "blue":
+            Img = Packer.RChan
+        elif name == "alpha":
+            Img = Packer.RChan
+        else:
+            print(name," isn't a valid name")
+            
+        Packer.ImRW.SavImg(export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png")
 
     def BtnImport(name, filename):
         DBGprint("button import pressed")
         chan = Packer.ImRW.OpenImg(text="open "+name+" texture, usually "+filename,fileName=filename+".png")
+        
+        #identify channel by name
         if name == "packed":
             Packer.RGBA = chan
         elif name == "red":
@@ -192,6 +210,8 @@ class Controller():
             Packer.BChan = chan
         elif name == "alpha":
             Packer.AChan = chan
+        else:
+            print(name," isn't a valid name")
         
         DBGprint("successfully imported texture")
         
@@ -207,6 +227,17 @@ class Controller():
 
     def BtnUnpacking():
         DBGprint("button unpack pressed")
+        Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Packer.ImPack.UnpackRGBA(Packer.RGBA)
+        #also add update GUI function when implimented
+
+    def BtnDBG():
+        DBGprint("OK what's broken now?")
+        print("Rchan details: ",Packer.RChan)
+        print("Gchan details: ",Packer.GChan)
+        print("Bchan details: ",Packer.BChan)
+        print("Achan details: ",Packer.AChan)
+        print("RGBA details: ",Packer.RGBA)
+
 
     #----Tickboxes
 
@@ -297,8 +328,9 @@ class Window(QWidget):
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 export "+name+" texture")
-            #-------🎮 NEEDS ADDING TO CONROLLER
-            exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
+            #-------🎮
+            #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
+            exp.clicked.connect(partial(Controller.BtnExport,Img=Img,name=name,filename=filename))
 
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -364,8 +396,8 @@ class Window(QWidget):
         #---Unpack Button
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
-        #-------🎮 NEEDS ADDING TO CONROLLER
-        unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
+        #unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
+        unpack.clicked.connect(Controller.BtnUnpacking)
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
         #---Alpha Checkbox
@@ -374,6 +406,11 @@ class Window(QWidget):
         #-------🎮 NEEDS ADDING TO CONROLLER
         useAlphaCB.clicked.connect(Packer.alphaToggle)
         settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+        if DEBUG:
+            DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
+            DBGButton.clicked.connect(Controller.BtnDBG)
+            settings.addWidget(DBGButton,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
 
         #-------------------------^-Settings-^----------------------------

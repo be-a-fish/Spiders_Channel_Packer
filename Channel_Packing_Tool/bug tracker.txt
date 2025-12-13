@@ -10,13 +10,15 @@ GUI: Images scaling breacks aspect ratio
 
 GUI: push buttons activating at launch instead of on press
 
-Tool: Images are remaining default
-need to sets Packer Var rather than return it
 
 ===Fixed issues:
 
 GUI: images not scaling
 
+Tool: Images are remaining default
+need to sets Packer Var rather than return it
+-discovered Img variable wasn't being updated in real time.
+ need to specify image to export on export rather than at button creation
 
 
 
