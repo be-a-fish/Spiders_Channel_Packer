@@ -83,16 +83,22 @@ class Packer():
             print ("attempted to save as: "+ str(filePath))
             #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
         
+
+
+        #opens file without a file dialogue
+        #use in batch open
+        def DefLoad(fileName):
+            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+            file = PIL.Image.open(defaultPath)#opens the file from the path
+            return file
+        
+
         def OpenImgBatch():
             print("This functionality hasn't been made yet")
 
         def SavImgBatch():
             print("This functionality hasn't been made yet")
         
-        def DefLoad(fileName):#opens file without a file dialogue
-            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
-            file = PIL.Image.open(defaultPath)#opens the file from the path
-            return file
         
     ##-----------------------Load Defaults-----------------------
 
@@ -101,6 +107,7 @@ class Packer():
     RChan, GChan, BChan, AChan = Image.Image.split(RGBA)#need to define before function so can't use unpacker
 
     #all functional for now :)
+    #thats probably a lie lol
 
 
     ##-----------------------Pack and Unpack Channels-----------------------
@@ -137,8 +144,8 @@ class Packer():
             
             DBGprint(RGBA)
             DBGprint(resolution)
-            Packer.RGBA = RGBA
-            #return RGBA
+            #Packer.RGBA = RGBA
+            return RGBA
 
         def UnpackRGBA(RGBA):
             DBGprint("attempting to unpack RGBA")
@@ -168,27 +175,51 @@ class Packer():
 
 class Controller():
 
-    class Btn():
+    #----Buttons:
 
-        def BtExport():
-            DBGprint("button export pressed")
+    def BtnExport():
+        DBGprint("button export pressed")
 
-        def BtImport():
-            DBGprint("button import pressed")
-
-        def BtBatchExp():
-            DBGprint("button batch export pressed")
-
-        def BtBatchImp():
-            DBGprint("button batch import pressed")
-
-        def Btpacking():
-            DBGprint("button pack pressed")
-
-        def Btunpacking():
-            DBGprint("button unpack pressed")
-
+    def BtnImport(name, filename):
+        DBGprint("button import pressed")
+        chan = Packer.ImRW.OpenImg(text="open "+name+" texture, usually "+filename,fileName=filename+".png")
+        if name == "packed":
+            Packer.RGBA = chan
+        elif name == "red":
+            Packer.RChan = chan
+        elif name == "green":
+            Packer.GChan = chan
+        elif name == "blue":
+            Packer.BChan = chan
+        elif name == "alpha":
+            Packer.AChan = chan
         
+        DBGprint("successfully imported texture")
+        
+
+    def BtnBatchExp():
+        DBGprint("button batch export pressed")
+
+    def BtnBatchImp():
+        DBGprint("button batch import pressed")
+
+    def BtnPacking():
+        DBGprint("button pack pressed")
+
+    def BtnUnpacking():
+        DBGprint("button unpack pressed")
+
+    #----Tickboxes
+
+    def TckBoxToBool():
+        DBGprint("Toggling Tick Box")
+
+    #----Textboxes
+
+    def TxtBoxToVar():
+        DBGprint("Update Text Box")
+
+    
 
 
 
@@ -201,7 +232,27 @@ class Controller():
 class Window(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Spider's Channel Packing Tool")
+
+
+        #-----------------Theme and Titlebar-----------------
+
+        titleList = ["Spider's Channel Packing Tool",
+                     "Some sketchy software I found online",
+                     "Totally not a virus.exe",
+                     "At least this isn't Adobe",
+                     "Über Hacker Tool",
+                     "Cos I can't be asked to pirate photoshop",
+                     "ya like jazz?",
+                     "Nerds of the world Unite, we have nothing to loose but our dice 🎲",
+                     "☭Eat the richⒶ... or like, maybe a sandwitch if you're feeling lazy",
+                     "5318008",
+                     "but can it run DOOM?",
+                     "this is what programmers do when they haven't had enough sleep",
+                     "AI can eat a bag of CONTENT NOT AVAILABLE WITHOUT AGE VERIFICATION",
+                     "And my parents still aren't proud of me"]
+        title = random.choice(titleList)
+
+        self.setWindowTitle(title)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("./Channel_Packing_Tool/GUI/icon.png"))
         self.setWindowIcon(icon)
@@ -212,7 +263,7 @@ class Window(QWidget):
         #Debug disable later ^
         
 
-        #-----------------Final Layout-----------------
+        #-----------------Layout-----------------
 
         seperateChans = QVBoxLayout()
         packedChans = QVBoxLayout()
@@ -238,7 +289,9 @@ class Window(QWidget):
             
 
             imp = QPushButton("📁 import "+name+" texture")
-            imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
+            imp.clicked.connect(partial(Controller.BtnImport,name=name,filename=filename))
+            #connect to button import on controller
+            #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 export "+name+" texture")
             exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
 
