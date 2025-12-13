@@ -289,10 +289,12 @@ class Window(QWidget):
             
 
             imp = QPushButton("📁 import "+name+" texture")
+            #-------🎮
             imp.clicked.connect(partial(Controller.BtnImport,name=name,filename=filename))
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 export "+name+" texture")
+            #-------🎮 NEEDS ADDING TO CONROLLER
             exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
 
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -325,10 +327,12 @@ class Window(QWidget):
 
         
         batchImp = QPushButton("📁 batch import channels")
+        #-------🎮 NEEDS ADDING TO CONROLLER
         batchImp.clicked.connect(partial(Packer.ImRW.OpenImgBatch))
         seperateChans1.addWidget(batchImp)#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
 
         batchExp = QPushButton("💾 batch export channels")
+        #-------🎮 NEEDS ADDING TO CONROLLER
         batchExp.clicked.connect(partial(Packer.ImRW.SavImgBatch))
         seperateChans2.addWidget(batchExp)
 
@@ -349,15 +353,17 @@ class Window(QWidget):
         settings = QVBoxLayout()
         settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
         pack = QPushButton("Pack Textures\n --> ")
+        #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
+        #-------🎮 NEEDS ADDING TO CONROLLER
         unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         useAlphaCB = QCheckBox("Use Alpha")
         useAlphaCB.setChecked(Packer.useAlpha)
+        #-------🎮 NEEDS ADDING TO CONROLLER
         useAlphaCB.clicked.connect(Packer.alphaToggle)
-        #useAlphaCB.clicked.connect(partial(print,"testing"))
         settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
