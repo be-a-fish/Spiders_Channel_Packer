@@ -1,5 +1,5 @@
 import sys
-import random
+import random #super very important for the code and not just fun easter eggs I wanna impliment when it's 4am and I havent slept in 48 hours
 
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QVBoxLayout, QPushButton,
@@ -7,12 +7,12 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QLineEdit)
 from PySide6 import QtGui, QtCore
 
-from functools import partial
+from functools import partial#for sending variables through button inputs
 
 from PIL import Image
 import PIL
 
-from tkinter import filedialog
+from tkinter import filedialog#file dialogue boxes. Literally don't use tkinter for anything else
 
 ##-----------------------testing zone-----------------------
 
@@ -48,7 +48,7 @@ class Packer():
     class ImRW():
         #oppening and closing images
 
-        def OpenImg(text,fileName):
+        def OpenImg(text,fileName):#📂
             DBGprint(text=text)
             extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
             defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
@@ -62,7 +62,7 @@ class Packer():
 
             #(backup path("../default_assets/backup.png"))
 
-        def SavImg(export,text,defaultName):
+        def SavImg(export,text,defaultName):#💾
             #exportQuality = 90
             #filePath = filedialog.asksaveasfile()
             defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
@@ -86,16 +86,16 @@ class Packer():
 
         #opens file without a file dialogue
         #use in batch open
-        def DefLoad(fileName):
+        def DefLoad(fileName):#📁Def
             defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
             file = PIL.Image.open(defaultPath)#opens the file from the path
             return file
         
 
-        def OpenImgBatch():
+        def OpenImgBatch():#📁📁📁📁
             print("This functionality hasn't been made yet")
 
-        def SavImgBatch():
+        def SavImgBatch():#💾💾💾💾
             print("This functionality hasn't been made yet")
         
         
@@ -110,6 +110,16 @@ class Packer():
 
 
     ##-----------------------Pack and Unpack Channels-----------------------
+
+    #    _______
+    #   |       |                       _______________
+    #   |   R   |___                   |               |
+    #   |_______|   |      <------     |               |
+    #       |   G   |___   ------>     |     RGBA      |
+    #       |_______|   |              |               |
+    #           |   B   |              |               |
+    #           |_______|              |_______________|
+    #
 
     class ImPack():
         #image packing class
@@ -183,6 +193,7 @@ class Packer():
 #    /      _______________      \
 #   /      /               \      \
 #   \____/                   \____/
+#
 
 
 class Controller():
@@ -363,11 +374,11 @@ class Window(QWidget):
         #---------------------v-Seperate Channels-v------------------------
         #    _______
         #   |       |
-        #   |       |___
+        #   |   R   |___
         #   |_______|   |
-        #       |       |___
+        #       |   G   |___
         #       |_______|   |
-        #           |       |
+        #           |   B   |
         #           |_______|
         #
         #RGBA as containers
@@ -397,6 +408,14 @@ class Window(QWidget):
 
         #----------------------v-PACKED Channels-v-------------------------
 
+        #    _______________
+        #   |               |
+        #   |               |
+        #   |     RGBA      |
+        #   |               |
+        #   |               |
+        #   |_______________|
+
         #RGBA as containers
         RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA",Img=Packer.RGBA)
 
@@ -413,6 +432,7 @@ class Window(QWidget):
         #---Pack Button
         pack = QPushButton("Pack Textures\n --> ")
         #-------🎮 NEEDS ADDING TO CONROLLER
+        pack.clicked.connect(Controller.BtnPacking)
         pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         
         #---Unpack Button
