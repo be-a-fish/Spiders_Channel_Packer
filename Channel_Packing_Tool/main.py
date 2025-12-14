@@ -185,15 +185,15 @@ class Packer():
 #just generally better than you in every consivable way
 
 #   This might look stupid and unproffesional but it helps me find the controller section faster
-#   
-#         _---___________---_
-#        / /  \  _  _     Y  \
-#      /   \__/         X   B  \
-#     /        +    (_)   A     \
-#    /      _______________      \
-#   /      /               \      \
-#   \____/                   \____/
-#
+#                   ||
+#         _--‾‾----------‾‾--_
+#        / /‾‾\  _ (X) _    Y \
+#      /   \__/|‾|        X   B \
+#     /      [‾   ‾]  /‾‾\  A    \
+#    /        ‾|_|‾   \__/        \
+#   /      /‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\      \
+#   \_  _/                    \_  _/
+#     ‾‾                        ‾‾
 
 
 class Controller():
@@ -433,7 +433,7 @@ class Window(QWidget):
         pack = QPushButton("Pack Textures\n --> ")
         #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(Controller.BtnPacking)
-        pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
+        #pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         
         #---Unpack Button
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -450,7 +450,7 @@ class Window(QWidget):
         useAlphaCB.clicked.connect(Packer.alphaToggle)
         settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
-        if DEBUG:
+        if DEBUG:#adds a debug button if debug is enabled
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
             DBGButton.clicked.connect(Controller.BtnDBG)
             settings.addWidget(DBGButton,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
