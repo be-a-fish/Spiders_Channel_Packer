@@ -71,6 +71,11 @@ class Packer():
             #filePath = str("./default_output/",defaultName)
             #print("didn't manage to get that dictionary. defaulting to ",filePath)
             print ("file path for save is",filePath)
+            if Packer.useAlpha:
+                print("exporting with alpha")
+            else:
+                export = Image.Image.convert(self=export, mode='RGB')
+                print("exporting without alpha")
             try:
                 export = export.save(fp=str(filePath))
             except ValueError as E:
@@ -256,12 +261,14 @@ class Controller():
         #also add update GUI function when implimented
 
     def BtnDBG():
-        DBGprint("OK what's broken now?")
+        DBGprint("OK what's broken now?\n ")
+        print("Details on the colour channels")
         print("Rchan details: ",Packer.RChan)
         print("Gchan details: ",Packer.GChan)
         print("Bchan details: ",Packer.BChan)
         print("Achan details: ",Packer.AChan)
         print("RGBA details: ",Packer.RGBA)
+        print(" \ndetails on the alpha toggle: ",Packer.useAlpha)
 
 
     #----Tickboxes
@@ -305,7 +312,10 @@ class Window(QWidget):
                      "but can it run DOOM?",
                      "this is what programmers do when they haven't had enough sleep",
                      "AI can eat a bag of CONTENT NOT AVAILABLE WITHOUT AGE VERIFICATION",
-                     "And my parents still aren't proud of me"]
+                     "And my parents still aren't proud of me",
+                     "Turns out she could say much worse than no",
+                     "Did you know there are more planes in the sea than submarines in the sky",
+                     "RGBTQ+ Rights"]
         title = random.choice(titleList)
 
         self.setWindowTitle(title)
