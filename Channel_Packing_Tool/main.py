@@ -230,7 +230,7 @@ class Controller():
         else:
             print(name," isn't a valid name")
 
-        Packer.ImRW.SavImg(export=exp,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png")
+        Packer.ImRW.SavImg(export=exp,text="save "+name+" channel texture, usually "+filename,defaultName=filename)
 
     def BtnImport(name, filename):
         DBGprint("button import pressed")
