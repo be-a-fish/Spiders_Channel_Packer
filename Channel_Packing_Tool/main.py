@@ -99,17 +99,25 @@ class Packer():
 
         def OpenImgBatch():#📁📁📁📁
             print("This functionality hasn't been made yet")
+            
 
         def SavImgBatch():#💾💾💾💾
             print("This functionality hasn't been made yet")
         
         
-    ##-----------------------Load Defaults-----------------------
+    ##-----------------------Packer Variables Load Defaults-----------------------
 
     RGBA = ImRW.DefLoad(fileName="ORMA.png")
 
     RChan, GChan, BChan, AChan = Image.Image.split(RGBA)#need to define before function so can't use unpacker
 
+    DefNames = {
+        "red" : "Occlusion.png",
+        "green" : "Roughness.png",
+        "blue" : "Metalic.png",
+        "alpha" : "Alpha_Mask.png",
+        "RGBA" : "ORMA.png"
+    }
     #all functional for now :)
     #thats probably a lie lol
 
@@ -253,7 +261,7 @@ class Controller():
 
     def BtnPacking():
         DBGprint("button pack pressed")
-        Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented")
+        Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace string with resolution when implimented")
 
     def BtnUnpacking():
         DBGprint("button unpack pressed")
@@ -339,7 +347,7 @@ class Window(QWidget):
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
         #makes the RGBA channels as boxes
-        def MakeChannel(name,imgPath,filename,Img):
+        def MakeChannel(name,imgPath,filename):
             channel = QVBoxLayout()
 
             #---------Image Label-----------
@@ -371,7 +379,7 @@ class Window(QWidget):
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
             channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-            channel.addWidget(QLineEdit(filename+".png"),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QLineEdit(filename),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
             container = QWidget()
@@ -392,10 +400,10 @@ class Window(QWidget):
         #           |_______|
         #
         #RGBA as containers
-        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/Occlusion.png", filename="Occlusion",Img=Packer.RChan)
-        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/Roughness.png", filename="Roughness",Img=Packer.GChan)
-        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/Metalic.png", filename="Metalic",Img=Packer.BChan)
-        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/Alpha_Mask.png", filename="Alpha_Mask",Img=Packer.AChan)
+        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["red"], filename=Packer.DefNames["red"])
+        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["green"], filename=Packer.DefNames["green"])
+        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["blue"], filename=Packer.DefNames["blue"])
+        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["alpha"], filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
         seperateChans1.addWidget(redCont)
@@ -427,7 +435,7 @@ class Window(QWidget):
         #   |_______________|
 
         #RGBA as containers
-        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/ORMA.png", filename="ORMA",Img=Packer.RGBA)
+        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["RGBA"], filename=Packer.DefNames["RGBA"])
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBACont)

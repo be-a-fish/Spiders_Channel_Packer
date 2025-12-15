@@ -8,7 +8,9 @@ also worth looking into a tickbox for "use alpha"
 
 GUI: Images scaling breacks aspect ratio
 
-GUI: push buttons activating at launch instead of on press
+GUI:images not updating when values changed:
+potential fix:  use a class to determine image labels rather than asign them in the mask maker.
+                then update the values in the class.
 
 Tool: Channels not packing into RGBA
 
@@ -22,6 +24,7 @@ need to sets Packer Var rather than return it
  need to specify image to export on export rather than at button creation
 
 
+GUI: push buttons activating at launch instead of on press
 
 
 ===Planned Features:
