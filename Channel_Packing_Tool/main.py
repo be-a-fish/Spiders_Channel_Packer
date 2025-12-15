@@ -11,6 +11,7 @@ from functools import partial#for sending variables through button inputs
 
 from PIL import Image
 import PIL
+from PIL import ImageQt
 
 from tkinter import filedialog#file dialogue boxes. Literally don't use tkinter for anything else
 
@@ -21,9 +22,6 @@ DEBUG = True
 def DBGprint(text):
     if DEBUG:
         print(text)
-
-
-
 
 
 
@@ -105,11 +103,34 @@ class Packer():
             print("This functionality hasn't been made yet")
         
         
-    ##-----------------------Packer Variables Load Defaults-----------------------
-
+    ##-----------------------Packer Variables Load Defaults and update Vars-----------------------
+    
+    #Pillow RGBA
     RGBA = ImRW.DefLoad(fileName="ORMA.png")
-
+    #Pillow channels
     RChan, GChan, BChan, AChan = Image.Image.split(RGBA)#need to define before function so can't use unpacker
+
+
+    #makes a list from PIL channels in Qt image format
+    QtChans = []
+    #Order: RChan,GChan,BChan,AChan,RGBA
+
+    def PILtoQtUpdate():
+        Packer.QtChans = []
+        for i in [Packer.RChan, Packer.GChan, Packer.BChan, Packer.AChan, Packer.RGBA]:
+            QtChan = ImageQt.ImageQt(i)#converts into Qt image format
+            print(QtChan)
+            Packer.QtChans.append(QtChan)
+            #Order: RChan,GChan,BChan,AChan,RGBA
+    
+    #PILtoQtUpdate()#calls the function once to set defaults
+
+    '''
+    for i in [RChan, GChan, BChan, AChan, RGBA]:
+        QtChan = ImageQt.ImageQt(i)
+        print(QtChan)
+        QtChans.append(QtChan)
+    '''
 
     DefNames = {
         "red" : "Occlusion.png",
@@ -120,6 +141,8 @@ class Packer():
     }
     #all functional for now :)
     #thats probably a lie lol
+
+    
 
 
     ##-----------------------Pack and Unpack Channels-----------------------
@@ -278,6 +301,8 @@ class Controller():
         print("RGBA details: ",Packer.RGBA)
         print(" \ndetails on the alpha toggle: ",Packer.useAlpha)
         print("default export names are: ",Packer.DefNames)
+        Packer.PILtoQtUpdate()
+        print("\nQt image format details:",Packer.QtChans)
 
 
     #----Tickboxes
@@ -357,17 +382,33 @@ class Window(QWidget):
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
 
+        '''
+        def UpdatePixmap(label):
+            imgGUI = QtGui.QPixmap(imgPath)
+            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            
+            
+            label.setPixmap(imgGUI)
+            label.setScaledContents(200)
+            #label.setMaximumSize(500,500)
+            label.setMinimumSize(100,100)
+            label.setBaseSize(200,200)
 
+        '''
 
 
         #makes the RGBA channels as boxes
-        def MakeChannel(name,imgPath,filename):
+        def MakeChannel(name,Channel,imgPath,filename):
             channel = QVBoxLayout()
 
             #---------Image Label-----------
             #to do: maintain aspect ratio
             label = QLabel()
-            imgGUI = QtGui.QPixmap(imgPath)
+            #imgGUI = QtGui.QPixmap(imgPath)
+            #imgQt = ImageQt.ImageQt(Channel)
+            
+
+            imgGUI = QtGui.QPixmap(Channel)
             imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
             
             
@@ -417,10 +458,11 @@ class Window(QWidget):
         #           |_______|
         #
         #RGBA as containers
-        redCont = MakeChannel(name="red", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["red"], filename=Packer.DefNames["red"])
-        greenCont = MakeChannel(name="green", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["green"], filename=Packer.DefNames["green"])
-        blueCont = MakeChannel(name="blue", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["blue"], filename=Packer.DefNames["blue"])
-        alphaCont = MakeChannel(name="alpha", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["alpha"], filename=Packer.DefNames["alpha"])
+        Packer.PILtoQtUpdate()#updates the QtImage list just before creating the images
+        redCont = MakeChannel(name="red", Channel=Packer.QtChans[0], imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["red"], filename=Packer.DefNames["red"])
+        greenCont = MakeChannel(name="green", Channel=Packer.QtChans[1], imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["green"], filename=Packer.DefNames["green"])
+        blueCont = MakeChannel(name="blue", Channel=Packer.QtChans[2], imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["blue"], filename=Packer.DefNames["blue"])
+        alphaCont = MakeChannel(name="alpha", Channel=Packer.QtChans[3], imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["alpha"], filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
         seperateChans1.addWidget(redCont)
@@ -452,7 +494,7 @@ class Window(QWidget):
         #   |________________|
 
         #RGBA as containers
-        RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["RGBA"], filename=Packer.DefNames["RGBA"])
+        RGBACont = MakeChannel(name="packed", Channel=Packer.QtChans[4], imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["RGBA"], filename=Packer.DefNames["RGBA"])
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBACont)
@@ -460,6 +502,18 @@ class Window(QWidget):
         #----------------------^-PACKED Channels-^-------------------------
 
         #-------------------------v-Settings-v----------------------------
+        #
+        #                ####        
+        #          ###  ######  ###   
+        #         ##################  
+        #          #####      #####   
+        #        #####          ##### 
+        #       ######          ######
+        #        #####         ##### 
+        #          #####      ##### 
+        #         ################## 
+        #          ###  ######  ### 
+        #                #### 
 
         settings = QVBoxLayout()
         settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
@@ -485,10 +539,20 @@ class Window(QWidget):
         useAlphaCB.clicked.connect(Packer.alphaToggle)
         settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
+        #DEBUG STUFF
+
+        
         if DEBUG:#adds a debug button if debug is enabled
+
+            DBGLabel = QLabel("Test Label")
+            settings.addWidget(DBGLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
             DBGButton.clicked.connect(Controller.BtnDBG)
+            DBGButton.clicked.connect(partial(DBGLabel.setText,"Updated Label"))
             settings.addWidget(DBGButton,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+
+            
 
 
         #-------------------------^-Settings-^----------------------------
