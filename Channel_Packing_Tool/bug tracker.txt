@@ -9,6 +9,9 @@ GUI:images not updating when values changed:
 potential fix:  use a class to determine image labels rather than asign them in the mask maker.
                 then update the values in the class.
                 Didnt work
+                -
+                i think the issue is not being able to set the label variables.
+                need to be able to return values from a button click
 
 Tool: Channels not packing into RGBA
 
