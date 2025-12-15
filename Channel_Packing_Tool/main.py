@@ -198,8 +198,8 @@ class Packer():
 #just generally better than you in every consivable way
 
 #   This might look stupid and unproffesional but it helps me find the controller section faster
-#                   ||
-#         _--‾‾----------‾‾--_
+#                   |
+#         _--‾‾-----^----‾‾--_
 #        / /‾‾\  _ (X) _    Y \
 #      /   \__/|‾|        X   B \
 #     /      [‾   ‾]  /‾‾\  A    \
@@ -277,6 +277,7 @@ class Controller():
         print("Achan details: ",Packer.AChan)
         print("RGBA details: ",Packer.RGBA)
         print(" \ndetails on the alpha toggle: ",Packer.useAlpha)
+        print("default export names are: ",Packer.DefNames)
 
 
     #----Tickboxes
@@ -286,18 +287,27 @@ class Controller():
 
     #----Textboxes
 
-    def TxtBoxToVar():
+    def setName(text,chanName):
         DBGprint("Update Text Box")
-
-    
-
-
-
-
+        Packer.DefNames[chanName] = text
 
 
 
 #-----------------GUI-----------------
+# _________________________________________________
+#| 🕷Spiders Channel packing tool            _[]X  |
+#|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+#||‾‾‾‾‾|   |‾‾‾‾‾|             |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
+#||  R  |   |  B  |             |                | |
+#||‾‾‾‾‾|   |‾‾‾‾‾|  _____      |                | |
+#||‾‾‾‾‾|   |‾‾‾‾‾| | --> |     |      RGBA      | |
+#| ‾‾‾‾‾     ‾‾‾‾‾   ‾‾‾‾‾      |                | |
+#||‾‾‾‾‾|   |‾‾‾‾‾|  _____      |                | |
+#||  G  |   |  A  | | <-- |     |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
+#||‾‾‾‾‾|   |‾‾‾‾‾|  ‾‾‾‾‾      |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
+#||‾‾‾‾‾|   |‾‾‾‾‾|             |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
+#| ‾‾‾‾‾     ‾‾‾‾‾               ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  |
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 class Window(QWidget):
     def __init__(self):
@@ -346,6 +356,10 @@ class Window(QWidget):
         seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
+
+
+
+
         #makes the RGBA channels as boxes
         def MakeChannel(name,imgPath,filename):
             channel = QVBoxLayout()
@@ -379,7 +393,10 @@ class Window(QWidget):
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
             channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
-            channel.addWidget(QLineEdit(filename),1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            txtBox = QLineEdit(filename)
+            #-------🎮
+            txtBox.textChanged.connect(partial(Controller.setName,chanName=name))
+            channel.addWidget(txtBox,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
             container = QWidget()
@@ -426,13 +443,13 @@ class Window(QWidget):
 
         #----------------------v-PACKED Channels-v-------------------------
 
-        #    _______________
-        #   |               |
-        #   |               |
-        #   |     RGBA      |
-        #   |               |
-        #   |               |
-        #   |_______________|
+        #   |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+        #   |                |
+        #   |                |
+        #   |      RGBA      |
+        #   |                |
+        #   |                |
+        #   |________________|
 
         #RGBA as containers
         RGBACont = MakeChannel(name="packed", imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["RGBA"], filename=Packer.DefNames["RGBA"])
