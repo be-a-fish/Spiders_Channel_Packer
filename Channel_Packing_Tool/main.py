@@ -134,7 +134,7 @@ class Packer():
     DefNames = {
         "red" : "Occlusion.png",
         "green" : "Roughness.png",
-        "blue" : "Metalic.png",
+        "blue" : "Metallic.png",
         "alpha" : "Alpha_Mask.png",
         "RGBA" : "ORMA.png"
     }
@@ -385,177 +385,68 @@ class Window(QWidget):
         seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
-
-        '''
-        def UpdatePixmap(label):
-            imgGUI = QtGui.QPixmap(imgPath)
-            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-            
-            
-            label.setPixmap(imgGUI)
-            label.setScaledContents(200)
-            #label.setMaximumSize(500,500)
-            label.setMinimumSize(100,100)
-            label.setBaseSize(200,200)
-
-        '''
-
-        '''#enable if class version doesnt work
-        def MakeImgLabel(QtChanNum):
-            #---------Image Label-----------
-            #to do: maintain aspect ratio
-            label = QLabel()
-            
-
-            imgGUI = QtGui.QPixmap(Packer.QtChans[QtChanNum])
-            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-            
-            
-            label.setPixmap(imgGUI)
-            label.setScaledContents(200)
-            #label.setMaximumSize(500,500)
-            label.setMinimumSize(100,100)
-            label.setBaseSize(200,200)
-
-            return label
-        '''
         
-        class ImageManager():
-            chanNum = 0#defaults image number to red
-            #when using class put imgNum = to fix
-
-
-            def MakeImgLabel(self):
-                #---------Image Label-----------
-                #to do: maintain aspect ratio
-                label = QLabel()
-                
-                
-                imgGUI = QtGui.QPixmap(Packer.QtChans[self.chanNum])
-                imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-                
-                
-                label.setPixmap(imgGUI)
-                #label.setScaledContents(200)
-                #label.setMaximumSize(500,500)
-                label.setMinimumSize(100,100)
-                label.setBaseSize(200,200)
-
-                return label
-
-            
-            Label = MakeImgLabel()
+        labels = [QLabel(),QLabel(),QLabel(),QLabel(),QLabel()]
+        #           red     green    blue    alpha      RGBA
         
-        RLabClass = ImageManager.chanNum=0
-        GLabClass = ImageManager.chanNum=1
-        BLabClass = ImageManager.chanNum=2
-        ALabClass = ImageManager.chanNum=3
-        RGBALabClass = ImageManager.chanNum=4
-        
-        print (RLabClass.__dict__)
+        Rlab = QLabel("red img")
+        Glab = QLabel("green img")
+        Blab = QLabel("blue img")
+        Alab = QLabel("Alpha img")
 
-        class LiveUI():
-            Packer.PILtoQtUpdate()#updates the QtImage list just before creating the images
-            
-            def __init__(self,Rlab,Glab,Blab,Alab,RGBAlab):
-                pass
-                '''
-                #default labels
-                self.Rlab = self.MakeImgLabel(self,QtChanNum=0)
-                self.Glab = self.MakeImgLabel(self,QtChanNum=1)
-                self.Blab = self.MakeImgLabel(self,QtChanNum=2)
-                self.Alab = self.MakeImgLabel(self,QtChanNum=3)
-                self.RGBAlab = self.MakeImgLabel(self,QtChanNum=4)  
-                '''
-                
-                
-
-
-
-            def MakeImgLabel(self,QtChanNum):
-                #---------Image Label-----------
-                #to do: maintain aspect ratio
-                label = QLabel()
-                
-
-                imgGUI = QtGui.QPixmap(Packer.QtChans[QtChanNum])
-                imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-                
-                
-                label.setPixmap(imgGUI)
-                #label.setScaledContents(200)
-                #label.setMaximumSize(500,500)
-                label.setMinimumSize(100,100)
-                label.setBaseSize(200,200)
-
-                return label
+        RGBAlab = QLabel("packed image")
+        def MakeLabel(ChanNum):
             Packer.PILtoQtUpdate()
-            
-            
 
-            
-            '''
-
-            lablist = []
-            for i in [0,1,2,3,4]:
-                chan = MakeImgLabel(self,QtChanNum=i)
-                lablist.append
-
-            Rlab,Glab,Blab,Alab,RGBAlab = lablist
-            '''
-
-            #----UI Update
-            def UpdateGUI(self):
-                Packer.PILtoQtUpdate()
-                self.Rlab = LiveUI.MakeImgLabel(self,QtChanNum=0)#channel number is which number in list the image is stored
-                self.Glab = LiveUI.MakeImgLabel(self,QtChanNum=1)
-                self.Blab = LiveUI.MakeImgLabel(self,QtChanNum=2)
-                self.Alab = LiveUI.MakeImgLabel(self,QtChanNum=3)
-
-                self.RGBAlab = LiveUI.MakeImgLabel(self,QtChanNum=4)
-                print("trying to update UI")
-
-                #labList = [Rlab,Glab,Blab,Alab,RGBAlab]
-                #return labList
-
-            
-            #Rlab,Glab,Blab,Alab,RGBAlab = Controller.UpdateGUI()
-
-
-
-        #makes the RGBA channels as boxes
-        def MakeChannel(name,Imlabel,imgPath,filename):
-            channel = QVBoxLayout()
-            '''made label stuff. using func instead
-            #---------Image Label-----------
-            #to do: maintain aspect ratio
-            label = QLabel()
-            #imgGUI = QtGui.QPixmap(imgPath)
-            #imgQt = ImageQt.ImageQt(Channel)
-            
-
-            imgGUI = QtGui.QPixmap(Channel)
-            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-            
-            
-            label.setPixmap(imgGUI)
+            label=QLabel()
+            imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
+            imgUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+            label.setPixmap(imgUI)
             label.setScaledContents(200)
-            #label.setMaximumSize(500,500)
             label.setMinimumSize(100,100)
-            label.setBaseSize(200,200)
-            '''
-            
-            channel.addWidget(Imlabel,0)
+            label.setBaseSize(20,20)
+            return label
+        
+        Rlab = MakeLabel(0)
+        Glab = MakeLabel(1)
+        Blab = MakeLabel(2)
+        Alab = MakeLabel(3)
+        RGBAlab = MakeLabel(4)
+        print("rlab is\n",Rlab)
+
+
+        def UpdateLabels():
+            Packer.PILtoQtUpdate()
+
+            imgUI = QtGui.QPixmap(Packer.QtChans[0])
+            Rlab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[1])
+            Glab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[2])
+            Blab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[3])
+            Alab.setPixmap(imgUI)
+
+            imgUI = QtGui.QPixmap(Packer.QtChans[4])
+            RGBAlab.setPixmap(imgUI)
+        
+
+        
+        #makes the RGBA channels as boxes
+        def MakeChannelButtons(name,filename):
+            channel = QVBoxLayout()
 
             imp = QPushButton("📁 import "+name+" texture")
             #-------🎮
             imp.clicked.connect(partial(Controller.BtnImport,name=name,filename=filename))
+            imp.clicked.connect(partial(UpdateLabels))
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 export "+name+" texture")
             #-------🎮
             #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
             exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
+            exp.clicked.connect(partial(UpdateLabels))
 
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
@@ -605,18 +496,25 @@ class Window(QWidget):
 
         Packer.PILtoQtUpdate()#updates the QtImage list just before creating the images
         #Rlab = MakeImgLabel(QtChan=Packer.QtChans[0])
-        redCont = MakeChannel(name="red", Imlabel=LiveUI.Rlab , imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["red"], filename=Packer.DefNames["red"])
+        redCont = MakeChannelButtons(name="red", filename=Packer.DefNames["red"])
         #Glab = MakeImgLabel(QtChan=Packer.QtChans[1])
-        greenCont = MakeChannel(name="green", Imlabel=LiveUI.Glab, imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["green"], filename=Packer.DefNames["green"])
+        greenCont = MakeChannelButtons(name="green", filename=Packer.DefNames["green"])
         #Blab = MakeImgLabel(QtChan=Packer.QtChans[2])
-        blueCont = MakeChannel(name="blue", Imlabel=LiveUI.Blab, imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["blue"], filename=Packer.DefNames["blue"])
+        blueCont = MakeChannelButtons(name="blue", filename=Packer.DefNames["blue"])
         #Alab = MakeImgLabel(QtChan=Packer.QtChans[3])
-        alphaCont = MakeChannel(name="alpha", Imlabel=LiveUI.Alab, imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["alpha"], filename=Packer.DefNames["alpha"])
+        alphaCont = MakeChannelButtons(name="alpha", filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
+        seperateChans1.addWidget(Rlab)
         seperateChans1.addWidget(redCont)
+
+        seperateChans1.addWidget(Glab)
         seperateChans1.addWidget(greenCont)
+
+        seperateChans2.addWidget(Blab)
         seperateChans2.addWidget(blueCont)
+
+        seperateChans2.addWidget(Alab)
         seperateChans2.addWidget(alphaCont)
 
         
@@ -644,9 +542,10 @@ class Window(QWidget):
 
         #RGBA as containers
         #RGBAlab = MakeImgLabel(QtChan=Packer.QtChans[4])
-        RGBACont = MakeChannel(name="packed", Imlabel=LiveUI.RGBAlab, imgPath="./Channel_Packing_Tool/default_assets/"+Packer.DefNames["RGBA"], filename=Packer.DefNames["RGBA"])
+        RGBACont = MakeChannelButtons(name="packed", filename=Packer.DefNames["RGBA"])
 
         #Add containers to Vertical layout
+        packedChans.addWidget(RGBAlab)
         packedChans.addWidget(RGBACont)
 
         #----------------------^-PACKED Channels-^-------------------------
@@ -672,6 +571,7 @@ class Window(QWidget):
         pack = QPushButton("Pack Textures\n --> ")
         #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(Controller.BtnPacking)
+        pack.clicked.connect(partial(UpdateLabels))
         #pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         
         #---Unpack Button
@@ -680,6 +580,7 @@ class Window(QWidget):
         #unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         #-------🎮
         unpack.clicked.connect(Controller.BtnUnpacking)
+        unpack.clicked.connect(partial(UpdateLabels))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
         #---Alpha Checkbox
@@ -694,12 +595,11 @@ class Window(QWidget):
         
         if DEBUG:#adds a debug button if debug is enabled
 
-            DBGLabel = QLabel("Test Label")
-            settings.addWidget(DBGLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+            #DBGLabel = QLabel("Test Label")
+            #settings.addWidget(DBGLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
-            DBGLabelImg = LiveUI.MakeImgLabel(self,QtChanNum=4)
-            settings.addWidget(DBGLabelImg)
             
+            '''
             DBGlabelImg = QLabel()
             imgGUI = QtGui.QPixmap(Packer.QtChans[4])
             imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
@@ -720,13 +620,13 @@ class Window(QWidget):
                 DBGlabelImg.setMinimumSize(100,100)
                 DBGlabelImg.setBaseSize(20,20)
                 print("did it work?")
-            
-            
+            '''
 
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
             DBGButton.clicked.connect(Controller.BtnDBG)
-            DBGButton.clicked.connect(partial(DBGLabel.setText,"Updated Label"))
-            DBGButton.clicked.connect(partial(LiveUI.UpdateGUI,self=DBGLabelImg))#need to find a way of returning the values
+            #DBGButton.clicked.connect(partial(DBGLabel.setText,"Updated Label"))
+            #DBGButton.clicked.connect(partial(UpdateGUI))#need to find a way of returning the values
+            DBGButton.clicked.connect(partial(UpdateLabels))
             settings.addWidget(DBGButton,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
             
