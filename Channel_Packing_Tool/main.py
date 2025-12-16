@@ -416,7 +416,7 @@ class Window(QWidget):
 
 
         def UpdateLabels():
-            Packer.PILtoQtUpdate()
+            Packer.PILtoQtUpdate()#recalculates the Qt images from the PIL images
 
             imgUI = QtGui.QPixmap(Packer.QtChans[0])
             Rlab.setPixmap(imgUI)
@@ -436,13 +436,13 @@ class Window(QWidget):
         def MakeChannelButtons(name,filename):
             channel = QVBoxLayout()
 
-            imp = QPushButton("📁 import "+name+" texture")
+            imp = QPushButton("📁 Import "+name+" texture")
             #-------🎮
             imp.clicked.connect(partial(Controller.BtnImport,name=name,filename=filename))
             imp.clicked.connect(partial(UpdateLabels))
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
-            exp = QPushButton("💾 export "+name+" texture")
+            exp = QPushButton("💾 Export "+name+" texture")
             #-------🎮
             #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
             exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
@@ -451,7 +451,7 @@ class Window(QWidget):
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
-            channel.addWidget(QLabel(" default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QLabel(" Default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             txtBox = QLineEdit(filename)
             #-------🎮
             txtBox.textChanged.connect(partial(Controller.setName,chanName=name))
@@ -518,12 +518,12 @@ class Window(QWidget):
         seperateChans2.addWidget(alphaCont)
 
         
-        batchImp = QPushButton("📁 batch import channels")
+        batchImp = QPushButton("📁 Batch import channels")
         #-------🎮 NEEDS ADDING TO CONROLLER
         batchImp.clicked.connect(partial(Packer.ImRW.OpenImgBatch))
         seperateChans1.addWidget(batchImp)#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
 
-        batchExp = QPushButton("💾 batch export channels")
+        batchExp = QPushButton("💾 Batch export channels")
         #-------🎮 NEEDS ADDING TO CONROLLER
         batchExp.clicked.connect(partial(Packer.ImRW.SavImgBatch))
         seperateChans2.addWidget(batchExp)
