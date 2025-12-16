@@ -96,10 +96,21 @@ class Packer():
 
         def OpenImgBatch():#📁📁📁📁
             print("This functionality hasn't been made yet")
-            
+
+            defPath = str("./Channel_Packing_Tool/default_output/")
+            filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
+            print ("file path for import is",filePath)
+
+            Packer.RChan = PIL.Image.open(str(filePath+Packer.DefNames["red"]))#opens the file from the path
+            Packer.GChan = PIL.Image.open(str(filePath+Packer.DefNames["green"]))
+            Packer.BChan = PIL.Image.open(str(filePath+Packer.DefNames["blue"]))
+            if Packer.useAlpha:
+                Packer.AChan = PIL.Image.open(str(filePath+Packer.DefNames["alpha"]))
+
+
+
 
         def SavImgBatch():#💾💾💾💾
-            print("This functionality hasn't been made yet")
 
             defPath = str("./Channel_Packing_Tool/default_output/")
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
@@ -108,7 +119,7 @@ class Packer():
             Packer.RChan.save(fp=str(filePath+Packer.DefNames["red"]))
             Packer.GChan.save(fp=str(filePath+Packer.DefNames["green"]))
             Packer.BChan.save(fp=str(filePath+Packer.DefNames["blue"]))
-            if Packer.alphaToggle:#only export alopha if alpha toggle is true
+            if Packer.useAlpha:#only export alpha if alpha toggle is true
                 Packer.AChan.save(fp=str(filePath+Packer.DefNames["alpha"]))
 
 
@@ -554,6 +565,7 @@ class Window(QWidget):
         batchImp = QPushButton("📁 Batch import channels")
         #-------🎮 NEEDS ADDING TO CONROLLER
         batchImp.clicked.connect(partial(Packer.ImRW.OpenImgBatch))
+        batchImp.clicked.connect(partial(UpdateLabels))
         seperateChans1.addWidget(batchImp)#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
 
         batchExp = QPushButton("💾 Batch export channels")
