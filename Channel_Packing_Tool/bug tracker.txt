@@ -1,8 +1,9 @@
 
 ====Known issues:
 
-
 GUI: Images scaling breacks aspect ratio
+
+Tool: Images of different resolutions can't pack together
 
 ===Fixed issues:
 
