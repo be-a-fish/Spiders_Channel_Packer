@@ -111,7 +111,7 @@ class Packer():
 
 
     #makes a list from PIL channels in Qt image format
-    QtChans = []
+    QtChans = []#needs to be empty at first because PILtoQtUpdate function gives its values
     #Order: RChan,GChan,BChan,AChan,RGBA
 
     def PILtoQtUpdate():
@@ -256,7 +256,7 @@ class Controller():
 
     def BtnImport(name, filename):
         DBGprint("button import pressed")
-        chan = Packer.ImRW.OpenImg(text="open "+name+" texture, usually "+filename,fileName=filename+".png")
+        chan = Packer.ImRW.OpenImg(text="open "+name+" texture, usually "+filename,fileName=filename)
         
         #identify channel by name
         if name == "packed":
