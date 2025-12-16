@@ -1,9 +1,15 @@
 
 ====Known issues:
 
-Tool Adds .png twice to open image
 
 GUI: Images scaling breacks aspect ratio
+
+===Fixed issues:
+
+Tool: doesn't work with 3 channel image files.
+potential solutions:
+any opened files need to be converted to 3 channel images.
+also worth looking into a tickbox for "use alpha"
 
 GUI:images not updating when values changed:
 potential fix:  use a class to determine image labels rather than asign them in the mask maker.
@@ -13,15 +19,6 @@ potential fix:  use a class to determine image labels rather than asign them in 
                 i think the issue is not being able to set the label variables.
                 need to be able to return values from a button click
 
-Tool: Channels not packing into RGBA
-
-===Fixed issues:
-
-Tool: doesn't work with 3 channel image files.
-potential solutions:
-any opened files need to be converted to 3 channel images.
-also worth looking into a tickbox for "use alpha"
-
 GUI: images not scaling
 
 Tool: Images are remaining default
@@ -29,6 +26,9 @@ need to sets Packer Var rather than return it
 -discovered Img variable wasn't being updated in real time.
  need to specify image to export on export rather than at button creation
 
+Tool Adds .png twice to open image
+
+Tool: Channels not packing into RGBA
 
 GUI: push buttons activating at launch instead of on press
 

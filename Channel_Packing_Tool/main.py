@@ -406,7 +406,11 @@ class Window(QWidget):
                      "free the nipple!!!",
                      "Nuclear Ghandi did nothing wrong",
                      "The Simpsons predicted this software",
-                     "Did you ever hear the tradgedy of Darth Plagueis the Wise?"]
+                     "Did you ever hear the tradgedy of Darth Plagueis the Wise?",
+                     "Pack it up, pack it in, let me begin. I came to win, battle me, that's a sin",
+                     "No AI was used in the creation of this software cos I have standards",
+                     "No animals were harmed in the creation of this software",
+                     "I hate London"]
         title = random.choice(titleList)
 
         self.setWindowTitle(title)
