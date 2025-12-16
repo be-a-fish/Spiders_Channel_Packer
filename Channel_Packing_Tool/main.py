@@ -364,7 +364,12 @@ class Window(QWidget):
                      "Did you know there are more planes in the sea than submarines in the sky",
                      "RGBTQ+ Rights",
                      "All I wanted was a Pepsi. Just one Pepsi. And she wouldn't give it to me. Just one Pepsi",
-                     "This app is rated PG.13 so I get one use of the word fuck and I just wasted it"]
+                     "This app is rated PG.13 so I get one use of the word fuck and I just wasted it",
+                     "Who shot Mr Burns?",
+                     "free the nipple!!!",
+                     "Nuclear Ghandi did nothing wrong",
+                     "The Simpsons predicted this software",
+                     "Did you ever hear the tradgedy of Darth Plagueis the Wise?"]
         title = random.choice(titleList)
 
         self.setWindowTitle(title)
