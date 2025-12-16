@@ -17,7 +17,7 @@ from tkinter import filedialog#file dialogue boxes. Literally don't use tkinter 
 
 ##-----------------------testing zone-----------------------
 
-DEBUG = True
+DEBUG = False
 
 def DBGprint(text):
     if DEBUG:
@@ -448,11 +448,15 @@ class Window(QWidget):
 
             label=QLabel()
             imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
-            imgUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+            imgUI.scaled(200,200,
+                         aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+                         mode=QtCore.Qt.TransformationMode.FastTransformation)
+            
             label.setPixmap(imgUI)
-            label.setScaledContents(200)
+            label.setScaledContents(True)
             label.setMinimumSize(100,100)
             label.setBaseSize(20,20)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
             return label
         
         Rlab = MakeLabel(0)

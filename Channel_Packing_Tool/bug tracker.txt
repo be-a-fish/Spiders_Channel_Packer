@@ -38,6 +38,8 @@ GUI: push buttons activating at launch instead of on press
 
 Resolution scaling
 
+different icon for world events. e.g. pride/halloween/xmas
+
 ===Implimented Features
 
 alpha toggle
