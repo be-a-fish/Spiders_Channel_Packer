@@ -699,7 +699,7 @@ class Window(QWidget):
 
             DBGLabelImg = LiveUI.MakeImgLabel(self,QtChanNum=4)
             settings.addWidget(DBGLabelImg)
-            '''
+            
             DBGlabelImg = QLabel()
             imgGUI = QtGui.QPixmap(Packer.QtChans[4])
             imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
@@ -720,7 +720,7 @@ class Window(QWidget):
                 DBGlabelImg.setMinimumSize(100,100)
                 DBGlabelImg.setBaseSize(20,20)
                 print("did it work?")
-            '''
+            
             
 
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")

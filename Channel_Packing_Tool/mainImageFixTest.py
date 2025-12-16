@@ -406,7 +406,77 @@ class Window(QWidget):
         #red channel UI:
         seperateChans1.addWidget(ChanLabelsList[0],0)
         '''
+        labels = [QLabel(),QLabel(),QLabel(),QLabel(),QLabel()]
+        #           red     green    blue    alpha      RGBA
+        
+        Rlab = QLabel("red img")
+        Glab = QLabel("green img")
+        Blab = QLabel("blue img")
+        Alab = QLabel("Alpha img")
 
+        RGBAlab = QLabel("packed image")
+        def MakeLabel(ChanNum):
+            Packer.PILtoQtUpdate()
+
+            label=QLabel()
+            imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
+            imgUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            label.setPixmap(imgUI)
+            label.setScaledContents(200)
+            label.setMinimumSize(100,100)
+            label.setBaseSize(20,20)
+            return label
+        
+        Rlab = MakeLabel(0)
+        Glab = MakeLabel(1)
+        Blab = MakeLabel(2)
+        Alab = MakeLabel(3)
+        RGBAlab = MakeLabel(4)
+        print("rlab is\n",Rlab)
+
+
+        def UpdateLabels():
+            Packer.PILtoQtUpdate()
+
+            imgUI = QtGui.QPixmap(Packer.QtChans[0])
+            Rlab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[1])
+            Glab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[2])
+            Blab.setPixmap(imgUI)
+            imgUI = QtGui.QPixmap(Packer.QtChans[3])
+            Alab.setPixmap(imgUI)
+
+            imgUI = QtGui.QPixmap(Packer.QtChans[4])
+            RGBAlab.setPixmap(imgUI)
+        
+        '''
+        def UpdateLabel(ChanNum=4):
+            Packer.PILtoQtUpdate()#updates the images to make sure they're the same as loaded images
+            
+            label=QLabel()
+            imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
+            imgUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+            label.setPixmap(imgUI)
+            label.setScaledContents(200)
+            label.setMinimumSize(100,100)
+            label.setBaseSize(20,20)
+            return label
+            
+            if ChanNum == 0:
+                Rlab = label
+            elif ChanNum == 1:
+                Glab = label
+            elif ChanNum == 2:
+                Blab = label
+            elif ChanNum == 3:
+                Alab = label
+            elif ChanNum == 4:
+                RGBAlab = label
+        '''
+        
+        
+        
         #makes the RGBA channels as boxes
         def MakeChannelButtons(name,filename):
             channel = QVBoxLayout()
@@ -478,9 +548,16 @@ class Window(QWidget):
         alphaCont = MakeChannelButtons(name="alpha", filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
+        seperateChans1.addWidget(Rlab)
         seperateChans1.addWidget(redCont)
+
+        seperateChans1.addWidget(Glab)
         seperateChans1.addWidget(greenCont)
+
+        seperateChans2.addWidget(Blab)
         seperateChans2.addWidget(blueCont)
+
+        seperateChans2.addWidget(Alab)
         seperateChans2.addWidget(alphaCont)
 
         
@@ -511,6 +588,7 @@ class Window(QWidget):
         RGBACont = MakeChannelButtons(name="packed", filename=Packer.DefNames["RGBA"])
 
         #Add containers to Vertical layout
+        packedChans.addWidget(RGBAlab)
         packedChans.addWidget(RGBACont)
 
         #----------------------^-PACKED Channels-^-------------------------
@@ -584,12 +662,12 @@ class Window(QWidget):
                 DBGlabelImg.setBaseSize(20,20)
                 print("did it work?")
             
-            
 
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
             DBGButton.clicked.connect(Controller.BtnDBG)
             DBGButton.clicked.connect(partial(DBGLabel.setText,"Updated Label"))
             DBGButton.clicked.connect(partial(UpdateGUI))#need to find a way of returning the values
+            DBGButton.clicked.connect(partial(UpdateLabels))
             settings.addWidget(DBGButton,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
             
