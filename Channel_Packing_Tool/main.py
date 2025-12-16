@@ -419,10 +419,60 @@ class Window(QWidget):
 
             return label
         '''
+        
+        class ImageManager():
+            chanNum = 0#defaults image number to red
+            #when using class put imgNum = to fix
+
+
+            def MakeImgLabel(self):
+                #---------Image Label-----------
+                #to do: maintain aspect ratio
+                label = QLabel()
+                
+                
+                imgGUI = QtGui.QPixmap(Packer.QtChans[self.chanNum])
+                imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
+                
+                
+                label.setPixmap(imgGUI)
+                #label.setScaledContents(200)
+                #label.setMaximumSize(500,500)
+                label.setMinimumSize(100,100)
+                label.setBaseSize(200,200)
+
+                return label
+
+            
+            Label = MakeImgLabel()
+        
+        RLabClass = ImageManager.chanNum=0
+        GLabClass = ImageManager.chanNum=1
+        BLabClass = ImageManager.chanNum=2
+        ALabClass = ImageManager.chanNum=3
+        RGBALabClass = ImageManager.chanNum=4
+        
+        print (RLabClass.__dict__)
+
         class LiveUI():
             Packer.PILtoQtUpdate()#updates the QtImage list just before creating the images
+            
+            def __init__(self,Rlab,Glab,Blab,Alab,RGBAlab):
+                pass
+                '''
+                #default labels
+                self.Rlab = self.MakeImgLabel(self,QtChanNum=0)
+                self.Glab = self.MakeImgLabel(self,QtChanNum=1)
+                self.Blab = self.MakeImgLabel(self,QtChanNum=2)
+                self.Alab = self.MakeImgLabel(self,QtChanNum=3)
+                self.RGBAlab = self.MakeImgLabel(self,QtChanNum=4)  
+                '''
+                
+                
 
-            def MakeImgLabel(QtChanNum):
+
+
+            def MakeImgLabel(self,QtChanNum):
                 #---------Image Label-----------
                 #to do: maintain aspect ratio
                 label = QLabel()
@@ -433,29 +483,36 @@ class Window(QWidget):
                 
                 
                 label.setPixmap(imgGUI)
-                label.setScaledContents(200)
+                #label.setScaledContents(200)
                 #label.setMaximumSize(500,500)
                 label.setMinimumSize(100,100)
                 label.setBaseSize(200,200)
 
                 return label
+            Packer.PILtoQtUpdate()
             
-            #default labels
-            Rlab = MakeImgLabel(QtChanNum=0)
-            Glab = MakeImgLabel(QtChanNum=1)
-            Blab = MakeImgLabel(QtChanNum=2)
-            Alab = MakeImgLabel(QtChanNum=3)
-            RGBAlab = MakeImgLabel(QtChanNum=4)  
             
+
+            
+            '''
+
+            lablist = []
+            for i in [0,1,2,3,4]:
+                chan = MakeImgLabel(self,QtChanNum=i)
+                lablist.append
+
+            Rlab,Glab,Blab,Alab,RGBAlab = lablist
+            '''
+
             #----UI Update
             def UpdateGUI(self):
                 Packer.PILtoQtUpdate()
-                self.Rlab = self.MakeImgLabel(QtChanNum=0)#channel number is which number in list the image is stored
-                self.Glab = self.MakeImgLabel(QtChanNum=1)
-                self.Blab = self.MakeImgLabel(QtChanNum=2)
-                self.Alab = self.MakeImgLabel(QtChanNum=3)
+                self.Rlab = LiveUI.MakeImgLabel(self,QtChanNum=0)#channel number is which number in list the image is stored
+                self.Glab = LiveUI.MakeImgLabel(self,QtChanNum=1)
+                self.Blab = LiveUI.MakeImgLabel(self,QtChanNum=2)
+                self.Alab = LiveUI.MakeImgLabel(self,QtChanNum=3)
 
-                self.RGBAlab = self.MakeImgLabel(QtChanNum=4)
+                self.RGBAlab = LiveUI.MakeImgLabel(self,QtChanNum=4)
                 print("trying to update UI")
 
                 #labList = [Rlab,Glab,Blab,Alab,RGBAlab]
@@ -640,7 +697,7 @@ class Window(QWidget):
             DBGLabel = QLabel("Test Label")
             settings.addWidget(DBGLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
 
-            DBGLabelImg = LiveUI.MakeImgLabel(QtChanNum=4)
+            DBGLabelImg = LiveUI.MakeImgLabel(self,QtChanNum=4)
             settings.addWidget(DBGLabelImg)
             '''
             DBGlabelImg = QLabel()
