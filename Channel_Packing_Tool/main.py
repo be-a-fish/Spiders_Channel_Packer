@@ -100,6 +100,31 @@ class Packer():
 
         def SavImgBatch():#💾💾💾💾
             print("This functionality hasn't been made yet")
+
+            defPath = str("./Channel_Packing_Tool/default_output/")
+            filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
+            print ("file path for save is",filePath)
+            #expImg = Packer.RChan
+            Packer.RChan.save(fp=str(filePath+Packer.DefNames["red"]))
+            Packer.GChan.save(fp=str(filePath+Packer.DefNames["green"]))
+            Packer.BChan.save(fp=str(filePath+Packer.DefNames["blue"]))
+            if Packer.alphaToggle:#only export alopha if alpha toggle is true
+                Packer.AChan.save(fp=str(filePath+Packer.DefNames["alpha"]))
+
+
+            '''
+            expList = [Packer.RChan, Packer.GChan, Packer.BChan]
+            expListNames = [Packer.DefNames["red"],Packer.DefNames["green"],Packer.DefNames["blue"],Packer.DefNames["alpha"],]
+            if Packer.useAlpha:
+                expList.append(Packer.AChan)
+            for i in expList:
+                #expImg = expList[i]
+                Path = str("./Channel_Packing_Tool/default_output/"+expListNames[i])
+                print(Path)
+                #print(expImg)
+            '''
+                
+
         
         
     ##-----------------------Packer Variables Load Defaults and update Vars-----------------------
@@ -277,6 +302,7 @@ class Controller():
 
     def BtnBatchExp():
         DBGprint("button batch export pressed")
+        Packer.ImRW.SavImgBatch()
 
     def BtnBatchImp():
         DBGprint("button batch import pressed")
