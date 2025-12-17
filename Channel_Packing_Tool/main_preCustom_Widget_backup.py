@@ -463,33 +463,18 @@ class Window(QWidget):
         seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
-        class AspectRatioLabel(QLabel):#makes a copy of the qlabel class with height for width enabled
-            #super jittery. Ask Omar if there's a cleaner way of doing this
-            def __init__(self, aspectRatio=1.0):
-                super().__init__()
-                self.aspectRatio = aspectRatio
-                DBGprint(self.aspectRatio)
-            
-            def hasHeightForWidth(self):
-                return True
-            
-            def heightForWidth(self, width):
-                return int(width * self.aspectRatio)#multiplies height by aspect ratio. Maybe in future make input for resizing texture?
-            
-
-
         
-        Rlab = AspectRatioLabel("red img")
-        Glab = AspectRatioLabel("green img")
-        Blab = AspectRatioLabel("blue img")
-        Alab = AspectRatioLabel("Alpha img")
+        Rlab = QLabel("red img")
+        Glab = QLabel("green img")
+        Blab = QLabel("blue img")
+        Alab = QLabel("Alpha img")
 
-        RGBAlab = AspectRatioLabel("packed image")
+        RGBAlab = QLabel("packed image")
         def MakeLabel(ChanNum):
             Packer.PILtoQtUpdate()
             #widg = QWidget()
             #widg.setSizePolicy()
-            label=AspectRatioLabel(aspectRatio = 1.0)
+            label=QLabel()
             imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
             imgUI.scaled(200,200,
                          aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatioByExpanding,
@@ -513,7 +498,6 @@ class Window(QWidget):
         Blab = MakeLabel(2)
         Alab = MakeLabel(3)
         RGBAlab = MakeLabel(4)
-        
         
 
 
