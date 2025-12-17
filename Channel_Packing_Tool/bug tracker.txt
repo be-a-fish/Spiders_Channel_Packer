@@ -5,6 +5,8 @@ GUI: Images scaling breacks aspect ratio
 
 Tool: Images of different resolutions can't pack together
 
+Tool: Still attempting to pack with alpha when alpha disabled
+
 Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
 
 ===Fixed issues:
