@@ -28,7 +28,7 @@ def DBGprint(text):
 
 
 ##-----------------------Open and Export Images-----------------------
-# region ImpExp Img
+# region Imp Exp
 #to do: 
 # batch import
 # batch export
@@ -362,7 +362,7 @@ class Controller():
 
 
 #-----------------GUI-----------------
-# region GUI
+# region ↓ GUI ↓
 # _________________________________________________
 #| 🕷Spiders Channel packing tool            _[]X  |
 #|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
@@ -407,6 +407,14 @@ class Window(QWidget):
                      "RGBTQ+ Rights",
                      "All I wanted was a Pepsi. Just one Pepsi. And she wouldn't give it to me. Just one Pepsi",
                      "This app is rated PG.13 so I get one use of the word fuck and I just wasted it",
+                     "𝕯𝖎𝖊 𝖒𝖔𝖓𝖘𝖙𝖊𝖗. 𝖄𝖔𝖚 𝖉𝖔𝖓'𝖙 𝖇𝖊𝖑𝖔𝖓𝖌 𝖎𝖓 𝖙𝖍𝖎𝖘 𝖜𝖔𝖗𝖑𝖉.",
+                     "𝕴𝖙 𝖜𝖆𝖘 𝖓𝖔𝖙 𝖇𝖞 𝖒𝖞 𝖍𝖆𝖓𝖉 𝕴 𝖜𝖆𝖘 𝖔𝖓𝖈𝖊 𝖆𝖌𝖆𝖎𝖓 𝖌𝖎𝖛𝖊𝖓 𝖋𝖑𝖊𝖘𝖍. 𝕴 𝖜𝖆𝖘 𝖇𝖗𝖔𝖚𝖌𝖍𝖙 𝖍𝖊𝖗𝖊 𝖇𝖞 𝖍𝖚𝖒𝖆𝖓𝖘 𝖜𝖍𝖔 𝖜𝖎𝖘𝖍 𝖙𝖔 𝖕𝖆𝖞 𝖒𝖊 𝖙𝖗𝖎𝖇𝖚𝖙𝖊",
+                     "𝕿𝖗𝖎𝖇𝖚𝖙𝖊? 𝖄𝖔𝖚 𝖘𝖙𝖊𝖆𝖑 𝖒𝖊𝖓𝖘 𝖘𝖔𝖚𝖑𝖘 𝖆𝖓𝖉 𝖒𝖆𝖐𝖊 𝖙𝖍𝖊𝖒 𝖞𝖔𝖚𝖗 𝖘𝖑𝖆𝖛𝖊𝖘",
+                     "𝕻𝖊𝖗𝖍𝖆𝖕𝖘 𝖙𝖍𝖊 𝖘𝖆𝖒𝖊 𝖈𝖆𝖓 𝖇𝖊 𝖘𝖆𝖎𝖉 𝖔𝖋 𝖆𝖑𝖑 𝖗𝖊𝖑𝖎𝖌𝖎𝖔𝖓𝖘?",
+                     "𝖄𝖔𝖚𝖗 𝖜𝖔𝖗𝖉𝖘 𝖆𝖗𝖊 𝖆𝖘 𝖊𝖒𝖕𝖙𝖞 𝖆𝖘 𝖞𝖔𝖚𝖗 𝖘𝖔𝖚𝖑. 𝕸𝖆𝖓𝖐𝖎𝖓𝖉 𝖎𝖑𝖑 𝖓𝖊𝖊𝖉𝖘 𝖆 𝖘𝖆𝖛𝖎𝖔𝖚𝖗 𝖘𝖚𝖈𝖍 𝖆𝖘 𝖞𝖔𝖚",
+                     "𝖂𝖍𝖆𝖙 𝖎𝖘 𝖆 𝖒𝖆𝖓? 𝕬 𝖒𝖎𝖘𝖊𝖗𝖆𝖇𝖑𝖊 𝖑𝖎𝖙𝖙𝖑𝖊 𝖕𝖎𝖑𝖊 𝖔𝖋 𝖘𝖊𝖈𝖗𝖊𝖙𝖘! 𝕭𝖚𝖙 𝖊𝖓𝖔𝖚𝖌𝖍 𝖙𝖆𝖑𝖐... 𝖍𝖆𝖛𝖊 𝖆𝖙 𝖞𝖔𝖚!",
+                     "I like trains",
+                     "𝕭𝖊𝖜𝖆𝖗𝖊; 𝖋𝖔𝖗 𝕴 𝖆𝖒 𝖋𝖊𝖆𝖗𝖑𝖊𝖘𝖘, 𝖆𝖓𝖉 𝖙𝖍𝖊𝖗𝖊𝖋𝖔𝖗𝖊 𝖕𝖔𝖜𝖊𝖗𝖋𝖚𝖑.",
                      "Who shot Mr Burns?",
                      "free the nipple!!!",
                      "Nuclear Ghandi did nothing wrong",
@@ -424,7 +432,17 @@ class Window(QWidget):
                      "It can't see you if you stay perfectly still",
                      "Hello there",
                      "The fish is thinking",
-                     "Jeveesus Lubs yoo"]
+                     "Jeveesus Lubs yoo... Someone has to to do it I guess",
+                     "Marco                                                                                                                          Polo",
+                     "Camden punks are posers",
+                     "You have a face como un burro",
+                     "Bring back mp3 players",
+                     "Boycott RAM. You never needed it anyway",
+                     "( ͡° ͜ʖ ͡°)",
+                     "( ͡° ͜ʖ ͡°)╭∩╮",
+                     "¯\_(ツ)_/¯",
+                     "( ཀ ʖ̯ ཀ)",
+                     "(｢•-•)｢ YEET"]
         
         title = ("Spider's Channel Packing Tool - "+random.choice(SplashText))
 
@@ -448,9 +466,6 @@ class Window(QWidget):
         seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
-        
-        labels = [QLabel(),QLabel(),QLabel(),QLabel(),QLabel()]
-        #           red     green    blue    alpha      RGBA
         
         Rlab = QLabel("red img")
         Glab = QLabel("green img")
@@ -479,7 +494,7 @@ class Window(QWidget):
         Blab = MakeLabel(2)
         Alab = MakeLabel(3)
         RGBAlab = MakeLabel(4)
-        print("rlab is\n",Rlab)
+        
 
 
         def UpdateLabels():
@@ -544,22 +559,7 @@ class Window(QWidget):
         #           |_______|
         #
         #RGBA as containers
-        '''
-        #------------Create and Update RGBA Image labels
-        def UpdateGUI():
-                Packer.PILtoQtUpdate()
-                Rlab = LiveUI.MakeImgLabel(QtChanNum=0)
-                Glab = LiveUI.MakeImgLabel(QtChanNum=1)
-                Blab = LiveUI.MakeImgLabel(QtChanNum=2)
-                Alab = LiveUI.MakeImgLabel(QtChanNum=3)
-
-                RGBAlab = LiveUI.MakeImgLabel(QtChanNum=4)   
-                labList = [Rlab,Glab,Blab,Alab,RGBAlab]
-                return labList  
         
-        Rlab,Glab,Blab,Alab,RGBAlab = UpdateGUI()
-        '''
-
 
         Packer.PILtoQtUpdate()#updates the QtImage list just before creating the images
         #Rlab = MakeImgLabel(QtChan=Packer.QtChans[0])
