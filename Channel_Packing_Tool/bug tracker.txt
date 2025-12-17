@@ -6,7 +6,7 @@ GUI: Images scaling breacks aspect ratio
 
 Tool: Images of different resolutions can't pack together
 
-Tool: Still attempting to pack with alpha when alpha disabled
+Tool: Alpha still unpacking when disabled
 
 Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
 
@@ -38,6 +38,7 @@ Tool: Channels not packing into RGBA
 
 GUI: push buttons activating at launch instead of on press
 
+Tool: Still attempting to pack with alpha when alpha disabled
 
 ===Planned Features:
 

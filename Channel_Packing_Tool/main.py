@@ -167,11 +167,11 @@ class Packer():
     '''
 
     DefNames = {
-        "red" : "Occlusion.png",
-        "green" : "Roughness.png",
-        "blue" : "Metallic.png",
-        "alpha" : "Alpha_Mask.png",
-        "RGBA" : "ORMA.png"
+        "red" : "T_Occlusion.png",
+        "green" : "T_Roughness.png",
+        "blue" : "T_Metallic.png",
+        "alpha" : "T_Alpha_Mask.png",
+        "RGBA" : "T_ORMA.png"
     }
     #all functional for now :)
     #thats probably a lie lol
@@ -507,7 +507,7 @@ class Window(QWidget):
             label.setMinimumSize(100,100)
             label.setBaseSize(20,20)
             label.setSizePolicy(QSizePolicy.Policy.MinimumExpanding,QSizePolicy.Policy.MinimumExpanding)
-            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
 
             #colour stuff
             colours = ["red","green","blue","white","black"]
