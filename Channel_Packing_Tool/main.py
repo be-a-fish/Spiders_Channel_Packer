@@ -465,17 +465,19 @@ class Window(QWidget):
 
         class AspectRatioLabel(QLabel):#makes a copy of the qlabel class with height for width enabled
             #super jittery. Ask Omar if there's a cleaner way of doing this
-            def __init__(self, aspectRatio=1.0):
+            #tried paint stuff without any luck
+            def __init__(self, aspectRatio=1.0):#needs to be a float so you can do .5 for half width etc
                 super().__init__()
                 self.aspectRatio = aspectRatio
                 DBGprint(self.aspectRatio)
             
             def hasHeightForWidth(self):
+                #probably not the cleanest way of doing this but tried litterally every other way I could think of
                 return True
             
             def heightForWidth(self, width):
-                return int(width * self.aspectRatio)#multiplies height by aspect ratio. Maybe in future make input for resizing texture?
-            
+                #multiplies height by aspect ratio. Maybe in future make input for resizing texture?
+                return int(width * self.aspectRatio)
 
 
         
