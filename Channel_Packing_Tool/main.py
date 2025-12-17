@@ -28,6 +28,7 @@ def DBGprint(text):
 
 
 ##-----------------------Open and Export Images-----------------------
+# region ImpExp Img
 #to do: 
 # batch import
 # batch export
@@ -139,7 +140,8 @@ class Packer():
         
         
     ##-----------------------Packer Variables Load Defaults and update Vars-----------------------
-    
+    # region Upd Vars
+
     #Pillow RGBA
     RGBA = ImRW.DefLoad(fileName="ORMA.png")
     #Pillow channels
@@ -181,6 +183,7 @@ class Packer():
 
 
     ##-----------------------Pack and Unpack Channels-----------------------
+    # region Pk Unpk
 
     #    _______
     #   |       |                       _______________
@@ -255,16 +258,18 @@ class Packer():
 #also allows multiple functions to activate when button pressed
 #just generally better than you in every consivable way
 
+# region controller
 #   This might look stupid and unproffesional but it helps me find the controller section faster
 #                   |
 #         _--‾‾-----^----‾‾--_
-#        / /‾‾\  _ (X) _    Y \
+#        / /‾‾\ <> (X) <>   Y \
 #      /   \__/|‾|        X   B \
 #     /      [‾   ‾]  /‾‾\  A    \
 #    /        ‾|_|‾   \__/        \
 #   /      /‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\      \
 #   \_  _/                    \_  _/
 #     ‾‾                        ‾‾
+
 
 
 class Controller():
@@ -357,6 +362,7 @@ class Controller():
 
 
 #-----------------GUI-----------------
+# region GUI
 # _________________________________________________
 #| 🕷Spiders Channel packing tool            _[]X  |
 #|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
@@ -383,8 +389,7 @@ class Window(QWidget):
         #-----------------Theme and Titlebar-----------------
 
         #randomly picks a title for the window from the list
-        titleList = ["Spider's Channel Packing Tool",
-                     "Some sketchy software I found online",
+        SplashText = ["Some sketchy software I found online",
                      "Totally not a virus.exe",
                      "At least this isn't Adobe",
                      "Über Hacker Tool",
@@ -410,8 +415,18 @@ class Window(QWidget):
                      "Pack it up, pack it in, let me begin. I came to win, battle me, that's a sin",
                      "No AI was used in the creation of this software cos I have standards",
                      "No animals were harmed in the creation of this software",
-                     "I hate London"]
-        title = random.choice(titleList)
+                     "I hate London",
+                     "Hello cruel world",
+                     "I've come here to chew ass and kick bubblegum, and I'm all out of ass",
+                     "There is no Heaven without Hell",
+                     "Your mother was a hamster",
+                     "we are no longer the knights that say ni",
+                     "It can't see you if you stay perfectly still",
+                     "Hello there",
+                     "The fish is thinking",
+                     "Jeveesus Lubs yoo"]
+        
+        title = ("Spider's Channel Packing Tool - "+random.choice(SplashText))
 
         self.setWindowTitle(title)
 
@@ -425,7 +440,7 @@ class Window(QWidget):
         #self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: 3px solid yellow} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
         #Debug disable later ^
         
-
+        # region Layout
         #-----------------Layout-----------------
 
         seperateChans = QVBoxLayout()
@@ -517,7 +532,7 @@ class Window(QWidget):
 
             return container#returns the created layout as a container
         
-
+        # region Chans UI
         #---------------------v-Seperate Channels-v------------------------
         #    _______
         #   |       |
@@ -604,6 +619,7 @@ class Window(QWidget):
         #----------------------^-PACKED Channels-^-------------------------
 
         #-------------------------v-Settings-v----------------------------
+        # region Settings
         #
         #                ####        
         #          ###  ######  ###   
