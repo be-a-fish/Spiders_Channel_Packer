@@ -2,6 +2,7 @@
 ====Known issues:
 
 GUI: Images scaling breacks aspect ratio
+    UPDATE: Kinda works now but jittery and stretches when made smaller
 
 Tool: Images of different resolutions can't pack together
 

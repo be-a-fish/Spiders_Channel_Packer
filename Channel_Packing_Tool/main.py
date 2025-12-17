@@ -508,6 +508,12 @@ class Window(QWidget):
             label.setBaseSize(20,20)
             label.setSizePolicy(QSizePolicy.Policy.MinimumExpanding,QSizePolicy.Policy.MinimumExpanding)
             label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+
+            #colour stuff
+            colours = ["red","green","blue","white","black"]
+            #label.setStyleSheet("background-color: black; border: 10px inset"+colours[ChanNum])
+            label.setStyleSheet("QWidget {background-color: #222034; color:"+colours[ChanNum]+"; border: 3px solid "+colours[ChanNum]+"}")
+
             return label
         
         Rlab = MakeLabel(0)
@@ -594,6 +600,7 @@ class Window(QWidget):
         alphaCont = MakeChannelButtons(name="alpha", filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
+        redOutline = QVBoxLayout()
         seperateChans1.addWidget(Rlab)
         seperateChans1.addWidget(redCont)
 
