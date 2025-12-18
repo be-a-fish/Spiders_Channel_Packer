@@ -13,11 +13,11 @@ from PIL import Image
 import PIL
 from PIL import ImageQt
 
-from tkinter import filedialog#file dialogue boxes. Literally don't use tkinter for anything else
+from tkinter import filedialog #for file dialogue boxes. Literally don't use tkinter for anything else
 
 ##-----------------------testing zone-----------------------
 
-DEBUG = False
+DEBUG = True
 
 def DBGprint(text):
     if DEBUG:
@@ -452,6 +452,7 @@ class Window(QWidget):
                      "You have a face como un burro",
                      "Bring back mp3 players",
                      "Boycott RAM. You never needed it anyway",
+                     "I am already in my pajamas",
                      "( ͡° ͜ʖ ͡°)",
                      "( ͡° ͜ʖ ͡°)╭∩╮",
                      "¯\_(ツ)_/¯",

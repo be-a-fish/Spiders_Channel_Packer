@@ -44,7 +44,16 @@ Tool: Still attempting to pack with alpha when alpha disabled
 
 Resolution scaling
 
+bit depth export
+
+Channel Invert Button
+
 different icon for world events. e.g. pride/halloween/xmas
+
+===WIP Features:
+
+Tool: Default file Names
+    need to fix
 
 ===Implimented Features
 
