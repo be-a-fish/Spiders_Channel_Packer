@@ -40,6 +40,14 @@ class Packer():
             Packer.useAlpha = True
         print("use Alpha set to",Packer.useAlpha)
 
+    AutoPack = False
+    def AutoPackToggle():#another toggle
+        if Packer.AutoPack:
+            Packer.AutoPack = False
+        else:
+            Packer.AutoPack = True
+        print("autopack set to",Packer.AutoPack)
+
     class ImRW():
         #oppening and closing images
 
@@ -99,11 +107,11 @@ class Packer():
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for import is",filePath)
 
-            Packer.RChan = PIL.Image.open(str(filePath+Packer.DefNames["red"]))#opens the file from the path
-            Packer.GChan = PIL.Image.open(str(filePath+Packer.DefNames["green"]))
-            Packer.BChan = PIL.Image.open(str(filePath+Packer.DefNames["blue"]))
+            Packer.RChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))#opens the file from the path
+            Packer.GChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
+            Packer.BChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["blue"]))
             if Packer.useAlpha:
-                Packer.AChan = PIL.Image.open(str(filePath+Packer.DefNames["alpha"]))
+                Packer.AChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["alpha"]))
 
 
 
@@ -114,11 +122,11 @@ class Packer():
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for save is",filePath)
             #expImg = Packer.RChan
-            Packer.RChan.save(fp=str(filePath+Packer.DefNames["red"]))
-            Packer.GChan.save(fp=str(filePath+Packer.DefNames["green"]))
-            Packer.BChan.save(fp=str(filePath+Packer.DefNames["blue"]))
+            Packer.RChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))
+            Packer.GChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
+            Packer.BChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["blue"]))
             if Packer.useAlpha:#only export alpha if alpha toggle is true
-                Packer.AChan.save(fp=str(filePath+Packer.DefNames["alpha"]))
+                Packer.AChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["alpha"]))
 
 
             '''
@@ -300,16 +308,19 @@ class Controller():
         #identify channel by name
         if name == "packed":
             Packer.RGBA = chan
-        elif name == "red":
-            Packer.RChan = chan
-        elif name == "green":
-            Packer.GChan = chan
-        elif name == "blue":
-            Packer.BChan = chan
-        elif name == "alpha":
-            Packer.AChan = chan
+            if Packer.AutoPack:
+                Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Packer.ImPack.UnpackRGBA(Packer.RGBA)
         else:
-            print(name," isn't a valid name")
+            if Packer.AutoPack:
+                Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace string with resolution when implimented")
+            if name == "red":
+                Packer.RChan = chan
+            elif name == "green":
+                Packer.GChan = chan
+            elif name == "blue":
+                Packer.BChan = chan
+            elif name == "alpha":
+                Packer.AChan = chan
         
         DBGprint("successfully imported texture")
         
@@ -320,6 +331,7 @@ class Controller():
 
     def BtnBatchImp():
         DBGprint("button batch import pressed")
+        Packer.ImRW.OpenImgBatch()
 
     def BtnPacking():
         DBGprint("button pack pressed")
@@ -700,7 +712,15 @@ class Window(QWidget):
         useAlphaCB.setChecked(Packer.useAlpha)
         #-------🎮 NEEDS ADDING TO CONROLLER
         useAlphaCB.clicked.connect(Packer.alphaToggle)
-        settings.addWidget(useAlphaCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        settings.addWidget(useAlphaCB,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+
+        #---Autopacker Checkbox
+        AutoPackCB = QCheckBox("Auto Packer Toggle")
+        AutoPackCB.setChecked(Packer.AutoPack)
+        #-------🎮 NEEDS ADDING TO CONROLLER
+        AutoPackCB.clicked.connect(Packer.AutoPackToggle)
+        settings.addWidget(AutoPackCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
         #DEBUG STUFF
         
