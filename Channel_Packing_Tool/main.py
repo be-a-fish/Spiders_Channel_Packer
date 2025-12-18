@@ -309,12 +309,8 @@ class Controller():
         if name == "packed":
             Packer.RGBA = chan
             if Packer.AutoPack:
-                Packer.PILtoQtUpdate()
                 Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Packer.ImPack.UnpackRGBA(Packer.RGBA)
         else:
-            if Packer.AutoPack:
-                Packer.PILtoQtUpdate()
-                Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace string with resolution when implimented")
             if name == "red":
                 Packer.RChan = chan
             elif name == "green":
@@ -323,6 +319,9 @@ class Controller():
                 Packer.BChan = chan
             elif name == "alpha":
                 Packer.AChan = chan
+            
+            if Packer.AutoPack:
+                Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace string with resolution when implimented")
         
         DBGprint("successfully imported texture")
         
