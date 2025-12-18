@@ -46,8 +46,8 @@ class Packer():
         def OpenImg(text,fileName):#📂
             DBGprint(text=text)
             extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
-            filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
+            defaultPath = str("./Channel_Packing_Tool/default_assets/"+Packer.DefNames["prefix"]+fileName)
+            filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=Packer.DefNames["prefix"]+fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
 
             print ("so you have chosen:" ,filePath)
             file = PIL.Image.open(filePath)#opens the file from the path
@@ -60,8 +60,8 @@ class Packer():
         def SavImg(export,text,defaultName):#💾
             #exportQuality = 90
             #filePath = filedialog.asksaveasfile()
-            defaultPath = str("./Channel_Packing_Tool/default_output/"+defaultName)
-            filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=defaultName) or defaultPath
+            defaultPath = str("./Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+defaultName)
+            filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=Packer.DefNames["prefix"]+defaultName) or defaultPath
             
             #filePath = str("./default_output/",defaultName)
             #print("didn't manage to get that dictionary. defaulting to ",filePath)
@@ -167,11 +167,12 @@ class Packer():
     '''
 
     DefNames = {
-        "red" : "T_Occlusion.png",
-        "green" : "T_Roughness.png",
-        "blue" : "T_Metallic.png",
-        "alpha" : "T_Alpha_Mask.png",
-        "RGBA" : "T_ORMA.png"
+        "red" : "_Occlusion.png",
+        "green" : "_Roughness.png",
+        "blue" : "_Metallic.png",
+        "alpha" : "_Alpha_Mask.png",
+        "RGBA" : "_ORMA.png",
+        "prefix" : "DefaultMaterial"
     }
     #all functional for now :)
     #thats probably a lie lol
@@ -352,6 +353,8 @@ class Controller():
 
     def setName(text,chanName):
         DBGprint("Update Text Box")
+        DBGprint(text)
+        DBGprint(chanName)
         Packer.DefNames[chanName] = text
     
     
@@ -561,7 +564,7 @@ class Window(QWidget):
             channel.addWidget(imp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             channel.addWidget(exp,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
-            channel.addWidget(QLabel(" Default file name:"),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+            channel.addWidget(QLabel(" Default file suffix for "+name+": "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             txtBox = QLineEdit(filename)
             #-------🎮
             txtBox.textChanged.connect(partial(Controller.setName,chanName=name))
@@ -680,6 +683,17 @@ class Window(QWidget):
         unpack.clicked.connect(Controller.BtnUnpacking)
         unpack.clicked.connect(partial(UpdateLabels))
         settings.addWidget(unpack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+
+
+        #Name Prefix
+        settings.addWidget(QLabel(" Default file prefix: "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+        txtBox = QLineEdit(Packer.DefNames["prefix"])
+        #-------🎮
+        txtBox.textChanged.connect(partial(Controller.setName,chanName="prefix"))
+        settings.addWidget(txtBox,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
+
+
 
         #---Alpha Checkbox
         useAlphaCB = QCheckBox("Use Alpha")
