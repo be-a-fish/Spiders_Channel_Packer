@@ -4,7 +4,7 @@ import random #super very important for the code and not just fun easter eggs I 
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QVBoxLayout, QPushButton,
                                QWidget, QCheckBox, QLabel,
-                               QLineEdit, QSizePolicy)
+                               QLineEdit, QSizePolicy, QToolTip)
 from PySide6 import QtGui, QtCore
 
 from functools import partial#for sending variables through button inputs
@@ -309,9 +309,11 @@ class Controller():
         if name == "packed":
             Packer.RGBA = chan
             if Packer.AutoPack:
+                Packer.PILtoQtUpdate()
                 Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Packer.ImPack.UnpackRGBA(Packer.RGBA)
         else:
             if Packer.AutoPack:
+                Packer.PILtoQtUpdate()
                 Packer.RGBA = Packer.ImPack.PackRGBA(Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace string with resolution when implimented")
             if name == "red":
                 Packer.RChan = chan
@@ -563,12 +565,14 @@ class Window(QWidget):
             channel = QVBoxLayout()
 
             imp = QPushButton("📁 Import "+name+" texture")
+            imp.setToolTip("Imports image to the "+name+" texture slot")
             #-------🎮
             imp.clicked.connect(partial(Controller.BtnImport,name=name,filename=filename))
             imp.clicked.connect(partial(UpdateLabels))
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 Export "+name+" texture")
+            exp.setToolTip("exports image from the "+name+" texture slot")
             #-------🎮
             #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
             exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
@@ -631,12 +635,14 @@ class Window(QWidget):
 
         
         batchImp = QPushButton("📁 Batch import channels")
+        batchImp.setToolTip("Imports images from a folder based on default name extensions")
         #-------🎮 NEEDS ADDING TO CONROLLER
         batchImp.clicked.connect(partial(Packer.ImRW.OpenImgBatch))
         batchImp.clicked.connect(partial(UpdateLabels))
         seperateChans1.addWidget(batchImp)#.clicked.connect(button_click_test)#dont connect arguments NO BRACKETS
 
         batchExp = QPushButton("💾 Batch export channels")
+        batchExp.setToolTip("Exports images to a folder based on default name extensions")
         #-------🎮 NEEDS ADDING TO CONROLLER
         batchExp.clicked.connect(partial(Packer.ImRW.SavImgBatch))
         seperateChans2.addWidget(batchExp)
@@ -683,6 +689,7 @@ class Window(QWidget):
         
         #---Pack Button
         pack = QPushButton("Pack Textures\n --> ")
+        pack.setToolTip("Takes R G B A channels and merges them into a single texture")
         #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(Controller.BtnPacking)
         pack.clicked.connect(partial(UpdateLabels))
@@ -691,6 +698,7 @@ class Window(QWidget):
         #---Unpack Button
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
+        unpack.setToolTip("Takes the packed texture and unpacks the channels so you can replace or export them individually")
         #unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         #-------🎮
         unpack.clicked.connect(Controller.BtnUnpacking)
@@ -710,6 +718,7 @@ class Window(QWidget):
 
         #---Alpha Checkbox
         useAlphaCB = QCheckBox("Use Alpha")
+        useAlphaCB.setToolTip("Enables Alpha channel for 4 channel packing")
         useAlphaCB.setChecked(Packer.useAlpha)
         #-------🎮 NEEDS ADDING TO CONROLLER
         useAlphaCB.clicked.connect(Packer.alphaToggle)
@@ -718,6 +727,7 @@ class Window(QWidget):
 
         #---Autopacker Checkbox
         AutoPackCB = QCheckBox("Auto Packer Toggle")
+        AutoPackCB.setToolTip("Automatically packs and unpacks images on import")
         AutoPackCB.setChecked(Packer.AutoPack)
         #-------🎮 NEEDS ADDING TO CONROLLER
         AutoPackCB.clicked.connect(Packer.AutoPackToggle)
