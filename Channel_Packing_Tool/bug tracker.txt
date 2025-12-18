@@ -3,11 +3,20 @@
 ====Known issues:
 
     GUI: Images scaling breacks aspect ratio
+        Priority: Low
         UPDATE: Kinda works now but jittery and stretches when made smaller
 
     Tool: Images of different resolutions can't pack together
+        Priority: Medium
 
     Tool: Alpha still unpacking when disabled
+        Priority: Low
+
+    Tool: Gives an error message when attempting to export a .jpg file with 4 Channels
+        Priority: Medium
+
+    GUI: Cursor isn't updated to hand pointer when hovering over a button
+        Priority: Low
 
 ===Fixed issues:
 
@@ -45,15 +54,30 @@
 
 ===Planned Features:
 
-    Resolution scaling
+    Tool: Error Warning Window
+        Priority: High
 
-    bit depth export
+    Tool: Resolution scaling
+        Priority: High
 
-    Channel Invert Button
+    Tool: bit depth export
+        Priority: Low
 
-    different icon for world events. e.g. pride/halloween/xmas
+    Tool: Channel Invert Button
+        Priority: Medium
 
-=QOL
+=QOL:
+
+    GUI: Larger, nicer Font
+        Priority: Medium
+
+    GUI: Warning when using absolute values in image. e.g. total black and total white
+        Priority: High (following Feedback, moved from low)
+
+=Easter Eggs:
+
+    GUI: different icon for world events. e.g. pride/halloween/xmas
+        Priority: Low
 
 ===WIP Features:
 
@@ -62,7 +86,12 @@
 
 ===Implimented Features
 
-    alpha toggle
+    Tool: alpha toggle
+
+    Tool: Export with different file extensions
+
+    Tool/GUI: Default files
+        Updated to clearer images with less information to be less overweilming
 
 =QOL:
 

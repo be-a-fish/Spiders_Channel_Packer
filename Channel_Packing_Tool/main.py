@@ -17,7 +17,7 @@ from tkinter import filedialog #for file dialogue boxes. Literally don't use tki
 
 ##-----------------------testing zone-----------------------
 
-DEBUG = True
+DEBUG = False
 
 def DBGprint(text):
     if DEBUG:
@@ -187,7 +187,7 @@ class Packer():
         "green" : "Roughness.png",
         "blue" : "Metallic.png",
         "alpha" : "Alpha_Mask.png",
-        "RGBA" : "ORMA.png",
+        "packed" : "ORMA.png",
         "prefix" : "DefaultMaterial_"
     }
     #all functional for now :)
@@ -428,6 +428,9 @@ class Window(QWidget):
                      "Nerds of the world Unite, we have nothing to loose but our dice 🎲",
                      "☭Eat the richⒶ... or like, maybe a sandwitch if you're feeling lazy",
                      "5318008",
+                     "Live long and prosper 🖖",
+                     "Marry and reproduce",
+                     "This is your god",
                      "but can it run DOOM?",
                      "this is what programmers do when they haven't had enough sleep",
                      "AI can eat a bag of CONTENT NOT AVAILABLE WITHOUT AGE VERIFICATION",
@@ -445,6 +448,8 @@ class Window(QWidget):
                      "𝖂𝖍𝖆𝖙 𝖎𝖘 𝖆 𝖒𝖆𝖓? 𝕬 𝖒𝖎𝖘𝖊𝖗𝖆𝖇𝖑𝖊 𝖑𝖎𝖙𝖙𝖑𝖊 𝖕𝖎𝖑𝖊 𝖔𝖋 𝖘𝖊𝖈𝖗𝖊𝖙𝖘! 𝕭𝖚𝖙 𝖊𝖓𝖔𝖚𝖌𝖍 𝖙𝖆𝖑𝖐... 𝖍𝖆𝖛𝖊 𝖆𝖙 𝖞𝖔𝖚!",
                      "I like trains",
                      "𝕭𝖊𝖜𝖆𝖗𝖊; 𝖋𝖔𝖗 𝕴 𝖆𝖒 𝖋𝖊𝖆𝖗𝖑𝖊𝖘𝖘, 𝖆𝖓𝖉 𝖙𝖍𝖊𝖗𝖊𝖋𝖔𝖗𝖊 𝖕𝖔𝖜𝖊𝖗𝖋𝖚𝖑.",
+                     "Any objections lady?",
+                     "the last metroid is in captivity. The galaxy is at peace...",
                      "Who shot Mr Burns?",
                      "Hot singles in your area",
                      "Nuclear Ghandi did nothing wrong",
@@ -454,7 +459,7 @@ class Window(QWidget):
                      "Pack it up, pack it in, let me begin. I came to win, battle me, that's a sin",
                      "No AI was used in the creation of this software cos I have standards",
                      "No animals were harmed in the creation of this software",
-                     "LOADING LAST BRAIN CELL [###########         ] ERROR 404: BRAINCELL NOT FOUND",
+                     "LOADING LAST BRAIN CELL [#####################                     ] ERROR 404: BRAINCELL NOT FOUND",
                      "I hate London",
                      "Hello cruel world",
                      "I've come here to chew ass and kick bubblegum, and I'm all out of ass",
@@ -465,13 +470,14 @@ class Window(QWidget):
                      "It can't see you if you stay perfectly still",
                      "Hello there",
                      "Shhhhhh... The fish is thinking",
-                     "Jeveesus Lubs yoo... Someone has to to do it I guess",
+                     "Jesus loves you... No one else does",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
                      "You have a face como un burro",
                      "Bring back mp3 players",
                      "Boycott RAM. You never needed it anyway",
                      "I am already in my pajamas",
+                     "Good news everyone!",
                      "( ͡° ͜ʖ ͡°)",
                      "( ͡° ͜ʖ ͡°)╭∩╮",
                      "¯\_(ツ)_/¯",
@@ -486,9 +492,10 @@ class Window(QWidget):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("./Channel_Packing_Tool/GUI/icon.png"))
         self.setWindowIcon(icon)
-
+        self.setMinimumWidth(1000)
+        
         #dark mode stuff:
-        self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:darkgray; border: none} QLineEdit {background-color: #373165; color yellow; border: 3px solid #373165} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
+        self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:darkgray; border: none} QLineEdit {font-size: 11pt; background-color: #373165; color yellow; border: 3px solid #373165} QPushButton {font-size: 11pt; background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
         #self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: 3px solid yellow} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
         #Debug disable later ^
         
@@ -501,7 +508,7 @@ class Window(QWidget):
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
 
         class AspectRatioLabel(QLabel):#makes a copy of the qlabel class with height for width enabled
-            #super jittery. Ask Omar if there's a cleaner way of doing this
+            #little jittery. Ask Omar if there's a cleaner way of doing this
             #tried paint stuff without any luck
             def __init__(self, aspectRatio=1.0):#needs to be a float so you can do .5 for half width etc
                 super().__init__()
@@ -681,7 +688,7 @@ class Window(QWidget):
 
         #RGBA as containers
         #RGBAlab = MakeImgLabel(QtChan=Packer.QtChans[4])
-        RGBACont = MakeChannelButtons(name="packed", filename=Packer.DefNames["RGBA"])
+        RGBACont = MakeChannelButtons(name="packed", filename=Packer.DefNames["packed"])
 
         #Add containers to Vertical layout
         packedChans.addWidget(RGBAlab)
