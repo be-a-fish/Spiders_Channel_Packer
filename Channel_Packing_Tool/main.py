@@ -23,16 +23,7 @@ def DBGprint(text):
     if DEBUG:
         print(text)
 
-'''
-DefNames = {
-        "red" : "AO.png",
-        "green" : "Roughness.png",
-        "blue" : "Metallic.png",
-        "alpha" : "Alpha_Mask.png",
-        "RGBA" : "ORMA.png",
-        "prefix" : "DefaultMaterial_"
-    }
-'''
+
 
 ##-----------------------Open and Export Images-----------------------
 # region Imp Exp
@@ -78,8 +69,6 @@ class Packer():
             defaultPath = str("./Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+Packer.DefNames[suffix])
             filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=Packer.DefNames["prefix"]+Packer.DefNames[suffix]) or defaultPath
             
-            #filePath = str("./default_output/",defaultName)
-            #print("didn't manage to get that dictionary. defaulting to ",filePath)
             print ("file path for save is",filePath)
             if Packer.useAlpha:
                 print("exporting with alpha")
@@ -88,6 +77,7 @@ class Packer():
                 print("exporting without alpha")
             try:
                 export = export.save(fp=str(filePath))
+                #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
             except ValueError as E:
                 print("there was an error while attempting to export")
                 print("the file path is ",filePath)
@@ -95,7 +85,7 @@ class Packer():
                 DBGprint(text=str("EXPORT ERROR"+filePath+export))
                 
             print ("attempted to save as: "+ str(filePath))
-            #format    (fp=file path, format=png, parameters left unused) fp string: fp=str(filePath)
+           
         
 
 
@@ -137,18 +127,6 @@ class Packer():
                 Packer.AChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["alpha"]))
 
 
-            '''
-            expList = [Packer.RChan, Packer.GChan, Packer.BChan]
-            expListNames = [Packer.DefNames["red"],Packer.DefNames["green"],Packer.DefNames["blue"],Packer.DefNames["alpha"],]
-            if Packer.useAlpha:
-                expList.append(Packer.AChan)
-            for i in expList:
-                #expImg = expList[i]
-                Path = str("./Channel_Packing_Tool/default_output/"+expListNames[i])
-                print(Path)
-                #print(expImg)
-            '''
-                
 
         
         
@@ -175,12 +153,6 @@ class Packer():
     
     #PILtoQtUpdate()#calls the function once to set defaults
 
-    '''
-    for i in [RChan, GChan, BChan, AChan, RGBA]:
-        QtChan = ImageQt.ImageQt(i)
-        print(QtChan)
-        QtChans.append(QtChan)
-    '''
 
     DefNames = {
         "red" : "AO.png",
@@ -225,8 +197,6 @@ class Packer():
             alphaLin = Image.Image.convert(self=alpha, mode='L')
             DBGprint(alpha)
 
-            #Image.Image.show(redLin)
-            #Image.Image.show(alpha)
             #---Combine into single image
 
             
@@ -438,6 +408,7 @@ class Window(QWidget):
                      "Turns out she could say much worse than no",
                      "Did you know there are more planes in the sea than submarines in the sky",
                      "RGBTQ+ Rights",
+                     "Never trust your own eyes, believe what you are told",
                      "All I wanted was a Pepsi. Just one Pepsi. And she wouldn't give it to me. Just one Pepsi",
                      "This app is rated PG.13 so I get one use of the word fuck and I just wasted it",
                      "𝕯𝖎𝖊 𝖒𝖔𝖓𝖘𝖙𝖊𝖗. 𝖄𝖔𝖚 𝖉𝖔𝖓'𝖙 𝖇𝖊𝖑𝖔𝖓𝖌 𝖎𝖓 𝖙𝖍𝖎𝖘 𝖜𝖔𝖗𝖑𝖉.",
@@ -447,6 +418,9 @@ class Window(QWidget):
                      "𝖄𝖔𝖚𝖗 𝖜𝖔𝖗𝖉𝖘 𝖆𝖗𝖊 𝖆𝖘 𝖊𝖒𝖕𝖙𝖞 𝖆𝖘 𝖞𝖔𝖚𝖗 𝖘𝖔𝖚𝖑. 𝕸𝖆𝖓𝖐𝖎𝖓𝖉 𝖎𝖑𝖑 𝖓𝖊𝖊𝖉𝖘 𝖆 𝖘𝖆𝖛𝖎𝖔𝖚𝖗 𝖘𝖚𝖈𝖍 𝖆𝖘 𝖞𝖔𝖚",
                      "𝖂𝖍𝖆𝖙 𝖎𝖘 𝖆 𝖒𝖆𝖓? 𝕬 𝖒𝖎𝖘𝖊𝖗𝖆𝖇𝖑𝖊 𝖑𝖎𝖙𝖙𝖑𝖊 𝖕𝖎𝖑𝖊 𝖔𝖋 𝖘𝖊𝖈𝖗𝖊𝖙𝖘! 𝕭𝖚𝖙 𝖊𝖓𝖔𝖚𝖌𝖍 𝖙𝖆𝖑𝖐... 𝖍𝖆𝖛𝖊 𝖆𝖙 𝖞𝖔𝖚!",
                      "I like trains",
+                     "I'm escaping to the one place that hasn't been corrupted by capitalism: SPACE!",
+                     "Experience bij",
+                     "Do you know DA WAE?",
                      "𝕭𝖊𝖜𝖆𝖗𝖊; 𝖋𝖔𝖗 𝕴 𝖆𝖒 𝖋𝖊𝖆𝖗𝖑𝖊𝖘𝖘, 𝖆𝖓𝖉 𝖙𝖍𝖊𝖗𝖊𝖋𝖔𝖗𝖊 𝖕𝖔𝖜𝖊𝖗𝖋𝖚𝖑.",
                      "Any objections lady?",
                      "the last metroid is in captivity. The galaxy is at peace...",
@@ -459,21 +433,31 @@ class Window(QWidget):
                      "Pack it up, pack it in, let me begin. I came to win, battle me, that's a sin",
                      "No AI was used in the creation of this software cos I have standards",
                      "No animals were harmed in the creation of this software",
-                     "LOADING LAST BRAIN CELL [#####################                     ] ERROR 404: BRAINCELL NOT FOUND",
+                     "LOADING LAST BRAIN CELL [#####################-----------] ERROR 404: BRAINCELL NOT FOUND",
                      "I hate London",
+                     "All cats are beautiful",
+                     "I found the source of the ticking. It's a pipe bomb",
                      "Hello cruel world",
                      "I've come here to chew ass and kick bubblegum, and I'm all out of ass",
                      "There is no Heaven without Hell",
-                     "Your mother was a hamster",
+                     "Your mother was a hamster and your father smells of elderberries",
                      "do a kickflip 🛹",
                      "we are no longer the knights that say ni",
+                     "I'm batman",
+                     "I only work in black. And sometimes, very, very dark gray",
+                     "I know that sounds like a cap poster, but it's true.",
+                     "Unless someone like you cares a whole awful lot, nothing is going to get better, it's not.",
                      "It can't see you if you stay perfectly still",
                      "Hello there",
+                     "I think I got it. But just in case... tell me the whole thing again, I wasn't listening",
                      "Shhhhhh... The fish is thinking",
                      "Jesus loves you... No one else does",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
+                     "Hab SoSlI' Quch",
+                     "Heghlu'meH QaQ jajvam",
                      "You have a face como un burro",
+                     "Apart from the roads, irrigation, education... what have the Romans ever done for us?",
                      "Bring back mp3 players",
                      "Boycott RAM. You never needed it anyway",
                      "I am already in my pajamas",
@@ -502,7 +486,6 @@ class Window(QWidget):
         # region Layout
         #-----------------Layout-----------------
 
-        seperateChans = QVBoxLayout()
         packedChans = QVBoxLayout()#contains Packed RGBA
         seperateChans1 = QVBoxLayout()#contains 2 channels - Red Green
         seperateChans2 = QVBoxLayout()#contains 2 channels - Blue Alpha
@@ -551,7 +534,7 @@ class Window(QWidget):
             label.setMinimumSize(100,100)
             label.setBaseSize(20,20)
             label.setSizePolicy(QSizePolicy.Policy.MinimumExpanding,QSizePolicy.Policy.MinimumExpanding)
-            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+            label.setAlignment(QtCore.Qt.AlignmentFlag.AlignBottom)
 
             #colour stuff
             colours = ["red","green","blue","white","black"]
@@ -600,7 +583,6 @@ class Window(QWidget):
             exp = QPushButton("💾 Export "+name+" texture")
             exp.setToolTip("exports image from the "+name+" texture slot")
             #-------🎮
-            #exp.clicked.connect(partial(Packer.ImRW.SavImg,export=Img,text="save "+name+" channel texture, usually "+filename,defaultName=filename+".png"))
             exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
             exp.clicked.connect(partial(UpdateLabels))
 
@@ -611,7 +593,6 @@ class Window(QWidget):
             txtBox = QLineEdit(filename)
             #-------🎮
             txtBox.textChanged.connect(partial(Controller.setName,text=txtBox,chanName=name))
-            #print(txtBox.text())
             channel.addWidget(txtBox,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
@@ -647,18 +628,17 @@ class Window(QWidget):
         alphaCont = MakeChannelButtons(name="alpha", filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
-        redOutline = QVBoxLayout()
-        seperateChans1.addWidget(Rlab)
-        seperateChans1.addWidget(redCont)
+        seperateChans1.addWidget(Rlab,0)
+        seperateChans1.addWidget(redCont,1)
 
-        seperateChans1.addWidget(Glab)
-        seperateChans1.addWidget(greenCont)
+        seperateChans2.addWidget(Glab,0)
+        seperateChans2.addWidget(greenCont,1)
 
-        seperateChans2.addWidget(Blab)
-        seperateChans2.addWidget(blueCont)
+        seperateChans1.addWidget(Blab,0)
+        seperateChans1.addWidget(blueCont,1)
 
-        seperateChans2.addWidget(Alab)
-        seperateChans2.addWidget(alphaCont)
+        seperateChans2.addWidget(Alab,0)
+        seperateChans2.addWidget(alphaCont,1)
 
         
         batchImp = QPushButton("📁 Batch import channels")
@@ -691,8 +671,8 @@ class Window(QWidget):
         RGBACont = MakeChannelButtons(name="packed", filename=Packer.DefNames["packed"])
 
         #Add containers to Vertical layout
-        packedChans.addWidget(RGBAlab)
-        packedChans.addWidget(RGBACont)
+        packedChans.addWidget(RGBAlab,0)
+        packedChans.addWidget(RGBACont,1)
 
         #----------------------^-PACKED Channels-^-------------------------
 
@@ -712,7 +692,8 @@ class Window(QWidget):
         #                #### 
 
         settings = QVBoxLayout()
-        settings.addWidget(QLabel("⚙ Settings: "),1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
+        settingLabel = QLabel("⚙ Settings: ")#.setStyleSheet("font-size: 13pt")
+        settings.addWidget(settingLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
         
         #---Pack Button
         pack = QPushButton("Pack Textures\n --> ")
