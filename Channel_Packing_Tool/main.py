@@ -23,9 +23,16 @@ def DBGprint(text):
     if DEBUG:
         print(text)
 
-
-
-
+'''
+DefNames = {
+        "red" : "AO.png",
+        "green" : "Roughness.png",
+        "blue" : "Metallic.png",
+        "alpha" : "Alpha_Mask.png",
+        "RGBA" : "ORMA.png",
+        "prefix" : "DefaultMaterial_"
+    }
+'''
 
 ##-----------------------Open and Export Images-----------------------
 # region Imp Exp
@@ -65,11 +72,11 @@ class Packer():
 
             #(backup path("../default_assets/backup.png"))
 
-        def SavImg(export,text,defaultName):#💾
+        def SavImg(export,text,suffix):#💾
             #exportQuality = 90
             #filePath = filedialog.asksaveasfile()
-            defaultPath = str("./Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+defaultName)
-            filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=Packer.DefNames["prefix"]+defaultName) or defaultPath
+            defaultPath = str("./Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+Packer.DefNames[suffix])
+            filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=Packer.DefNames["prefix"]+Packer.DefNames[suffix]) or defaultPath
             
             #filePath = str("./default_output/",defaultName)
             #print("didn't manage to get that dictionary. defaulting to ",filePath)
@@ -122,6 +129,7 @@ class Packer():
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for save is",filePath)
             #expImg = Packer.RChan
+            DBGprint("Prefix is"+Packer.DefNames["prefix"])
             Packer.RChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))
             Packer.GChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
             Packer.BChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["blue"]))
@@ -175,12 +183,12 @@ class Packer():
     '''
 
     DefNames = {
-        "red" : "_Occlusion.png",
-        "green" : "_Roughness.png",
-        "blue" : "_Metallic.png",
-        "alpha" : "_Alpha_Mask.png",
-        "RGBA" : "_ORMA.png",
-        "prefix" : "DefaultMaterial"
+        "red" : "AO.png",
+        "green" : "Roughness.png",
+        "blue" : "Metallic.png",
+        "alpha" : "Alpha_Mask.png",
+        "RGBA" : "ORMA.png",
+        "prefix" : "DefaultMaterial_"
     }
     #all functional for now :)
     #thats probably a lie lol
@@ -251,6 +259,7 @@ class Packer():
     
 
 
+
 #format examples:
 #Packer.ImPack.PackRGBA(red,green,blue,alpha,resolution)
 #Packer.ImRW.OpenImg(text,fileName)
@@ -284,6 +293,8 @@ class Controller():
 
     def BtnExport(name,filename):
         DBGprint("button export pressed")
+        DBGprint("filename: "+filename)
+        DBGprint("name: "+name)
         
         #identify channel by name
         if name == "packed":
@@ -299,7 +310,7 @@ class Controller():
         else:
             print(name," isn't a valid name")
 
-        Packer.ImRW.SavImg(export=exp,text="save "+name+" channel texture, usually "+filename,defaultName=filename)
+        Packer.ImRW.SavImg(export=exp,text="save "+name+" channel texture, usually "+filename,suffix=name)
 
     def BtnImport(name, filename):
         DBGprint("button import pressed")
@@ -355,6 +366,7 @@ class Controller():
         print("default export names are: ",Packer.DefNames)
         Packer.PILtoQtUpdate()
         print("\nQt image format details:",Packer.QtChans)
+        print("\n default names:",Packer.DefNames)
 
 
     #----Tickboxes
@@ -364,13 +376,17 @@ class Controller():
 
     #----Textboxes
 
-    def setName(unused,chanName,text="test"):
-        #bit hacky but need an unused variable at the start or the partial connect spits too many values into the first slot
-        DBGprint("Update Text Box")
-        DBGprint(text)
-        DBGprint(chanName)
-        Packer.DefNames[chanName] = text
     
+
+    def setName(unused,chanName,text):
+        #bit hacky but need an unused variable at the start or the partial connect spits too many values into the first slot
+        #global DefNames
+        print(text.text())
+        DBGprint("Update Text Box")
+        DBGprint(text.text())
+        DBGprint(chanName)
+        Packer.DefNames[chanName] = text.text()
+        #DefNames[chanName] = text.text()
     
 
 
@@ -444,6 +460,7 @@ class Window(QWidget):
                      "I've come here to chew ass and kick bubblegum, and I'm all out of ass",
                      "There is no Heaven without Hell",
                      "Your mother was a hamster",
+                     "do a kickflip 🛹",
                      "we are no longer the knights that say ni",
                      "It can't see you if you stay perfectly still",
                      "Hello there",
@@ -586,7 +603,8 @@ class Window(QWidget):
             channel.addWidget(QLabel(" Default file suffix for "+name+": "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             txtBox = QLineEdit(filename)
             #-------🎮
-            txtBox.textEdited.connect(partial(Controller.setName,text=txtBox.text,chanName=name))
+            txtBox.textChanged.connect(partial(Controller.setName,text=txtBox,chanName=name))
+            #print(txtBox.text())
             channel.addWidget(txtBox,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
@@ -713,7 +731,7 @@ class Window(QWidget):
         settings.addWidget(QLabel(" Default file prefix: "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         txtBox = QLineEdit(Packer.DefNames["prefix"])
         #-------🎮
-        txtBox.textEdited.connect(partial(Controller.setName,text=txtBox.text,chanName="prefix"))######### NEED TO MAKE WORK
+        txtBox.textEdited.connect(partial(Controller.setName,text=txtBox,chanName="prefix"))
         settings.addWidget(txtBox,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
@@ -766,6 +784,9 @@ class Window(QWidget):
                 DBGlabelImg.setBaseSize(20,20)
                 print("did it work?")
             '''
+            #DBGtextBox = 
+
+
 
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
             DBGButton.clicked.connect(Controller.BtnDBG)
@@ -781,10 +802,10 @@ class Window(QWidget):
 
         #---collums
         col0 = QWidget()
-        col0.setLayout(seperateChans1)#seperate channels
+        col0.setLayout(seperateChans1)#seperate channels RG
 
         col1 = QWidget()
-        col1.setLayout(seperateChans2)#seperate channels
+        col1.setLayout(seperateChans2)#seperate channels BA
 
         col2 = QWidget()
         col2.setLayout(settings)#settings collum

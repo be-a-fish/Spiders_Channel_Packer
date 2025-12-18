@@ -9,8 +9,6 @@
 
     Tool: Alpha still unpacking when disabled
 
-    Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
-
 ===Fixed issues:
 
     Tool: doesn't work with 3 channel image files.
@@ -41,6 +39,7 @@
 
     Tool: Still attempting to pack with alpha when alpha disabled
 
+    Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
 
 =========Features=========
 
@@ -65,7 +64,10 @@
 
     alpha toggle
 
-=QOL
+=QOL:
 
     Autopack Tickbox
 
+=Easter Eggs:
+
+    Random Splash Text
