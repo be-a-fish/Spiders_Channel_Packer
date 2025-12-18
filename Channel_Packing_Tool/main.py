@@ -363,7 +363,8 @@ class Controller():
 
     #----Textboxes
 
-    def setName(text,chanName):
+    def setName(unused,chanName,text="test"):
+        #bit hacky but need an unused variable at the start or the partial connect spits too many values into the first slot
         DBGprint("Update Text Box")
         DBGprint(text)
         DBGprint(chanName)
@@ -579,7 +580,7 @@ class Window(QWidget):
             channel.addWidget(QLabel(" Default file suffix for "+name+": "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             txtBox = QLineEdit(filename)
             #-------🎮
-            txtBox.textChanged.connect(partial(Controller.setName,chanName=name))
+            txtBox.textChanged.connect(partial(Controller.setName,text=txtBox.text,chanName=name))
             channel.addWidget(txtBox,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
@@ -702,7 +703,7 @@ class Window(QWidget):
         settings.addWidget(QLabel(" Default file prefix: "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         txtBox = QLineEdit(Packer.DefNames["prefix"])
         #-------🎮
-        txtBox.textChanged.connect(partial(Controller.setName,chanName="prefix"))
+        txtBox.textChanged.connect(partial(Controller.setName,text=txtBox.text,chanName="prefix"))
         settings.addWidget(txtBox,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
