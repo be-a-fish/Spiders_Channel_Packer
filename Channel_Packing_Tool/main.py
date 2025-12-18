@@ -40,7 +40,7 @@ class Packer():
             Packer.useAlpha = True
         print("use Alpha set to",Packer.useAlpha)
 
-    AutoPack = False
+    AutoPack = True
     def AutoPackToggle():#another toggle
         if Packer.AutoPack:
             Packer.AutoPack = False
@@ -161,7 +161,7 @@ class Packer():
         Packer.QtChans = []
         for i in [Packer.RChan, Packer.GChan, Packer.BChan, Packer.AChan, Packer.RGBA]:
             QtChan = ImageQt.ImageQt(i)#converts into Qt image format
-            print(QtChan)
+            #print(QtChan)
             Packer.QtChans.append(QtChan)
             #Order: RChan,GChan,BChan,AChan,RGBA
     
@@ -445,7 +445,7 @@ class Window(QWidget):
                      "we are no longer the knights that say ni",
                      "It can't see you if you stay perfectly still",
                      "Hello there",
-                     "The fish is thinking",
+                     "Shhhhhh... The fish is thinking",
                      "Jeveesus Lubs yoo... Someone has to to do it I guess",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
@@ -583,7 +583,7 @@ class Window(QWidget):
             channel.addWidget(QLabel(" Default file suffix for "+name+": "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             txtBox = QLineEdit(filename)
             #-------🎮
-            txtBox.textChanged.connect(partial(Controller.setName,text=txtBox.text,chanName=name))
+            txtBox.textEdited.connect(partial(Controller.setName,text=txtBox.text,chanName=name))
             channel.addWidget(txtBox,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
             #channel.setAlignment(alignment= "")
 
@@ -710,7 +710,7 @@ class Window(QWidget):
         settings.addWidget(QLabel(" Default file prefix: "),0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         txtBox = QLineEdit(Packer.DefNames["prefix"])
         #-------🎮
-        txtBox.textChanged.connect(partial(Controller.setName,text=txtBox.text,chanName="prefix"))
+        txtBox.textEdited.connect(partial(Controller.setName,text=txtBox.text,chanName="prefix"))######### NEED TO MAKE WORK
         settings.addWidget(txtBox,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
 
