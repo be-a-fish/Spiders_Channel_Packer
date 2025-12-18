@@ -1,60 +1,71 @@
+=========Bugs=========
 
 ====Known issues:
 
-GUI: Images scaling breacks aspect ratio
-    UPDATE: Kinda works now but jittery and stretches when made smaller
+    GUI: Images scaling breacks aspect ratio
+        UPDATE: Kinda works now but jittery and stretches when made smaller
 
-Tool: Images of different resolutions can't pack together
+    Tool: Images of different resolutions can't pack together
 
-Tool: Alpha still unpacking when disabled
+    Tool: Alpha still unpacking when disabled
 
-Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
+    Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
 
 ===Fixed issues:
 
-Tool: doesn't work with 3 channel image files.
-potential solutions:
-any opened files need to be converted to 3 channel images.
-also worth looking into a tickbox for "use alpha"
+    Tool: doesn't work with 3 channel image files.
+    potential solutions:
+    any opened files need to be converted to 3 channel images.
+    also worth looking into a tickbox for "use alpha"
 
-GUI:images not updating when values changed:
-potential fix:  use a class to determine image labels rather than asign them in the mask maker.
-                then update the values in the class.
-                Didnt work
-                -
-                i think the issue is not being able to set the label variables.
-                need to be able to return values from a button click
+    GUI:images not updating when values changed:
+    potential fix:  use a class to determine image labels rather than asign them in the mask maker.
+                    then update the values in the class.
+                    Didnt work
+                    -
+                    i think the issue is not being able to set the label variables.
+                    need to be able to return values from a button click
 
-GUI: images not scaling
+    GUI: images not scaling
 
-Tool: Images are remaining default
-need to sets Packer Var rather than return it
--discovered Img variable wasn't being updated in real time.
- need to specify image to export on export rather than at button creation
+    Tool: Images are remaining default
+    need to sets Packer Var rather than return it
+    -discovered Img variable wasn't being updated in real time.
+    need to specify image to export on export rather than at button creation
 
-Tool Adds .png twice to open image
+    Tool Adds .png twice to open image
 
-Tool: Channels not packing into RGBA
+    Tool: Channels not packing into RGBA
 
-GUI: push buttons activating at launch instead of on press
+    GUI: push buttons activating at launch instead of on press
 
-Tool: Still attempting to pack with alpha when alpha disabled
+    Tool: Still attempting to pack with alpha when alpha disabled
+
+
+=========Features=========
 
 ===Planned Features:
 
-Resolution scaling
+    Resolution scaling
 
-bit depth export
+    bit depth export
 
-Channel Invert Button
+    Channel Invert Button
 
-different icon for world events. e.g. pride/halloween/xmas
+    different icon for world events. e.g. pride/halloween/xmas
+
+=QOL
 
 ===WIP Features:
 
-Tool: Default file Names
-    need to fix
+    Tool: Default file Names
+        need to fix
 
 ===Implimented Features
 
-alpha toggle
+    alpha toggle
+
+=QOL
+
+    Autopack Tickbox
+
