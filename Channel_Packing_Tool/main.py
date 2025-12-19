@@ -453,6 +453,7 @@ class Window(QWidget):
                      "Unless someone like you cares a whole awful lot, nothing is going to get better, it's not.",
                      "It can't see you if you stay perfectly still",
                      "Hello there",
+                     "Let's settle this argument once and for all: It's pronounced gif",
                      "I think I got it. But just in case... tell me the whole thing again, I wasn't listening",
                      "Shhhhhh... The fish is thinking",
                      "Jesus loves you... No one else does",
