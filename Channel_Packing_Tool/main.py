@@ -1,4 +1,5 @@
 import sys
+import os
 import random #super very important for the code and not just fun easter eggs I wanna impliment when it's 4am and I havent slept in 48 hours
 
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
@@ -52,7 +53,8 @@ class Packer():
         def OpenImg(text,fileName):#📂
             DBGprint(text=text)
             extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
-            defaultPath = str("./Channel_Packing_Tool/default_assets/"+Packer.DefNames["prefix"]+fileName)
+            path = os.getcwd()
+            defaultPath = str(path+"/Channel_Packing_Tool/default_assets/"+Packer.DefNames["prefix"]+fileName)
             filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=Packer.DefNames["prefix"]+fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
 
             print ("so you have chosen:" ,filePath)
@@ -66,7 +68,8 @@ class Packer():
         def SavImg(export,text,suffix):#💾
             #exportQuality = 90
             #filePath = filedialog.asksaveasfile()
-            defaultPath = str("./Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+Packer.DefNames[suffix])
+            path = os.getcwd()
+            defaultPath = str(path+"/Channel_Packing_Tool/default_output/"+Packer.DefNames["prefix"]+Packer.DefNames[suffix])
             filePath = filedialog.asksaveasfilename(defaultextension=".png",title=text,initialfile=Packer.DefNames["prefix"]+Packer.DefNames[suffix]) or defaultPath
             
             print ("file path for save is",filePath)
@@ -92,15 +95,16 @@ class Packer():
         #opens file without a file dialogue
         #use in batch open
         def DefLoad(fileName):#📁Def
-            defaultPath = str("./Channel_Packing_Tool/default_assets/"+fileName)
+            path = os.getcwd()
+            defaultPath = str(path+"/Channel_Packing_Tool/default_assets/"+fileName)
             file = PIL.Image.open(defaultPath)#opens the file from the path
             return file
         
 
         def OpenImgBatch():#📁📁📁📁
             print("This functionality hasn't been made yet")
-
-            defPath = str("./Channel_Packing_Tool/default_output/")
+            path = os.getcwd()
+            defPath = str(path+"/Channel_Packing_Tool/default_output/")
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for import is",filePath)
 
@@ -114,8 +118,8 @@ class Packer():
 
 
         def SavImgBatch():#💾💾💾💾
-
-            defPath = str("./Channel_Packing_Tool/default_output/")
+            path = os.getcwd()
+            defPath = str(path+"/Channel_Packing_Tool/default_output/")
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for save is",filePath)
             #expImg = Packer.RChan
@@ -474,7 +478,8 @@ class Window(QWidget):
 
         #sets the icon to premade icon file
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./Channel_Packing_Tool/GUI/icon.png"))
+        path = os.getcwd()
+        icon.addPixmap(QtGui.QPixmap(path+"/Channel_Packing_Tool/GUI/icon.png"))
         self.setWindowIcon(icon)
         self.setMinimumWidth(1000)
         

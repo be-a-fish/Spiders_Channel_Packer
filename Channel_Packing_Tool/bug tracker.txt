@@ -2,6 +2,9 @@
 
 ====Known issues:
 
+    Tool: Dictionaries don't load properly if you change the folder it's in
+        Priority: URGENT
+
     GUI: Images scaling breacks aspect ratio
         Priority: Low
         UPDATE: Kinda works now but jittery and stretches when made smaller
