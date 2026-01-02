@@ -103,3 +103,9 @@
 =Easter Eggs:
 
     Random Splash Text
+
+=Notes:
+
+    When using PyInstaller use the following command:
+        python -m PyInstaller main.py --onefile --icon=icon.ico
+    Remember to move Channel_Packing_Tool folder to same location as .exe file
