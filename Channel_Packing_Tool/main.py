@@ -244,7 +244,7 @@ class Packer():
 # region controller
 #   This might look stupid and unproffesional but it helps me find the controller section faster
 #                   |
-#         _--‾‾-----^----‾‾--_
+#         _––‾‾–––––^––––‾‾––_
 #        / /‾‾\ <> (X) <>   Y \
 #      /   \__/|‾|        X   B \
 #     /      [‾   ‾]  /‾‾\  A    \
