@@ -4,7 +4,10 @@
 
     GUI: Images scaling breacks aspect ratio
         Priority: Low
-        UPDATE: Kinda works now but jittery and stretches when made smaller. changed priority to low as it's functional
+        UPDATE: Kinda works now but jittery and stretches when made smaller.
+        changed priority to low as it's functional
+        Aspect ratio forced 1:1 so different images will display as square. chosen to keep it this way for visual consistency
+        still correct size when exporting. only affects GUI
 
     Tool: Images of different resolutions can't pack together
         Priority: Medium
