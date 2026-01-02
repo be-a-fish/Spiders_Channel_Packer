@@ -465,6 +465,8 @@ class Window(QWidget):
                      "Apart from the roads, irrigation, education... what have the Romans ever done for us?",
                      "Bring back mp3 players",
                      "Boycott RAM. You never needed it anyway",
+                     "may contain traces of humour",
+                     "not suitible for those suffering from a milk allergy due to cheesy jokes",
                      "I am already in my pajamas",
                      "Good news everyone!",
                      "( ͡° ͜ʖ ͡°)",
