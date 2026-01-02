@@ -2,12 +2,9 @@
 
 ====Known issues:
 
-    Tool: Dictionaries don't load properly if you change the folder it's in
-        Priority: URGENT
-
     GUI: Images scaling breacks aspect ratio
         Priority: Low
-        UPDATE: Kinda works now but jittery and stretches when made smaller
+        UPDATE: Kinda works now but jittery and stretches when made smaller. changed priority to low as it's functional
 
     Tool: Images of different resolutions can't pack together
         Priority: Medium
@@ -19,6 +16,15 @@
         Priority: Medium
 
     GUI: Cursor isn't updated to hand pointer when hovering over a button
+        Priority: Low
+
+    GUI: Save/open windows don't close when closing the main windows
+        Priority: Low
+    
+    Tool: Autopacker doesn't work on batch import
+        Priority: Medium
+
+    GUI: Import and export windows don't use the main icon
         Priority: Low
 
 ===Fixed issues:
@@ -43,7 +49,7 @@
     -discovered Img variable wasn't being updated in real time.
     need to specify image to export on export rather than at button creation
 
-    Tool Adds .png twice to open image
+    Tool Adds .png twice to open image str
 
     Tool: Channels not packing into RGBA
 
@@ -52,6 +58,12 @@
     Tool: Still attempting to pack with alpha when alpha disabled
 
     Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
+
+    Tool: Dictionaries don't load properly if you change the folder it's in
+    Fix: used os path and ensured builds always have Channel_Packing_Tool folder in same dictionary
+
+
+    EXE: terminal shows when built
 
 =========Features=========
 
@@ -104,8 +116,22 @@
 
     Random Splash Text
 
-=Notes:
+=========Notes=========
 
-    When using PyInstaller use the following command:
-        python -m PyInstaller main.py --onefile --icon=icon.ico
+=Version format:
+
+e.g. 1.0.2
+
+    first digit:
+        Release. 0=unreleased. 1=released
+    second digit:
+        Feature version. goes up when features are added
+    third digit:
+        Bug fix. Goes up when bug is fixed
+
+
+=PyInstaller:
+
+    When using PyInstaller, open the Channel_Packing_Tool folder in terminal and use the following command:
+        python -m PyInstaller main.py --onefile --icon=icon.ico --noconsole
     Remember to move Channel_Packing_Tool folder to same location as .exe file
