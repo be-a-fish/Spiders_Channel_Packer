@@ -439,6 +439,7 @@ class Window(QWidget):
                      "No animals were harmed in the creation of this software",
                      "LOADING LAST BRAIN CELL [#####################-----------] ERROR 404: BRAINCELL NOT FOUND",
                      "I hate London",
+                     "Sup nerds",
                      "All cats are beautiful",
                      "I found the source of the ticking. It's a pipe bomb",
                      "Hello cruel world",
@@ -698,7 +699,7 @@ class Window(QWidget):
         #                #### 
 
         settings = QVBoxLayout()
-        settingLabel = QLabel("⚙ Settings: ")#.setStyleSheet("font-size: 13pt")
+        settingLabel = QLabel("⚙ Options: ")#.setStyleSheet("font-size: 13pt")
         settings.addWidget(settingLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
         
         #---Pack Button
@@ -828,3 +829,5 @@ if __name__ == "__main__":
     window = Window()
     window.show()
     sys.exit(app.exec())
+
+input("press enter to close the console")
