@@ -454,6 +454,9 @@ class Window(QWidget):
                      "I think I got it. But just in case... tell me the whole thing again, I wasn't listening",
                      "Shhhhhh... The fish is thinking",
                      "Jesus loves you... No one else does",
+                     "I wear my scars with pride. They're a reminder of times when life tried to break me but failed.",
+                     "My dearest friend, if you don’t mind, I’d like to join you by your side, where we can gaze into the stars.",
+                     "You don't need to pretend. Not with me.",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
                      "Hab SoSlI' Quch",
@@ -519,8 +522,7 @@ class Window(QWidget):
         RGBAlab = AspectRatioLabel("packed image")
         def MakeLabel(ChanNum):
             Packer.PILtoQtUpdate()
-            #widg = QWidget()
-            #widg.setSizePolicy()
+            
             label=AspectRatioLabel(aspectRatio = 1.0)
             imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
             imgUI.scaled(200,200,
@@ -531,9 +533,6 @@ class Window(QWidget):
             label.setScaledContents(True)
             
 
-            #label.setUpdatesEnabled#dunno what this is but could be useful
-            #label.setSizePolicy(QSizePolicy.setWidthForHeight)
-            #label.setBaseSize(QtGui.Qt.SizeMode.RelativeSize)
             label.setMinimumSize(100,100)
             label.setBaseSize(20,20)
             label.setSizePolicy(QSizePolicy.Policy.MinimumExpanding,QSizePolicy.Policy.MinimumExpanding)
