@@ -5,7 +5,7 @@ import random #super very important for the code and not just fun easter eggs I 
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QVBoxLayout, QPushButton,
                                QWidget, QCheckBox, QLabel,
-                               QLineEdit, QSizePolicy, QToolTip)
+                               QLineEdit, QSizePolicy)
 from PySide6 import QtGui, QtCore
 
 from functools import partial#for sending variables through button inputs
@@ -52,7 +52,7 @@ class Packer():
 
         def OpenImg(text,fileName):#📂
             DBGprint(text=text)
-            extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this shit out
+            extensions = [".png","jpg"] #add filetypes to filedialog: filetypes= need to figure this **** out
             path = os.getcwd()
             defaultPath = str(path+"/Channel_Packing_Tool/default_assets/"+Packer.DefNames["prefix"]+fileName)
             filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=Packer.DefNames["prefix"]+fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
@@ -122,7 +122,7 @@ class Packer():
             defPath = str(path+"/Channel_Packing_Tool/default_output/")
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for save is",filePath)
-            #expImg = Packer.RChan
+            
             DBGprint("Prefix is"+Packer.DefNames["prefix"])
             Packer.RChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))
             Packer.GChan.save(fp=str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
@@ -151,11 +151,11 @@ class Packer():
         Packer.QtChans = []
         for i in [Packer.RChan, Packer.GChan, Packer.BChan, Packer.AChan, Packer.RGBA]:
             QtChan = ImageQt.ImageQt(i)#converts into Qt image format
-            #print(QtChan)
+            
             Packer.QtChans.append(QtChan)
             #Order: RChan,GChan,BChan,AChan,RGBA
     
-    #PILtoQtUpdate()#calls the function once to set defaults
+    #PILtoQtUpdate()#calls the function once to set defaults. kept for debugging purposes
 
 
     DefNames = {
@@ -204,7 +204,6 @@ class Packer():
             #---Combine into single image
 
             
-            #PIL.Image.Image.show(RGBA)
             if Packer.useAlpha:
                 RGBA = Image.merge('RGBA', (redLin,greenLin,blueLin,alphaLin))
                 DBGprint("using alpha channel")
@@ -215,15 +214,10 @@ class Packer():
             
             DBGprint(RGBA)
             DBGprint(resolution)
-            #Packer.RGBA = RGBA
             return RGBA
 
         def UnpackRGBA(RGBA):
             DBGprint("attempting to unpack RGBA")
-            
-            #Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Image.Image.split(RGBA)
-            #wanted to use Packer Variables rather than return value because button inputs dont support return values
-            #unnessisary due to controller class
             
             red,green,blue,alpha = Image.Image.split(RGBA)
             
@@ -326,7 +320,6 @@ class Controller():
     def BtnUnpacking():
         DBGprint("button unpack pressed")
         Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan = Packer.ImPack.UnpackRGBA(Packer.RGBA)
-        #also add update GUI function when implimented
 
     def BtnDBG():
         DBGprint("OK what's broken now?\n ")
@@ -354,13 +347,11 @@ class Controller():
 
     def setName(unused,chanName,text):
         #bit hacky but need an unused variable at the start or the partial connect spits too many values into the first slot
-        #global DefNames
         print(text.text())
         DBGprint("Update Text Box")
         DBGprint(text.text())
         DBGprint(chanName)
         Packer.DefNames[chanName] = text.text()
-        #DefNames[chanName] = text.text()
     
 
 
@@ -371,12 +362,12 @@ class Controller():
 #| 🕷Spiders Channel packing tool            _[]X  |
 #|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
 #||‾‾‾‾‾|   |‾‾‾‾‾|             |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
-#||  R  |   |  B  |             |                | |
+#||  R  |   |  G  |             |                | |
 #||‾‾‾‾‾|   |‾‾‾‾‾|  _____      |                | |
 #||‾‾‾‾‾|   |‾‾‾‾‾| | --> |     |      RGBA      | |
 #| ‾‾‾‾‾     ‾‾‾‾‾   ‾‾‾‾‾      |                | |
 #||‾‾‾‾‾|   |‾‾‾‾‾|  _____      |                | |
-#||  G  |   |  A  | | <-- |     |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
+#||  B  |   |  A  | | <-- |     |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
 #||‾‾‾‾‾|   |‾‾‾‾‾|  ‾‾‾‾‾      |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
 #||‾‾‾‾‾|   |‾‾‾‾‾|             |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾| |
 #| ‾‾‾‾‾     ‾‾‾‾‾               ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  |
@@ -439,10 +430,14 @@ class Window(QWidget):
                      "No animals were harmed in the creation of this software",
                      "LOADING LAST BRAIN CELL [#####################-----------] ERROR 404: BRAINCELL NOT FOUND",
                      "I hate London",
+                     "Trans rights are human rights ⚧",
+                     "Free palestine",
                      "Sup nerds",
                      "All cats are beautiful",
                      "I found the source of the ticking. It's a pipe bomb",
                      "Hello cruel world",
+                     "This program was made by a queer disabled punk. If that makes you uncomfortable them maybe re-evaluate your opinion :)",
+                     "Never trust a tory",
                      "I've come here to chew ass and kick bubblegum, and I'm all out of ass",
                      "There is no Heaven without Hell",
                      "Your mother was a hamster and your father smells of elderberries",
@@ -450,10 +445,11 @@ class Window(QWidget):
                      "we are no longer the knights that say ni",
                      "I'm batman",
                      "I only work in black. And sometimes, very, very dark gray",
-                     "I know that sounds like a cap poster, but it's true.",
+                     "I know that sounds like a cat poster, but it's true.",
                      "Unless someone like you cares a whole awful lot, nothing is going to get better, it's not.",
                      "It can't see you if you stay perfectly still",
                      "Hello there",
+                     "Get that mohawk you wanted when you were a kid. You have free will. No one can stop you.",
                      "Let's settle this argument once and for all: It's pronounced gif",
                      "I think I got it. But just in case... tell me the whole thing again, I wasn't listening",
                      "Shhhhhh... The fish is thinking",
@@ -488,7 +484,7 @@ class Window(QWidget):
         #dark mode stuff:
         self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:darkgray; border: none} QLineEdit {font-size: 11pt; background-color: #373165; color yellow; border: 3px solid #373165} QPushButton {font-size: 11pt; background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
         #self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:yellow; border: 3px solid yellow} QPushButton {background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
-        #Debug disable later ^
+        #Debug disable later but keep in code ^
         
         # region Layout
         #-----------------Layout-----------------
@@ -708,13 +704,11 @@ class Window(QWidget):
         #-------🎮 NEEDS ADDING TO CONROLLER
         pack.clicked.connect(Controller.BtnPacking)
         pack.clicked.connect(partial(UpdateLabels))
-        #pack.clicked.connect(partial(Packer.ImPack.PackRGBA,Packer.RChan,Packer.GChan,Packer.BChan,Packer.AChan,"replace with resolution when implimented"))#change to pack
         
         #---Unpack Button
         settings.addWidget(pack,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
         unpack = QPushButton("Unpack Textures\n <-- ")
         unpack.setToolTip("Takes the packed texture and unpacks the channels so you can replace or export them individually")
-        #unpack.clicked.connect(partial(Packer.ImPack.UnpackRGBA,Packer.RGBA))
         #-------🎮
         unpack.clicked.connect(Controller.BtnUnpacking)
         unpack.clicked.connect(partial(UpdateLabels))
@@ -735,7 +729,7 @@ class Window(QWidget):
         useAlphaCB = QCheckBox("Use Alpha")
         useAlphaCB.setToolTip("Enables Alpha channel for 4 channel packing")
         useAlphaCB.setChecked(Packer.useAlpha)
-        #-------🎮 NEEDS ADDING TO CONROLLER
+        #-------🎮
         useAlphaCB.clicked.connect(Packer.alphaToggle)
         settings.addWidget(useAlphaCB,0,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
@@ -744,7 +738,7 @@ class Window(QWidget):
         AutoPackCB = QCheckBox("Auto Packer Toggle")
         AutoPackCB.setToolTip("Automatically packs and unpacks images on import")
         AutoPackCB.setChecked(Packer.AutoPack)
-        #-------🎮 NEEDS ADDING TO CONROLLER
+        #-------🎮
         AutoPackCB.clicked.connect(Packer.AutoPackToggle)
         settings.addWidget(AutoPackCB,1,alignment=QtCore.Qt.AlignmentFlag.AlignTop)
 
@@ -752,35 +746,6 @@ class Window(QWidget):
         
         
         if DEBUG:#adds a debug button if debug is enabled
-
-            #DBGLabel = QLabel("Test Label")
-            #settings.addWidget(DBGLabel,1,alignment=QtCore.Qt.AlignmentFlag.AlignBottom)
-
-            
-            '''
-            DBGlabelImg = QLabel()
-            imgGUI = QtGui.QPixmap(Packer.QtChans[4])
-            imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-            DBGlabelImg.setPixmap(imgGUI)
-            DBGlabelImg.setScaledContents(200)
-            DBGlabelImg.setMinimumSize(100,100)
-            DBGlabelImg.setBaseSize(20,20)
-
-            settings.addWidget(DBGlabelImg)
-
-            def UpdateGUI():
-                Packer.PILtoQtUpdate()
-                
-                imgGUI = QtGui.QPixmap(Packer.QtChans[4])
-                imgGUI.scaled(100,100,aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatio)
-                DBGlabelImg.setPixmap(imgGUI)
-                DBGlabelImg.setScaledContents(200)
-                DBGlabelImg.setMinimumSize(100,100)
-                DBGlabelImg.setBaseSize(20,20)
-                print("did it work?")
-            '''
-            #DBGtextBox = 
-
 
 
             DBGButton = QPushButton("DEBUG BUTTON\nASSIGN ME STUFF TO TEST")
