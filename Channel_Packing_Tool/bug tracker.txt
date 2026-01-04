@@ -30,6 +30,9 @@
     GUI: Import and export windows don't use the main icon
         Priority: Low
 
+    Tool: Jpeg imports don't always keep rotation data. Not huge issue as you can just export and right click > rotateleft/right
+        Priority: Low
+
 ===Fixed issues:
 
     Tool: doesn't work with 3 channel image files.
