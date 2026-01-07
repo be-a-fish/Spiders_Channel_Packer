@@ -47,13 +47,15 @@
                     -
                     i think the issue is not being able to set the label variables.
                     need to be able to return values from a button click
+                    -
+                    This was the issue. Used functools for this. Also had to add empty variable to setname button
 
     GUI: images not scaling
 
     Tool: Images are remaining default
-    need to sets Packer Var rather than return it
-    -discovered Img variable wasn't being updated in real time.
-    need to specify image to export on export rather than at button creation
+        need to sets Packer Var rather than return it
+        -discovered Img variable wasn't being updated in real time.
+        need to specify image to export on export rather than at button creation
 
     Tool Adds .png twice to open image str
 
@@ -66,10 +68,14 @@
     Tool: Default names aren't set when exporting manually (noticed on ORMA, could just be that one)
 
     Tool: Dictionaries don't load properly if you change the folder it's in
-    Fix: used os path and ensured builds always have Channel_Packing_Tool folder in same dictionary
+        Fix: used os path and ensured builds always have Channel_Packing_Tool folder in same dictionary
 
 
     EXE: terminal shows when built
+
+
+    GUI: R and B channel images can get smaller than G and A on some computers
+        Fix: increased min window size
 
 =========Features=========
 
@@ -86,6 +92,9 @@
 
     Tool: Channel Invert Button
         Priority: Medium
+
+    Tool: seperate suffix from name (as dropdown for format type):
+        Priority: High
 
 =QOL:
 

@@ -241,12 +241,12 @@ class Packer():
 
 # region controller
 #   This might look stupid and unproffesional but it helps me find the controller section faster
-#                   |
-#         _––‾‾–––––^––––‾‾––_
-#        / /‾‾\ <> (X) <>   Y \
-#      /   \__/|‾|        X   B \
-#     /      [‾   ‾]  /‾‾\  A    \
-#    /        ‾|_|‾   \__/        \
+#                  ||
+#         _––‾‾––––┴┴––––‾‾––_
+#       / ◜‾◝  <> Ⓧ <>    Ⓨ \
+#      /  ◟_◞ |‾|        Ⓧ  Ⓑ\
+#     /      [‾   ‾]  ◜‾◝  Ⓐ   \
+#    /        ‾|_|‾   ◟_◞        \
 #   /      /‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\      \
 #   \_  _/                    \_  _/
 #     ‾‾                        ‾‾
@@ -395,6 +395,7 @@ class Window(QWidget):
                      "Marry and reproduce",
                      "This is your god",
                      "but can it run DOOM?",
+                     "🛸",
                      "this is what programmers do when they haven't had enough sleep",
                      "AI can eat a bag of CONTENT NOT AVAILABLE WITHOUT AGE VERIFICATION",
                      "And my parents still aren't proud of me",
@@ -428,6 +429,7 @@ class Window(QWidget):
                      "No animals were harmed in the creation of this software",
                      "LOADING LAST BRAIN CELL [#####################-----------] ERROR 404: BRAINCELL NOT FOUND",
                      "I hate London",
+                     "Remember to take a break. Eat grass. Touch food.",
                      "Trans rights are human rights ⚧",
                      "Free palestine",
                      "Sup nerds",
@@ -446,17 +448,20 @@ class Window(QWidget):
                      "I know that sounds like a cat poster, but it's true.",
                      "Unless someone like you cares a whole awful lot, nothing is going to get better, it's not.",
                      "It can't see you if you stay perfectly still",
+                     "Do not judge a persons charicter based on the curcumstances of ones birth",
                      "Hello there",
                      "Get that mohawk you wanted when you were a kid. You have free will. No one can stop you.",
                      "Let's settle this argument once and for all: It's pronounced gif",
                      "I think I got it. But just in case... tell me the whole thing again, I wasn't listening",
                      "Shhhhhh... The fish is thinking",
+                     "Greetings mortal",
                      "Jesus loves you... No one else does",
                      "I wear my scars with pride. They're a reminder of times when life tried to break me but failed.",
                      "My dearest friend, if you don’t mind, I’d like to join you by your side, where we can gaze into the stars.",
                      "You don't need to pretend. Not with me.",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
+                     "You didn't leave the oven on did you?",
                      "Hab SoSlI' Quch",
                      "Heghlu'meH QaQ jajvam",
                      "You have a face como un burro",
@@ -467,6 +472,8 @@ class Window(QWidget):
                      "not suitible for those suffering from a milk allergy due to cheesy jokes",
                      "I am already in my pajamas",
                      "Good news everyone!",
+                     " 🕷 ",
+                     " /╲/\(╭ ⋱ ⋰ ╮)/\╱\ ",
                      "( ͡° ͜ʖ ͡°)",
                      "( ͡° ͜ʖ ͡°)╭∩╮",
                      "¯\_(ツ)_/¯",
@@ -482,7 +489,7 @@ class Window(QWidget):
         path = os.getcwd()
         icon.addPixmap(QtGui.QPixmap(path+"/Channel_Packing_Tool/GUI/icon.png"))
         self.setWindowIcon(icon)
-        self.setMinimumWidth(1000)
+        self.setMinimumWidth(1200)
         
         #dark mode stuff:
         self.setStyleSheet("QToolBar { background: #2a2841; } QWidget {background-color: #222034; color:darkgray; border: none} QLineEdit {font-size: 11pt; background-color: #373165; color yellow; border: 3px solid #373165} QPushButton {font-size: 11pt; background-color: #2a2841; color yellow; border: 3px solid #373165} QPushButton::pressed {background-color: #373165; color yellow; border: 3px solid #373165}")
@@ -545,7 +552,7 @@ class Window(QWidget):
 
             return label
         
-        Rlab = MakeLabel(0)
+        Rlab = MakeLabel(0)#number is channel number
         Glab = MakeLabel(1)
         Blab = MakeLabel(2)
         Alab = MakeLabel(3)
@@ -583,7 +590,7 @@ class Window(QWidget):
             #connect to button import on controller
             #imp.clicked.connect(partial(Packer.ImRW.OpenImg,text="open "+name+" channel texture, usually "+filename,fileName=filename+".png"))
             exp = QPushButton("💾 Export "+name+" texture")
-            exp.setToolTip("exports image from the "+name+" texture slot")
+            exp.setToolTip("Exports image from the "+name+" texture slot")
             #-------🎮
             exp.clicked.connect(partial(Controller.BtnExport,name=name,filename=filename))
             exp.clicked.connect(partial(UpdateLabels))
@@ -630,8 +637,8 @@ class Window(QWidget):
         alphaCont = MakeChannelButtons(name="alpha", filename=Packer.DefNames["alpha"])
 
         #Add containers to Vertical layout
-        seperateChans1.addWidget(Rlab,0)
-        seperateChans1.addWidget(redCont,1)
+        seperateChans1.addWidget(Rlab,0)#adds the channel image label
+        seperateChans1.addWidget(redCont,1)#adds the channel buttons
 
         seperateChans2.addWidget(Glab,0)
         seperateChans2.addWidget(greenCont,1)
@@ -774,10 +781,10 @@ class Window(QWidget):
 
         #---master layout
         Mlayout = QHBoxLayout()
-        Mlayout.addWidget(col0,1)
-        Mlayout.addWidget(col1,1)#numbers represent importance for scaling
-        Mlayout.addWidget(col2,0)
-        Mlayout.addWidget(col3,2)#scale this guy most important
+        Mlayout.addWidget(col0,3)
+        Mlayout.addWidget(col1,3)#numbers represent importance for scaling
+        Mlayout.addWidget(col2,2)
+        Mlayout.addWidget(col3,7)#scale this guy most important
         #Mlayout.maximumSize()
         
 
@@ -794,4 +801,4 @@ if __name__ == "__main__":
     window.show()
     sys.exit(app.exec())
 
-input("press enter to close the console")
+input("press enter to close the console")# avoids program closing automatically on some machines. (PyInstaller bug)
