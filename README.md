@@ -1,5 +1,5 @@
 This tool is a standalone channel packing tool used to merge separate RGB(A) images into a single image and unpack images into separate RGB(A) channels.
-This is a common texture optimisation tecnique. It was made to streamline PBR workflows. 
+This is a common texture optimisation technique. It was made to streamline PBR workflows. 
 
 This tool is FREE AND OPEN SOURCE! Developed as a uni project for my MSc.
 Only donate if you want to support me.
