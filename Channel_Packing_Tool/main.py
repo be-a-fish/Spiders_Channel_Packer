@@ -1,6 +1,6 @@
 import sys
 import os
-import random #super very important for the code and not just fun easter eggs I wanna impliment when it's 4am and I havent slept in 48 hours
+from random import choice as RanChoice#super very important for the code and not just fun easter eggs I wanna impliment when it's 4am and I havent slept in 48 hours
 
 from PySide6.QtWidgets import (QApplication, QHBoxLayout,
                                QVBoxLayout, QPushButton,
@@ -11,7 +11,6 @@ from PySide6 import QtGui, QtCore
 from functools import partial#for sending variables through button inputs
 
 from PIL import Image, ImageQt
-#import PIL
 
 from tkinter import filedialog #for file dialogue boxes. Literally don't use tkinter for anything else
 
@@ -474,7 +473,7 @@ class Window(QWidget):
                      "( ཀ ʖ̯ ཀ)",
                      "(｢•-•)｢ YEET"]
         
-        title = ("Spider's Channel Packing Tool - "+random.choice(SplashText))
+        title = ("Spider's Channel Packing Tool - "+RanChoice(SplashText))
 
         self.setWindowTitle(title)
 
