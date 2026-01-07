@@ -10,9 +10,8 @@ from PySide6 import QtGui, QtCore
 
 from functools import partial#for sending variables through button inputs
 
-from PIL import Image
-import PIL
-from PIL import ImageQt
+from PIL import Image, ImageQt
+#import PIL
 
 from tkinter import filedialog #for file dialogue boxes. Literally don't use tkinter for anything else
 
@@ -58,7 +57,7 @@ class Packer():
             filePath = filedialog.askopenfilename(title=text,defaultextension=".png",initialfile=Packer.DefNames["prefix"]+fileName) or defaultPath #opens a window to grab a file. if window is closed sets to default path
 
             print ("so you have chosen:" ,filePath)
-            file = PIL.Image.open(filePath)#opens the file from the path
+            file = Image.open(filePath)#opens the file from the path
             fileConv = Image.Image.convert(self=file, mode='RGBA')#converts to RGBA
             DBGprint(fileConv)
             return fileConv
@@ -97,7 +96,7 @@ class Packer():
         def DefLoad(fileName):#📁Def
             path = os.getcwd()
             defaultPath = str(path+"/Channel_Packing_Tool/default_assets/"+fileName)
-            file = PIL.Image.open(defaultPath)#opens the file from the path
+            file = Image.open(defaultPath)#opens the file from the path
             return file
         
 
@@ -108,11 +107,11 @@ class Packer():
             filePath = (filedialog.askdirectory(title="Select output folder for batch export")+"/") or defPath
             print ("file path for import is",filePath)
 
-            Packer.RChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))#opens the file from the path
-            Packer.GChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
-            Packer.BChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["blue"]))
+            Packer.RChan = Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["red"]))#opens the file from the path
+            Packer.GChan = Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["green"]))
+            Packer.BChan = Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["blue"]))
             if Packer.useAlpha:
-                Packer.AChan = PIL.Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["alpha"]))
+                Packer.AChan = Image.open(str(filePath+Packer.DefNames["prefix"]+Packer.DefNames["alpha"]))
 
 
 
