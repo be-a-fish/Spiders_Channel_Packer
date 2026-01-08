@@ -1,3 +1,22 @@
+##-----------------------Version information-----------------------
+
+
+
+#   Version: 1.0.2
+#            ^ ^ ^
+#   release  ┘ | |
+#   version    | |
+#   (1 or 0)   | | 
+#              | |
+#   feature    | |
+#   version ---┘ |
+#                |
+#   bugfix       |
+#   version -----┘
+
+
+##-----------------------Libraries-----------------------
+#region Libs
 import sys
 import os
 from random import choice as RanChoice#super very important for the code and not just fun easter eggs I wanna impliment when it's 4am and I havent slept in 48 hours
