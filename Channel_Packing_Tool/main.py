@@ -407,7 +407,7 @@ class Window(QWidget):
                      "Über Hacker Tool",
                      "Cos I can't be asked to pirate photoshop",
                      "ya like jazz?",
-                     "Nerds of the world Unite, we have nothing to loose but our dice 🎲",
+                     "Nerds of the world Unite, we have nothing to lose but our dice 🎲",
                      "☭Eat the richⒶ... or like, maybe a sandwitch if you're feeling lazy",
                      "5318008",
                      "Live long and prosper 🖖",
@@ -480,6 +480,7 @@ class Window(QWidget):
                      "You don't need to pretend. Not with me.",
                      "Marco                                                                                                                          Polo",
                      "Camden punks are posers",
+                     "so long and thanks for all the fish",
                      "You didn't leave the oven on did you?",
                      "Hab SoSlI' Quch",
                      "Heghlu'meH QaQ jajvam",
@@ -546,11 +547,12 @@ class Window(QWidget):
         Alab = AspectRatioLabel("Alpha img")
 
         RGBAlab = AspectRatioLabel("packed image")
+
         def MakeLabel(ChanNum):
             Packer.PILtoQtUpdate()
             
             label=AspectRatioLabel(aspectRatio = 1.0)
-            imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])
+            imgUI = QtGui.QPixmap(Packer.QtChans[ChanNum])#determines which channel is set
             imgUI.scaled(200,200,
                          aspectMode=QtCore.Qt.AspectRatioMode.KeepAspectRatioByExpanding,
                          mode=QtCore.Qt.TransformationMode.FastTransformation)
